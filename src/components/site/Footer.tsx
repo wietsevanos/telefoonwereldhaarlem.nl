@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import logoTw from "@/assets/logo-tw.png.asset.json";
 
 export function Footer() {
   return (
@@ -6,9 +7,9 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-12 lg:gap-16 mb-16">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2.5 mb-6">
-              <span className="size-8 bg-brand-900 rounded-lg grid place-items-center">
-                <span className="size-3 bg-brand-400 rounded-full" />
+            <div className="flex items-center gap-3 mb-6">
+              <span className="size-10 bg-brand-900 rounded-xl grid place-items-center overflow-hidden">
+                <img src={logoTw.url} alt="" aria-hidden className="size-7 object-contain" />
               </span>
               <span className="font-bold text-lg tracking-tight">
                 TELEFOON WERELD <span className="font-light text-brand-500">HAARLEM</span>
