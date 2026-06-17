@@ -30,12 +30,12 @@ const popularRepairs = [
   { name: "Samsung scherm reparatie", price: "Vanaf €119,-", image: repairSamsung, desc: "Originele Samsung onderdelen voor een perfect resultaat." },
   { name: "Samsung batterij vervangen", price: "Vanaf €59,-", image: repairBattery, desc: "Direct weer een volle dag accu." },
   { name: "Oplaadpoort reparatie", price: "Vanaf €45,-", image: repairScreen, desc: "Slechte verbinding of niet meer opladen? Snel verholpen." },
-  { name: "Waterschade herstel", price: "Op offerte", image: repairBattery, desc: "Ultrasone reiniging — 85% wordt succesvol hersteld." },
+  { name: "Waterschade herstel", price: "Op offerte", image: repairBattery, desc: "Ultrasone reiniging, 85% wordt succesvol hersteld." },
 ];
 
 const steps = [
   { n: "01", title: "Maak afspraak", body: "Kies je toestel en tijdstip in onze online planner of bel ons direct." },
-  { n: "02", title: "Breng toestel langs", body: "Kom langs aan de Zijlweg 24 in Haarlem — geen wachttijd." },
+  { n: "02", title: "Breng toestel langs", body: "Kom langs aan de Zijlweg 24 in Haarlem, zonder wachttijd." },
   { n: "03", title: "Wij repareren", body: "Onze technici fixen je toestel met uiterste precisie en originele onderdelen." },
   { n: "04", title: "Weer als nieuw", body: "Getest, gecontroleerd en klaar. Inclusief garantie op de reparatie." },
 ];
@@ -244,7 +244,7 @@ function Home() {
             <span className="text-[11px] font-bold uppercase tracking-widest text-brand-500">Winkel</span>
             <h3 className="mt-3 text-2xl font-bold">Premium accessoires</h3>
             <p className="mt-2 text-brand-900/60 text-[15px] max-w-md">
-              De beste hoesjes, screenprotectors en originele opladers — direct uit voorraad voor elk model.
+              De beste hoesjes, screenprotectors en originele opladers, direct uit voorraad voor elk model.
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-brand-600 font-semibold group-hover:gap-3 transition-all">
               Bekijk in winkel <span aria-hidden>→</span>
@@ -254,7 +254,7 @@ function Home() {
             <span className="text-[11px] font-bold uppercase tracking-widest text-brand-400">Service</span>
             <h3 className="mt-3 text-2xl font-bold">Pakketpunt</h3>
             <p className="mt-2 text-white/60 text-[15px] max-w-md">
-              Officieel ophaal- en verzendpunt — pakketten ophalen of brengen, snel geregeld tijdens openingstijden.
+              Officieel ophaal en verzendpunt, pakketten ophalen of brengen, snel geregeld tijdens openingstijden.
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-brand-300 font-semibold group-hover:gap-3 transition-all">
               Meer over pakketpunt <span aria-hidden>→</span>
