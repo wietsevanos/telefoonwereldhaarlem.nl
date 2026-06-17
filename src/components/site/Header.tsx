@@ -39,13 +39,10 @@ export function Header() {
             className="h-9 w-auto object-contain"
             style={{ filter: "brightness(0)" }}
           />
-          <span className="font-bold text-[15px] tracking-tight leading-none">
-            TELEFOON WERELD <span className="font-light text-brand-500">HAARLEM</span>
-          </span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-7">
-          {navItems.slice(1, -1).map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.to}
               to={item.to}
