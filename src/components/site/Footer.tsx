@@ -10,10 +10,13 @@ export function Footer() {
             <div className="flex items-center gap-3 mb-6">
               <img
                 src={logoTw.url}
-                alt="Telefoon Wereld"
+                alt="Telefoon Wereld Haarlem"
                 className="h-10 w-auto object-contain"
                 style={{ filter: "brightness(0)" }}
               />
+              <span className="font-bold text-lg tracking-tight">
+                TELEFOON WERELD <span className="font-light text-brand-500">HAARLEM</span>
+              </span>
             </div>
             <p className="text-brand-900/60 max-w-sm leading-relaxed mb-8 text-[15px]">
               De premium reparatiepartner voor smartphones, tablets en laptops in Haarlem.
@@ -58,7 +61,7 @@ export function Footer() {
 
         <div className="pt-10 border-t border-[color:var(--color-hairline)] flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-brand-900/50 text-xs">
-            © {new Date().getFullYear()} Alle rechten voorbehouden.
+            © {new Date().getFullYear()} Telefoon Wereld Haarlem. Alle rechten voorbehouden.
           </p>
           <div className="flex gap-6 text-xs text-brand-900/50">
             <a href="#" className="hover:text-brand-900">Privacy</a>
