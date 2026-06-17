@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReparatiesRouteImport } from './routes/reparaties'
 import { Route as OverOnsRouteImport } from './routes/over-ons'
 import { Route as AfspraakRouteImport } from './routes/afspraak'
+import { Route as AccessoiresRouteImport } from './routes/accessoires'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ReparatiesRoute = ReparatiesRouteImport.update({
@@ -29,6 +30,11 @@ const AfspraakRoute = AfspraakRouteImport.update({
   path: '/afspraak',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccessoiresRoute = AccessoiresRouteImport.update({
+  id: '/accessoires',
+  path: '/accessoires',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/accessoires': typeof AccessoiresRoute
   '/afspraak': typeof AfspraakRoute
   '/over-ons': typeof OverOnsRoute
   '/reparaties': typeof ReparatiesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accessoires': typeof AccessoiresRoute
   '/afspraak': typeof AfspraakRoute
   '/over-ons': typeof OverOnsRoute
   '/reparaties': typeof ReparatiesRoute
@@ -50,20 +58,28 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/accessoires': typeof AccessoiresRoute
   '/afspraak': typeof AfspraakRoute
   '/over-ons': typeof OverOnsRoute
   '/reparaties': typeof ReparatiesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/afspraak' | '/over-ons' | '/reparaties'
+  fullPaths: '/' | '/accessoires' | '/afspraak' | '/over-ons' | '/reparaties'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/afspraak' | '/over-ons' | '/reparaties'
-  id: '__root__' | '/' | '/afspraak' | '/over-ons' | '/reparaties'
+  to: '/' | '/accessoires' | '/afspraak' | '/over-ons' | '/reparaties'
+  id:
+    | '__root__'
+    | '/'
+    | '/accessoires'
+    | '/afspraak'
+    | '/over-ons'
+    | '/reparaties'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccessoiresRoute: typeof AccessoiresRoute
   AfspraakRoute: typeof AfspraakRoute
   OverOnsRoute: typeof OverOnsRoute
   ReparatiesRoute: typeof ReparatiesRoute
@@ -92,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AfspraakRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/accessoires': {
+      id: '/accessoires'
+      path: '/accessoires'
+      fullPath: '/accessoires'
+      preLoaderRoute: typeof AccessoiresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +127,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccessoiresRoute: AccessoiresRoute,
   AfspraakRoute: AfspraakRoute,
   OverOnsRoute: OverOnsRoute,
   ReparatiesRoute: ReparatiesRoute,
