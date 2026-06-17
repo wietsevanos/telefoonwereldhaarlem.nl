@@ -86,16 +86,16 @@ function Home() {
               Professionele smartphone, tablet en laptop reparaties in het hart van Haarlem.
               Klaar terwijl u wacht, met de hoogste kwaliteit onderdelen.
             </p>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 flex gap-2 sm:gap-3">
               <Link
                 to="/afspraak"
-                className="px-8 py-4 bg-brand-900 text-white rounded-2xl font-semibold hover:bg-brand-600 transition-all hover:shadow-[var(--shadow-glow)] active:scale-95"
+                className="px-5 py-3 sm:px-8 sm:py-4 bg-brand-900 text-white rounded-2xl font-semibold hover:bg-brand-600 transition-all hover:shadow-[var(--shadow-glow)] active:scale-95 text-sm sm:text-base whitespace-nowrap"
               >
                 Maak afspraak
               </Link>
               <Link
                 to="/reparaties"
-                className="px-8 py-4 bg-white border border-[color:var(--color-hairline)] rounded-2xl font-semibold hover:bg-brand-50 transition-all active:scale-95"
+                className="px-5 py-3 sm:px-8 sm:py-4 bg-white border border-[color:var(--color-hairline)] rounded-2xl font-semibold hover:bg-brand-50 transition-all active:scale-95 text-sm sm:text-base whitespace-nowrap"
               >
                 Bekijk reparaties
               </Link>
