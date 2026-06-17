@@ -1,12 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { SiteShell, PageHero } from "@/components/site/SiteShell";
-import {
-  categories,
-  specialServices,
-  type RepairKey,
-  repairCatalog,
-} from "@/lib/repairs-data";
+import { categories, specialServices, repairCatalog } from "@/lib/repairs-data";
 
 export const Route = createFileRoute("/reparaties")({
   head: () => ({
@@ -240,6 +235,3 @@ function ReparatiesPage() {
     </SiteShell>
   );
 }
-
-// Silence unused import warning in environments where RepairKey is only used in data file.
-export type _ReparatiesRepairKey = RepairKey;
