@@ -47,7 +47,7 @@ function AccessoiresPage() {
 
       <section className="py-16 bg-white border-y border-[color:var(--color-hairline)]">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold tracking-tight">Geen webshop — wel persoonlijk advies.</h2>
+          <h2 className="text-3xl font-bold tracking-tight">Geen webshop, wel persoonlijk advies.</h2>
           <p className="mt-4 text-brand-900/60">
             Kom langs in de winkel aan de Zijlweg. Wij helpen u het juiste accessoire kiezen voor uw toestel en gebruik.
           </p>
