@@ -164,7 +164,7 @@ function AfspraakPage() {
 
       <section className="pb-32">
         <div className="max-w-3xl mx-auto px-6">
-          <div className="bg-white rounded-[36px] shadow-[var(--shadow-lift)] p-8 sm:p-12 relative overflow-hidden border border-[color:var(--color-hairline)]">
+          <div className="bg-white rounded-[28px] sm:rounded-[36px] shadow-[var(--shadow-lift)] p-6 sm:p-12 relative overflow-hidden border border-[color:var(--color-hairline)]">
             <div className="absolute -top-24 -right-24 size-72 bg-brand-500/10 blur-3xl rounded-full" />
             <div className="relative">
               {!done ? (
@@ -187,13 +187,13 @@ function AfspraakPage() {
                   {step === 1 && (
                     <div className="animate-fade-up">
                       <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">1. Wat voor apparaat?</p>
-                      <div className="grid grid-cols-3 gap-3">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
                         {devices.map((d) => (
                           <button
                             key={d}
                             type="button"
                             onClick={() => setDevice(d)}
-                            className={`p-6 rounded-2xl border-2 font-bold transition-all ${
+                            className={`px-3 py-4 sm:p-6 rounded-2xl border-2 font-bold text-sm sm:text-base transition-all text-center break-words ${
                               device === d
                                 ? "border-brand-500 bg-brand-50 text-brand-700"
                                 : "border-transparent bg-brand-50/60 hover:bg-brand-50"
@@ -326,12 +326,12 @@ function AfspraakPage() {
                   )}
 
                   {/* Nav buttons */}
-                  <div className="mt-10 flex items-center justify-between gap-3">
+                  <div className="mt-8 sm:mt-10 flex items-center justify-between gap-3">
                     <button
                       type="button"
                       onClick={() => setStep((s) => Math.max(1, s - 1))}
                       disabled={step === 1}
-                      className="px-5 py-3 rounded-2xl text-sm font-semibold text-brand-900/60 hover:text-brand-900 disabled:opacity-30"
+                      className="px-3 sm:px-5 py-3 rounded-2xl text-sm font-semibold text-brand-900/60 hover:text-brand-900 disabled:opacity-30 whitespace-nowrap"
                     >
                       ← Terug
                     </button>
@@ -340,7 +340,7 @@ function AfspraakPage() {
                         type="button"
                         onClick={() => canNext && setStep((s) => s + 1)}
                         disabled={!canNext}
-                        className="px-7 py-3.5 bg-brand-900 text-white rounded-2xl font-semibold hover:bg-brand-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="px-5 sm:px-7 py-3 sm:py-3.5 bg-brand-900 text-white rounded-2xl font-semibold text-sm sm:text-base hover:bg-brand-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
                       >
                         Volgende stap →
                       </button>
@@ -348,7 +348,7 @@ function AfspraakPage() {
                       <button
                         type="submit"
                         onClick={handleSubmit}
-                        className="px-7 py-3.5 bg-brand-500 text-white rounded-2xl font-semibold hover:bg-brand-600 transition-all"
+                        className="px-5 sm:px-7 py-3 sm:py-3.5 bg-brand-500 text-white rounded-2xl font-semibold text-sm sm:text-base hover:bg-brand-600 transition-all whitespace-nowrap"
                       >
                         Verstuur aanvraag
                       </button>
