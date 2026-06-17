@@ -248,10 +248,10 @@ function Home() {
           <div className="bg-white border border-[color:var(--color-hairline)] rounded-[28px] md:rounded-[36px] shadow-[var(--shadow-soft)] overflow-hidden flex flex-col md:flex-row items-stretch">
             {/* Static branding & score */}
             <div className="p-6 md:p-8 lg:p-10 flex flex-row md:flex-col gap-5 md:gap-6 md:w-[34%] shrink-0 border-b md:border-b-0 md:border-r border-[color:var(--color-hairline)] bg-white relative z-10 items-center md:items-start">
-              <div className="shrink-0 md:shrink">
+              <div className="min-w-0">
                 <span className="text-[11px] font-bold uppercase tracking-widest text-brand-500">Klanten</span>
-                <h2 className="mt-2 md:mt-3 text-xl md:text-2xl lg:text-[26px] font-semibold tracking-tight leading-tight">
-                  Wat klanten over<span className="hidden md:inline"><br />ons zeggen.</span><span className="inline md:hidden"> ons zeggen.</span>
+                <h2 className="mt-2 md:mt-3 text-xl md:text-2xl lg:text-[26px] font-semibold tracking-tight leading-tight truncate">
+                  Wat klanten over ons zeggen.
                 </h2>
               </div>
               <div className="flex items-center gap-3 md:gap-4 ml-auto md:ml-0 shrink-0">
