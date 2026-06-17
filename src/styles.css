@@ -62,6 +62,10 @@
   0%, 100% { opacity: 0.4; transform: scale(1); }
   50% { opacity: 0.7; transform: scale(1.05); }
 }
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
 @utility animate-fade-up {
   animation: fade-up 0.8s var(--ease-apple) both;
@@ -74,6 +78,9 @@
 }
 @utility animate-glow-pulse {
   animation: glow-pulse 5s ease-in-out infinite;
+}
+@utility animate-marquee-x {
+  animation: marquee-x 40s linear infinite;
 }
 
 html, body {
