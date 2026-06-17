@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell, PageHero } from "@/components/site/SiteShell";
-import aboutShop from "@/assets/about-shop.jpg";
+import eigenaarPhoto from "@/assets/eigenaar.webp.asset.json";
 
 export const Route = createFileRoute("/over-ons")({
   head: () => ({
@@ -39,9 +39,20 @@ function OverOnsPage() {
 
       <section className="pb-24">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="rounded-[40px] overflow-hidden shadow-[var(--shadow-lift)] border border-[color:var(--color-hairline)]">
-            <img src={aboutShop} alt="Onze winkel aan de Zijlweg" width={1200} height={800} loading="lazy" className="w-full h-auto object-cover" />
-          </div>
+          <figure className="rounded-[40px] overflow-hidden shadow-[var(--shadow-lift)] border border-[color:var(--color-hairline)] relative">
+            <img
+              src={eigenaarPhoto.url}
+              alt="De eigenaar van Telefoon Wereld Haarlem aan de balie in de winkel"
+              width={1456}
+              height={1100}
+              loading="lazy"
+              className="w-full h-auto object-cover"
+            />
+            <figcaption className="absolute bottom-5 left-5 right-5 sm:left-8 sm:bottom-8 sm:right-auto bg-white/85 backdrop-blur-md rounded-2xl px-5 py-3 text-sm">
+              <p className="font-semibold text-brand-900">Aan de balie</p>
+              <p className="text-brand-900/60">Eigenaar van Telefoon Wereld Haarlem</p>
+            </figcaption>
+          </figure>
         </div>
       </section>
 

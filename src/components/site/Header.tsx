@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import logoTw from "@/assets/logo-tw.png.asset.json";
 
 const navItems = [
   { to: "/", label: "Home" },
@@ -32,8 +33,8 @@ export function Header() {
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
-          <span className="size-8 bg-brand-900 rounded-lg grid place-items-center">
-            <span className="size-3 bg-brand-400 rounded-full" />
+          <span className="size-9 bg-brand-900 rounded-xl grid place-items-center overflow-hidden">
+            <img src={logoTw.url} alt="" aria-hidden className="size-6 object-contain" />
           </span>
           <span className="font-bold text-[15px] tracking-tight leading-none">
             TELEFOON WERELD <span className="font-light text-brand-500">HAARLEM</span>
