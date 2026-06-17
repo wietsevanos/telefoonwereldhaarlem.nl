@@ -2,7 +2,20 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
 
+type AfspraakSearch = {
+  device?: string;
+  brand?: string;
+  model?: string;
+  repair?: string;
+};
+
 export const Route = createFileRoute("/afspraak")({
+  validateSearch: (search: Record<string, unknown>): AfspraakSearch => ({
+    device: typeof search.device === "string" ? search.device : undefined,
+    brand: typeof search.brand === "string" ? search.brand : undefined,
+    model: typeof search.model === "string" ? search.model : undefined,
+    repair: typeof search.repair === "string" ? search.repair : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Afspraak maken — Telefoon Wereld Haarlem" },
@@ -14,20 +27,94 @@ export const Route = createFileRoute("/afspraak")({
   component: AfspraakPage,
 });
 
-const devices = ["Smartphone", "Tablet", "Laptop"] as const;
-const brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi", "Oppo", "Anders"];
+const devices = [
+  "Smartphone",
+  "Tablet",
+  "Laptop",
+  "MacBook",
+  "Smartwatch",
+  "Gameconsole",
+  "Navigatiesysteem",
+  "Anders",
+] as const;
+const brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi", "Oppo", "Huawei", "Sony", "Microsoft", "Anders"];
 const repairsByDevice: Record<string, string[]> = {
-  Smartphone: ["Scherm vervangen", "Batterij vervangen", "Laadpoort", "Camera", "Speaker", "Achterkant", "Waterschade"],
-  Tablet: ["Scherm vervangen", "Batterij vervangen", "Laadpoort", "Knop reparatie"],
-  Laptop: ["Scherm vervangen", "Batterij vervangen", "Toetsenbord", "Vloeistofschade", "Opslag upgrade"],
+  Smartphone: [
+    "Scherm vervangen",
+    "Batterij vervangen",
+    "Oplaadpoort reparatie",
+    "Camera reparatie",
+    "Speaker reparatie",
+    "Microfoon reparatie",
+    "Achterkant vervangen",
+    "Face ID reparatie",
+    "Knoppen reparatie",
+    "Waterschade behandeling",
+    "Softwareprobleem oplossen",
+    "Dataherstel",
+    "Moederbord reparatie",
+  ],
+  Tablet: [
+    "Scherm vervangen",
+    "Batterij vervangen",
+    "Oplaadpoort reparatie",
+    "Camera reparatie",
+    "Speaker reparatie",
+    "Knoppen reparatie",
+    "Softwareprobleem oplossen",
+    "Waterschade behandeling",
+  ],
+  Laptop: [
+    "Scherm vervangen",
+    "Batterij vervangen",
+    "Toetsenbord vervangen",
+    "SSD of opslag upgrade",
+    "Koeling en ventilator",
+    "Oplaadpoort reparatie",
+    "Softwareprobleem oplossen",
+    "Waterschade behandeling",
+    "Moederbord reparatie",
+    "Dataherstel",
+  ],
+  MacBook: [
+    "Scherm vervangen",
+    "Batterij vervangen",
+    "Toetsenbord vervangen",
+    "SSD of opslag upgrade",
+    "Koeling en ventilator",
+    "Oplaadpoort reparatie",
+    "Softwareprobleem oplossen",
+    "Waterschade behandeling",
+    "Moederbord reparatie",
+    "Dataherstel",
+  ],
+  Smartwatch: ["Scherm vervangen", "Batterij vervangen", "Achterkant vervangen", "Knoppen reparatie", "Softwareprobleem oplossen"],
+  Gameconsole: ["HDMI poort reparatie", "Controller of joystick reparatie", "Oplaadpoort reparatie", "Koeling en ventilator", "SSD of opslag upgrade", "Softwareprobleem oplossen"],
+  Navigatiesysteem: ["Scherm vervangen", "Batterij vervangen", "Touchscreen probleem", "Softwareprobleem oplossen"],
+  Anders: ["Algemene reparatie", "Diagnose"],
 };
 
 function AfspraakPage() {
-  const [step, setStep] = useState(1);
-  const [device, setDevice] = useState<string | null>(null);
-  const [brand, setBrand] = useState<string | null>(null);
-  const [model, setModel] = useState("");
-  const [repair, setRepair] = useState<string | null>(null);
+  const search = Route.useSearch();
+  const initialDevice = search.device && (devices as readonly string[]).includes(search.device) ? search.device : null;
+  const initialBrand = search.brand ?? null;
+  const initialModel = search.model ?? "";
+  const initialRepair = search.repair ?? null;
+  const initialStep = initialRepair
+    ? 5
+    : initialModel
+    ? 4
+    : initialBrand
+    ? 3
+    : initialDevice
+    ? 2
+    : 1;
+
+  const [step, setStep] = useState(initialStep);
+  const [device, setDevice] = useState<string | null>(initialDevice);
+  const [brand, setBrand] = useState<string | null>(initialBrand);
+  const [model, setModel] = useState(initialModel);
+  const [repair, setRepair] = useState<string | null>(initialRepair);
   const [form, setForm] = useState({ naam: "", email: "", telefoon: "", opmerking: "" });
   const [done, setDone] = useState(false);
 
@@ -143,7 +230,7 @@ function AfspraakPage() {
                     <div className="animate-fade-up">
                       <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">4. Welke reparatie?</p>
                       <div className="grid sm:grid-cols-2 gap-3">
-                        {repairsByDevice[device].map((r) => (
+                        {(repairsByDevice[device] ?? repairsByDevice.Anders).map((r) => (
                           <button
                             key={r}
                             type="button"
