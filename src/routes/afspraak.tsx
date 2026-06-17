@@ -1,6 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
+import { repairCatalog } from "@/lib/repairs-data";
+
+const priceByLabel: Record<string, number> = Object.values(repairCatalog).reduce(
+  (acc, r) => {
+    acc[r.label] = r.from;
+    return acc;
+  },
+  {} as Record<string, number>,
+);
+
+function priceFor(label: string | null): string | null {
+  if (!label) return null;
+  const v = priceByLabel[label];
+  return typeof v === "number" ? `Vanaf €${v},-` : null;
+}
 
 type AfspraakSearch = {
   device?: string;
@@ -235,16 +250,24 @@ function AfspraakPage() {
                             key={r}
                             type="button"
                             onClick={() => setRepair(r)}
-                            className={`text-left px-5 py-4 rounded-2xl font-medium transition-all border-2 ${
+                            className={`text-left px-5 py-4 rounded-2xl font-medium transition-all border-2 flex items-center justify-between gap-3 ${
                               repair === r
                                 ? "border-brand-500 bg-brand-50 text-brand-700"
                                 : "border-transparent bg-brand-50/60 hover:bg-brand-50"
                             }`}
                           >
-                            {r}
+                            <span>{r}</span>
+                            {priceFor(r) && (
+                              <span className="text-xs font-semibold text-brand-600 whitespace-nowrap">
+                                {priceFor(r)}
+                              </span>
+                            )}
                           </button>
                         ))}
                       </div>
+                      <p className="mt-4 text-xs text-brand-900/50">
+                        Genoemde prijzen zijn indicatief. U ontvangt vooraf altijd een definitieve prijsopgave.
+                      </p>
                     </div>
                   )}
 
@@ -290,6 +313,14 @@ function AfspraakPage() {
                         <p><strong>Merk:</strong> {brand}</p>
                         <p><strong>Model:</strong> {model}</p>
                         <p><strong>Reparatie:</strong> {repair}</p>
+                        {priceFor(repair) && (
+                          <p className="pt-2 mt-2 border-t border-brand-900/10">
+                            <strong>Indicatieve prijs:</strong> {priceFor(repair)}
+                            <span className="block text-xs text-brand-900/50 mt-1">
+                              Definitieve prijs volgt na diagnose in de winkel.
+                            </span>
+                          </p>
+                        )}
                       </div>
                     </form>
                   )}
