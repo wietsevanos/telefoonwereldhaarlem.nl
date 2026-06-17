@@ -9,8 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReparatiesRouteImport } from './routes/reparaties'
+import { Route as PakketpuntRouteImport } from './routes/pakketpunt'
+import { Route as OverOnsRouteImport } from './routes/over-ons'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AfspraakRouteImport } from './routes/afspraak'
+import { Route as AccessoiresRouteImport } from './routes/accessoires'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ReparatiesRoute = ReparatiesRouteImport.update({
+  id: '/reparaties',
+  path: '/reparaties',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PakketpuntRoute = PakketpuntRouteImport.update({
+  id: '/pakketpunt',
+  path: '/pakketpunt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OverOnsRoute = OverOnsRouteImport.update({
+  id: '/over-ons',
+  path: '/over-ons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AfspraakRoute = AfspraakRouteImport.update({
+  id: '/afspraak',
+  path: '/afspraak',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccessoiresRoute = AccessoiresRouteImport.update({
+  id: '/accessoires',
+  path: '/accessoires',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +55,116 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/accessoires': typeof AccessoiresRoute
+  '/afspraak': typeof AfspraakRoute
+  '/contact': typeof ContactRoute
+  '/over-ons': typeof OverOnsRoute
+  '/pakketpunt': typeof PakketpuntRoute
+  '/reparaties': typeof ReparatiesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accessoires': typeof AccessoiresRoute
+  '/afspraak': typeof AfspraakRoute
+  '/contact': typeof ContactRoute
+  '/over-ons': typeof OverOnsRoute
+  '/pakketpunt': typeof PakketpuntRoute
+  '/reparaties': typeof ReparatiesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/accessoires': typeof AccessoiresRoute
+  '/afspraak': typeof AfspraakRoute
+  '/contact': typeof ContactRoute
+  '/over-ons': typeof OverOnsRoute
+  '/pakketpunt': typeof PakketpuntRoute
+  '/reparaties': typeof ReparatiesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/accessoires'
+    | '/afspraak'
+    | '/contact'
+    | '/over-ons'
+    | '/pakketpunt'
+    | '/reparaties'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/accessoires'
+    | '/afspraak'
+    | '/contact'
+    | '/over-ons'
+    | '/pakketpunt'
+    | '/reparaties'
+  id:
+    | '__root__'
+    | '/'
+    | '/accessoires'
+    | '/afspraak'
+    | '/contact'
+    | '/over-ons'
+    | '/pakketpunt'
+    | '/reparaties'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccessoiresRoute: typeof AccessoiresRoute
+  AfspraakRoute: typeof AfspraakRoute
+  ContactRoute: typeof ContactRoute
+  OverOnsRoute: typeof OverOnsRoute
+  PakketpuntRoute: typeof PakketpuntRoute
+  ReparatiesRoute: typeof ReparatiesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reparaties': {
+      id: '/reparaties'
+      path: '/reparaties'
+      fullPath: '/reparaties'
+      preLoaderRoute: typeof ReparatiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pakketpunt': {
+      id: '/pakketpunt'
+      path: '/pakketpunt'
+      fullPath: '/pakketpunt'
+      preLoaderRoute: typeof PakketpuntRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/over-ons': {
+      id: '/over-ons'
+      path: '/over-ons'
+      fullPath: '/over-ons'
+      preLoaderRoute: typeof OverOnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/afspraak': {
+      id: '/afspraak'
+      path: '/afspraak'
+      fullPath: '/afspraak'
+      preLoaderRoute: typeof AfspraakRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accessoires': {
+      id: '/accessoires'
+      path: '/accessoires'
+      fullPath: '/accessoires'
+      preLoaderRoute: typeof AccessoiresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +177,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccessoiresRoute: AccessoiresRoute,
+  AfspraakRoute: AfspraakRoute,
+  ContactRoute: ContactRoute,
+  OverOnsRoute: OverOnsRoute,
+  PakketpuntRoute: PakketpuntRoute,
+  ReparatiesRoute: ReparatiesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
