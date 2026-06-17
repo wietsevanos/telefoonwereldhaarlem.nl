@@ -20,7 +20,7 @@ function PakketpuntPage() {
         eyebrow="Pakketpunt"
         title="Pakketten halen en"
         highlight="brengen in Haarlem."
-        intro="Onze winkel is officieel pakketpunt. Loop binnen tijdens openingstijden — geen wachtrij, persoonlijke service."
+        intro="Onze winkel is officieel pakketpunt. Loop binnen tijdens openingstijden, zonder wachtrij en met persoonlijke service."
       />
 
       <section className="pb-24">
@@ -33,7 +33,7 @@ function PakketpuntPage() {
           <div className="bg-white rounded-3xl p-8 border border-[color:var(--color-hairline)]">
             <span className="text-[11px] font-bold uppercase tracking-widest text-brand-500">Versturen</span>
             <h3 className="mt-3 text-2xl font-bold">Pakket verzenden</h3>
-            <p className="mt-3 text-brand-900/60 leading-relaxed">Met of zonder verzendlabel — wij scannen uw pakket in en u krijgt direct een verzendbewijs.</p>
+            <p className="mt-3 text-brand-900/60 leading-relaxed">Met of zonder verzendlabel, wij scannen uw pakket in en u krijgt direct een verzendbewijs.</p>
           </div>
         </div>
       </section>
