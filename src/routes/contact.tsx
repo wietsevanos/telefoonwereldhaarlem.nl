@@ -18,7 +18,7 @@ function ContactPage() {
   const [sent, setSent] = useState(false);
   return (
     <SiteShell>
-      <PageHero eyebrow="Contact" title="Kom langs of" highlight="stuur een bericht." intro="Wij zijn er voor u tijdens onze openingstijden — bellen, mailen of binnenlopen mag altijd." />
+      <PageHero eyebrow="Contact" title="Kom langs of" highlight="stuur een bericht." intro="Wij zijn er voor u tijdens onze openingstijden. Bellen, mailen of binnenlopen mag altijd." />
 
       <section className="pb-24">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1fr_1.2fr] gap-8">

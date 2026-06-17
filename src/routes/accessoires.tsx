@@ -14,9 +14,9 @@ export const Route = createFileRoute("/accessoires")({
 });
 
 const categories = [
-  { title: "Hoesjes", body: "Van strak siliconen tot leren bookcases — bescherming met stijl voor iPhone, Samsung, Google en meer.", tag: "200+ modellen" },
+  { title: "Hoesjes", body: "Van strak siliconen tot leren bookcases, bescherming met stijl voor iPhone, Samsung, Google en meer.", tag: "200+ modellen" },
   { title: "Opladers", body: "Originele USB-C, Lightning en MagSafe opladers. Inclusief snelladers en draadloze opties.", tag: "Origineel" },
-  { title: "Screenprotectors", body: "Premium tempered glass — perfect aangebracht in de winkel, lifetime garantie tegen breuk.", tag: "Gratis plaatsing" },
+  { title: "Screenprotectors", body: "Premium tempered glass, perfect aangebracht in de winkel, lifetime garantie tegen breuk.", tag: "Gratis plaatsing" },
 ];
 
 function AccessoiresPage() {
@@ -26,7 +26,7 @@ function AccessoiresPage() {
         eyebrow="Accessoires"
         title="Alles om uw toestel"
         highlight="te beschermen."
-        intro="Wij selecteren accessoires die wij zelf ook zouden gebruiken — hoogwaardig, eerlijk geprijsd en passend bij uw model."
+        intro="Wij selecteren accessoires die wij zelf ook zouden gebruiken, hoogwaardig en eerlijk geprijsd, passend bij uw model."
       />
 
       <section className="pb-24">
