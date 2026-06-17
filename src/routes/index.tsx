@@ -65,28 +65,36 @@ function Home() {
   return (
     <SiteShell>
       {/* HERO */}
-      <section className="relative pt-12 lg:pt-20 pb-24 overflow-hidden">
+      <section className="relative pt-12 lg:pt-20 pb-16 lg:pb-24 overflow-hidden">
         <div className="absolute -top-32 -left-40 size-[600px] bg-brand-200/40 blur-3xl rounded-full -z-10" />
         <div className="absolute top-40 right-0 size-[500px] bg-brand-400/20 blur-3xl rounded-full -z-10 animate-glow-pulse" />
 
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="max-w-2xl animate-fade-up">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-[color:var(--color-hairline)] text-brand-600 rounded-full text-[11px] font-bold uppercase tracking-widest mb-6 shadow-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500" />
-              </span>
-              Vandaag geopend · Haarlem
-            </span>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-balance">
-              Telefoon Wereld Haarlem.{" "}
-              <span className="text-brand-500">Snel weer als nieuw.</span>
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Image — first on mobile */}
+          <div className="relative animate-fade-up order-1 lg:order-2">
+            <div className="absolute -inset-8 lg:-inset-12 bg-brand-500/15 blur-3xl rounded-full" />
+            <div className="relative rounded-[32px] lg:rounded-[40px] overflow-hidden bg-white shadow-[var(--shadow-lift)] border border-[color:var(--color-hairline)] animate-float-soft">
+              <img
+                src={heroPhone}
+                alt="Premium smartphone weergave"
+                width={1024}
+                height={1024}
+                className="w-full h-auto aspect-square object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-4 -left-4 lg:-bottom-6 lg:-left-6 bg-white/80 backdrop-blur-xl rounded-2xl px-4 py-3 lg:px-5 lg:py-4 border border-[color:var(--color-hairline)] shadow-[var(--shadow-soft)]">
+              <div className="text-xl lg:text-2xl font-bold text-brand-600">30 min</div>
+              <div className="text-[11px] text-brand-900/60 uppercase tracking-wider mt-0.5">Gemiddelde reparatietijd</div>
+            </div>
+          </div>
+
+          {/* Text — second on mobile */}
+          <div className="max-w-2xl animate-fade-up order-2 lg:order-1">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-balance">
+              Telefoon Wereld Haarlem{" "}
+              <span className="text-brand-500">— snel als nieuw.</span>
             </h1>
-            <p className="mt-8 text-lg md:text-xl text-brand-900/60 max-w-lg leading-relaxed">
-              Professionele smartphone, tablet en laptop reparaties in het hart van Haarlem.
-              Klaar terwijl u wacht, met de hoogste kwaliteit onderdelen.
-            </p>
-            <div className="mt-10 flex flex-row gap-2 sm:gap-3">
+            <div className="mt-8 flex flex-row gap-2 sm:gap-3">
               <Link
                 to="/afspraak"
                 className="px-5 py-3 sm:px-8 sm:py-4 bg-brand-900 text-white rounded-2xl font-semibold text-sm sm:text-base hover:bg-brand-600 transition-all hover:shadow-[var(--shadow-glow)] active:scale-95 flex-1 text-center whitespace-nowrap"
@@ -100,30 +108,13 @@ function Home() {
                 Bekijk reparaties
               </Link>
             </div>
-            <div className="mt-12 flex items-center gap-6 text-sm text-brand-900/60">
-              <div className="flex items-center gap-1.5">
-                <span className="text-brand-500 text-lg">★★★★★</span>
+            <div className="mt-6 flex items-center gap-4 text-sm text-brand-900/60">
+              <div className="flex items-center gap-1">
+                <span className="text-brand-500">★★★★★</span>
                 <span className="font-semibold text-brand-900">4,8</span>
               </div>
               <span className="h-4 w-px bg-brand-900/15" />
-              <span>500+ tevreden klanten in Haarlem</span>
-            </div>
-          </div>
-
-          <div className="relative animate-fade-up [animation-delay:200ms]">
-            <div className="absolute -inset-12 bg-brand-500/15 blur-3xl rounded-full" />
-            <div className="relative rounded-[40px] overflow-hidden bg-white shadow-[var(--shadow-lift)] border border-[color:var(--color-hairline)] animate-float-soft">
-              <img
-                src={heroPhone}
-                alt="Premium smartphone weergave"
-                width={1024}
-                height={1024}
-                className="w-full h-auto aspect-square object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-6 -left-6 bg-white/80 backdrop-blur-xl rounded-2xl px-5 py-4 border border-[color:var(--color-hairline)] shadow-[var(--shadow-soft)] hidden md:block">
-              <div className="text-2xl font-bold text-brand-600">30 min</div>
-              <div className="text-xs text-brand-900/60 uppercase tracking-wider mt-0.5">Gemiddelde reparatietijd</div>
+              <span>500+ tevreden klanten</span>
             </div>
           </div>
         </div>
