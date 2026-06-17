@@ -33,9 +33,12 @@ export function Header() {
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
-          <span className="size-9 bg-brand-900 rounded-xl grid place-items-center overflow-hidden">
-            <img src={logoTw.url} alt="" aria-hidden className="size-6 object-contain" />
-          </span>
+          <img
+            src={logoTw.url}
+            alt="Telefoon Wereld Haarlem"
+            className="h-9 w-auto object-contain"
+            style={{ filter: "brightness(0)" }}
+          />
           <span className="font-bold text-[15px] tracking-tight leading-none">
             TELEFOON WERELD <span className="font-light text-brand-500">HAARLEM</span>
           </span>
