@@ -22,7 +22,7 @@ const stats = [
 ];
 
 const values = [
-  { title: "Ambachtelijk", body: "Elke reparatie wordt met aandacht en de juiste tools uitgevoerd — geen haastwerk." },
+  { title: "Ambachtelijk", body: "Elke reparatie wordt met aandacht en de juiste tools uitgevoerd, zonder haastwerk." },
   { title: "Eerlijk", body: "Geen verborgen kosten of onnodige reparaties. Wij vertellen u eerlijk wat er nodig is." },
   { title: "Lokaal", body: "Geboren en getogen in Haarlem. Wij kennen onze klanten bij naam." },
 ];
@@ -63,12 +63,12 @@ function OverOnsPage() {
             <p>
               Wat begon als een passie voor techniek aan de keukentafel, groeide uit tot een vertrouwd
               adres aan de Zijlweg. Wij geloven dat een kapotte telefoon geen reden hoeft te zijn voor
-              stress — een goede reparateur lost het op terwijl u koffie drinkt.
+              stress, een goede reparateur lost het op terwijl u koffie drinkt.
             </p>
             <p>
               Onze technici werken alleen met originele en hoogwaardige onderdelen. Of het nu gaat om
               een gebarsten iPhone-scherm, een lege Samsung-batterij of een vloeistofschade aan uw
-              MacBook — wij benaderen iedere reparatie met dezelfde precisie en zorg.
+              MacBook, wij benaderen iedere reparatie met dezelfde precisie en zorg.
             </p>
             <p>
               Boven alles zijn wij Haarlemmers. Wij kennen onze buurt, onze klanten en onze
