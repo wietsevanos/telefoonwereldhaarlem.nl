@@ -79,23 +79,23 @@ function Home() {
               Vandaag geopend · Haarlem
             </span>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-balance">
-              Telefoon kapot?{" "}
-              <span className="text-brand-500">Binnen no-time weer als nieuw.</span>
+              Telefoon Wereld Haarlem.{" "}
+              <span className="text-brand-500">Snel weer als nieuw.</span>
             </h1>
             <p className="mt-8 text-lg md:text-xl text-brand-900/60 max-w-lg leading-relaxed">
               Professionele smartphone, tablet en laptop reparaties in het hart van Haarlem.
               Klaar terwijl u wacht, met de hoogste kwaliteit onderdelen.
             </p>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-row gap-2 sm:gap-3">
               <Link
                 to="/afspraak"
-                className="px-8 py-4 bg-brand-900 text-white rounded-2xl font-semibold hover:bg-brand-600 transition-all hover:shadow-[var(--shadow-glow)] active:scale-95"
+                className="px-5 py-3 sm:px-8 sm:py-4 bg-brand-900 text-white rounded-2xl font-semibold text-sm sm:text-base hover:bg-brand-600 transition-all hover:shadow-[var(--shadow-glow)] active:scale-95 flex-1 text-center whitespace-nowrap"
               >
                 Maak afspraak
               </Link>
               <Link
                 to="/reparaties"
-                className="px-8 py-4 bg-white border border-[color:var(--color-hairline)] rounded-2xl font-semibold hover:bg-brand-50 transition-all active:scale-95"
+                className="px-5 py-3 sm:px-8 sm:py-4 bg-white border border-[color:var(--color-hairline)] rounded-2xl font-semibold text-sm sm:text-base hover:bg-brand-50 transition-all active:scale-95 flex-1 text-center whitespace-nowrap"
               >
                 Bekijk reparaties
               </Link>
