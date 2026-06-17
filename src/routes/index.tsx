@@ -243,20 +243,20 @@ function Home() {
       </section>
 
       {/* REVIEWS */}
-      <section className="py-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="bg-white border border-[color:var(--color-hairline)] rounded-[36px] shadow-[var(--shadow-soft)] overflow-hidden flex flex-col md:flex-row items-stretch">
+      <section className="py-14 md:py-20">
+        <div className="max-w-6xl mx-auto px-4 md:px-6">
+          <div className="bg-white border border-[color:var(--color-hairline)] rounded-[28px] md:rounded-[36px] shadow-[var(--shadow-soft)] overflow-hidden flex flex-col md:flex-row items-stretch">
             {/* Static branding & score */}
-            <div className="p-8 lg:p-10 flex flex-col gap-6 md:w-[34%] shrink-0 border-b md:border-b-0 md:border-r border-[color:var(--color-hairline)] bg-white relative z-10">
-              <div>
+            <div className="p-6 md:p-8 lg:p-10 flex flex-row md:flex-col gap-5 md:gap-6 md:w-[34%] shrink-0 border-b md:border-b-0 md:border-r border-[color:var(--color-hairline)] bg-white relative z-10 items-center md:items-start">
+              <div className="min-w-0">
                 <span className="text-[11px] font-bold uppercase tracking-widest text-brand-500">Klanten</span>
-                <h2 className="mt-3 text-2xl lg:text-[26px] font-semibold tracking-tight leading-tight">
-                  Wat klanten over<br />ons zeggen.
+                <h2 className="mt-2 md:mt-3 text-xl md:text-2xl lg:text-[26px] font-semibold tracking-tight leading-tight truncate">
+                  Wat klanten over ons zeggen.
                 </h2>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center justify-center size-12 rounded-2xl bg-brand-50 border border-[color:var(--color-hairline)] shadow-sm shrink-0">
-                  <svg viewBox="0 0 24 24" className="size-6" aria-hidden>
+              <div className="flex items-center gap-3 md:gap-4 ml-auto md:ml-0 shrink-0">
+                <div className="flex items-center justify-center size-10 md:size-12 rounded-2xl bg-brand-50 border border-[color:var(--color-hairline)] shadow-sm shrink-0">
+                  <svg viewBox="0 0 24 24" className="size-5 md:size-6" aria-hidden>
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
                     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05" />
@@ -265,21 +265,21 @@ function Home() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xl font-bold text-brand-900 tabular-nums">4,8</span>
-                    <span className="text-[#fbbc05] text-base tracking-tight">★★★★★</span>
+                    <span className="text-lg md:text-xl font-bold text-brand-900 tabular-nums">4,8</span>
+                    <span className="text-[#fbbc05] text-sm md:text-base tracking-tight">★★★★★</span>
                   </div>
-                  <p className="text-[13px] text-brand-900/60 font-medium mt-0.5">500+ Google beoordelingen</p>
+                  <p className="text-xs md:text-[13px] text-brand-900/60 font-medium mt-0.5">500+ Google beoordelingen</p>
                 </div>
               </div>
             </div>
 
             {/* Marquee */}
-            <div className="relative flex-1 overflow-hidden h-[240px] flex items-center bg-brand-50/30">
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10 hidden md:block" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10 hidden md:block" />
+            <div className="relative flex-1 overflow-hidden h-[190px] md:h-[240px] flex items-center bg-brand-50/30">
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-12 md:w-20 bg-gradient-to-r from-white to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-12 md:w-20 bg-gradient-to-l from-white to-transparent z-10" />
 
               <div className="flex w-max animate-marquee-x hover:[animation-play-state:paused]">
-                {[...reviews, ...reviews].map((r, i) => {
+                {[...reviews, ...reviews, ...reviews].map((r, i) => {
                   const initials = r.name
                     .split(" ")
                     .map((p) => p[0])
@@ -289,13 +289,13 @@ function Home() {
                   return (
                     <figure
                       key={`${r.name}-${i}`}
-                      className="w-80 mx-3 p-6 bg-white rounded-3xl border border-[color:var(--color-hairline)] shadow-[0_4px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between h-[180px] shrink-0"
+                      className="w-[280px] md:w-80 mx-2 md:mx-3 p-5 md:p-6 bg-white rounded-2xl md:rounded-3xl border border-[color:var(--color-hairline)] shadow-[0_4px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between h-[150px] md:h-[180px] shrink-0"
                     >
-                      <blockquote className="text-[14px] leading-relaxed text-brand-900/70">
+                      <blockquote className="text-[13px] md:text-[14px] leading-relaxed text-brand-900/70">
                         "{r.quote}"
                       </blockquote>
                       <figcaption className="flex items-center gap-3">
-                        <div className="size-9 rounded-full bg-brand-50 flex items-center justify-center text-brand-600 font-bold text-sm">
+                        <div className="size-8 md:size-9 rounded-full bg-brand-50 flex items-center justify-center text-brand-600 font-bold text-xs md:text-sm">
                           {initials}
                         </div>
                         <div>
