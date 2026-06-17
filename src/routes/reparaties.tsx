@@ -51,22 +51,24 @@ function ReparatiesPage() {
 
       <section className="py-10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-wrap gap-2 p-1.5 bg-white rounded-full border border-[color:var(--color-hairline)] w-fit mx-auto mb-12 shadow-[var(--shadow-soft)]">
-            {categories.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => {
-                  setActiveCat(c.id);
-                  setOpenBrand(c.brands[0]?.name ?? null);
-                  setOpenModel(null);
-                }}
-                className={`px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-all whitespace-nowrap ${
-                  activeCat === c.id ? "bg-brand-900 text-white" : "text-brand-900/70 hover:text-brand-900"
-                }`}
-              >
-                {c.label}
-              </button>
-            ))}
+          <div className="mb-12 -mx-6 px-6 sm:mx-0 sm:px-0 sm:flex sm:justify-center">
+            <div className="flex gap-2 p-1.5 bg-white rounded-full border border-[color:var(--color-hairline)] shadow-[var(--shadow-soft)] overflow-x-auto sm:overflow-visible sm:flex-wrap sm:w-fit scrollbar-none">
+              {categories.map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => {
+                    setActiveCat(c.id);
+                    setOpenBrand(c.brands[0]?.name ?? null);
+                    setOpenModel(null);
+                  }}
+                  className={`px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold transition-all whitespace-nowrap shrink-0 ${
+                    activeCat === c.id ? "bg-brand-900 text-white" : "text-brand-900/70 hover:text-brand-900"
+                  }`}
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="grid lg:grid-cols-[280px_1fr] gap-8 max-w-6xl mx-auto">
