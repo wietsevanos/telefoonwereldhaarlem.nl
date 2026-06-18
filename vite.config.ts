@@ -12,9 +12,4 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
-  nitro: {
-    preset: "node-server",
-    // Output the standalone server in .output/ so DirectAdmin can point at it
-    output: { dir: ".output" },
-  },
 });
