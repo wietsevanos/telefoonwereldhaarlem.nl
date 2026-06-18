@@ -69,7 +69,7 @@ export const Route = createFileRoute("/api/public/afspraak")({
 
           // Probeer het tijdslot vast te leggen — uniciteit voorkomt dubbele boekingen.
           const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-          const { error: insertError } = await supabaseAdmin.from("bookings").insert({
+          const { error: insertError } = await (supabaseAdmin.from as any)("bookings").insert({
             slot_at: slotDate.toISOString(),
             naam,
             email,
