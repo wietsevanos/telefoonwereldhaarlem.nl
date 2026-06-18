@@ -19,9 +19,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AfspraakRouteImport } from './routes/afspraak'
 import { Route as AccessoiresRouteImport } from './routes/accessoires'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiPublicSlotsRouteImport } from './routes/api/public/slots'
 import { Route as ApiPublicAfspraakRouteImport } from './routes/api/public/afspraak'
-import { Route as ApiPublicAfspraakIcsRouteImport } from './routes/api/public/afspraak.ics'
 
 const VoorwaardenRoute = VoorwaardenRouteImport.update({
   id: '/voorwaarden',
@@ -73,20 +71,10 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicSlotsRoute = ApiPublicSlotsRouteImport.update({
-  id: '/api/public/slots',
-  path: '/api/public/slots',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicAfspraakRoute = ApiPublicAfspraakRouteImport.update({
   id: '/api/public/afspraak',
   path: '/api/public/afspraak',
   getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicAfspraakIcsRoute = ApiPublicAfspraakIcsRouteImport.update({
-  id: '/ics',
-  path: '/ics',
-  getParentRoute: () => ApiPublicAfspraakRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -100,9 +88,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
   '/voorwaarden': typeof VoorwaardenRoute
-  '/api/public/afspraak': typeof ApiPublicAfspraakRouteWithChildren
-  '/api/public/slots': typeof ApiPublicSlotsRoute
-  '/api/public/afspraak/ics': typeof ApiPublicAfspraakIcsRoute
+  '/api/public/afspraak': typeof ApiPublicAfspraakRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -115,9 +101,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
   '/voorwaarden': typeof VoorwaardenRoute
-  '/api/public/afspraak': typeof ApiPublicAfspraakRouteWithChildren
-  '/api/public/slots': typeof ApiPublicSlotsRoute
-  '/api/public/afspraak/ics': typeof ApiPublicAfspraakIcsRoute
+  '/api/public/afspraak': typeof ApiPublicAfspraakRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -131,9 +115,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
   '/voorwaarden': typeof VoorwaardenRoute
-  '/api/public/afspraak': typeof ApiPublicAfspraakRouteWithChildren
-  '/api/public/slots': typeof ApiPublicSlotsRoute
-  '/api/public/afspraak/ics': typeof ApiPublicAfspraakIcsRoute
+  '/api/public/afspraak': typeof ApiPublicAfspraakRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -149,8 +131,6 @@ export interface FileRouteTypes {
     | '/reparaties'
     | '/voorwaarden'
     | '/api/public/afspraak'
-    | '/api/public/slots'
-    | '/api/public/afspraak/ics'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -164,8 +144,6 @@ export interface FileRouteTypes {
     | '/reparaties'
     | '/voorwaarden'
     | '/api/public/afspraak'
-    | '/api/public/slots'
-    | '/api/public/afspraak/ics'
   id:
     | '__root__'
     | '/'
@@ -179,8 +157,6 @@ export interface FileRouteTypes {
     | '/reparaties'
     | '/voorwaarden'
     | '/api/public/afspraak'
-    | '/api/public/slots'
-    | '/api/public/afspraak/ics'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -194,8 +170,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ReparatiesRoute: typeof ReparatiesRoute
   VoorwaardenRoute: typeof VoorwaardenRoute
-  ApiPublicAfspraakRoute: typeof ApiPublicAfspraakRouteWithChildren
-  ApiPublicSlotsRoute: typeof ApiPublicSlotsRoute
+  ApiPublicAfspraakRoute: typeof ApiPublicAfspraakRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -270,13 +245,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/slots': {
-      id: '/api/public/slots'
-      path: '/api/public/slots'
-      fullPath: '/api/public/slots'
-      preLoaderRoute: typeof ApiPublicSlotsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/afspraak': {
       id: '/api/public/afspraak'
       path: '/api/public/afspraak'
@@ -284,26 +252,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicAfspraakRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/afspraak/ics': {
-      id: '/api/public/afspraak/ics'
-      path: '/ics'
-      fullPath: '/api/public/afspraak/ics'
-      preLoaderRoute: typeof ApiPublicAfspraakIcsRouteImport
-      parentRoute: typeof ApiPublicAfspraakRoute
-    }
   }
 }
-
-interface ApiPublicAfspraakRouteChildren {
-  ApiPublicAfspraakIcsRoute: typeof ApiPublicAfspraakIcsRoute
-}
-
-const ApiPublicAfspraakRouteChildren: ApiPublicAfspraakRouteChildren = {
-  ApiPublicAfspraakIcsRoute: ApiPublicAfspraakIcsRoute,
-}
-
-const ApiPublicAfspraakRouteWithChildren =
-  ApiPublicAfspraakRoute._addFileChildren(ApiPublicAfspraakRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -316,8 +266,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ReparatiesRoute: ReparatiesRoute,
   VoorwaardenRoute: VoorwaardenRoute,
-  ApiPublicAfspraakRoute: ApiPublicAfspraakRouteWithChildren,
-  ApiPublicSlotsRoute: ApiPublicSlotsRoute,
+  ApiPublicAfspraakRoute: ApiPublicAfspraakRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
