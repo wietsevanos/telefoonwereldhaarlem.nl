@@ -565,6 +565,30 @@ function AfspraakPage() {
                   <p className="mt-3 text-brand-900/60 max-w-md mx-auto">
                     Uw afspraak is ingepland{slot ? ` op ${fmtDay(slot)} om ${fmtTime(slot)}` : ""}. U ontvangt een bevestiging per e-mail.
                   </p>
+                  {slot && (() => {
+                    const title = `Reparatie-afspraak: ${repair ?? ""} (${brand?.name ?? ""} ${model ?? ""})`.trim();
+                    const details = `Reparatie-afspraak bij Telefoon Wereld Haarlem.\n\nApparaat: ${category?.label ?? ""}\nMerk: ${brand?.name ?? ""}\nModel: ${model ?? ""}\nReparatie: ${repair ?? ""}`;
+                    const { google, icsUrl } = buildCalendarLinks(slot, title, details);
+                    return (
+                      <div className="mt-8 flex flex-wrap justify-center gap-3">
+                        <a
+                          href={google}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-5 py-3 rounded-2xl bg-brand-900 text-white font-semibold text-sm hover:bg-brand-600 transition-all"
+                        >
+                          Toevoegen aan Google Agenda
+                        </a>
+                        <a
+                          href={icsUrl}
+                          download="afspraak.ics"
+                          className="px-5 py-3 rounded-2xl border-2 border-brand-900/15 text-brand-900 font-semibold text-sm hover:bg-brand-50 transition-all"
+                        >
+                          Apple / Outlook (.ics)
+                        </a>
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
             </div>
