@@ -39,7 +39,7 @@ function buildCalendarLinks(opts: {
   const location = "Telefoon Wereld Haarlem, Generaal Cronjéstraat, Haarlem";
   const dates = `${toICSDate(start)}/${toICSDate(end)}`;
   const google = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(opts.title)}&dates=${dates}&details=${encodeURIComponent(opts.details)}&location=${encodeURIComponent(location)}`;
-  const ics = `${opts.origin}/api/public/afspraak.ics?title=${encodeURIComponent(opts.title)}&details=${encodeURIComponent(opts.details)}&start=${toICSDate(start)}&end=${toICSDate(end)}&location=${encodeURIComponent(location)}`;
+  const ics = `${opts.origin}/api/public/afspraak/ics?title=${encodeURIComponent(opts.title)}&details=${encodeURIComponent(opts.details)}&start=${toICSDate(start)}&end=${toICSDate(end)}&location=${encodeURIComponent(location)}`;
   return { google, ics, start };
 }
 
