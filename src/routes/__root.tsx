@@ -4,12 +4,9 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
-  HeadContent,
-  Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect } from "react";
 
-import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -73,52 +70,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Telefoon Wereld Haarlem" },
-      { name: "description", content: "Professionele smartphone, tablet en laptop reparaties in Haarlem. Klaar terwijl u wacht aan de Zijlweg. Plan direct uw reparatie." },
-      { name: "author", content: "Telefoon Wereld Haarlem" },
-      { property: "og:title", content: "Telefoon Wereld Haarlem" },
-      { property: "og:description", content: "Professionele smartphone, tablet en laptop reparaties in Haarlem. Klaar terwijl u wacht aan de Zijlweg. Plan direct uw reparatie." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@TelefoonWereld" },
-      { name: "twitter:title", content: "Telefoon Wereld Haarlem" },
-      { name: "twitter:description", content: "Professionele smartphone, tablet en laptop reparaties in Haarlem. Klaar terwijl u wacht aan de Zijlweg. Plan direct uw reparatie." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b3dc3ef6-d48b-4a31-a4fb-5c2271e35290/id-preview-22b71475--658f5290-d18d-475d-90f4-da42e311f1d1.lovable.app-1781712796026.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b3dc3ef6-d48b-4a31-a4fb-5c2271e35290/id-preview-22b71475--658f5290-d18d-475d-90f4-da42e311f1d1.lovable.app-1781712796026.png" },
-    ],
-    links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" },
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
-  }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
-
-function RootShell({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
