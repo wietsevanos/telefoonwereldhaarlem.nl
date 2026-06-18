@@ -1,20 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
-import { repairCatalog } from "@/lib/repairs-data";
-
-const priceByLabel: Record<string, number> = Object.values(repairCatalog).reduce(
-  (acc, r) => {
-    acc[r.label] = r.from;
-    return acc;
-  },
-  {} as Record<string, number>,
-);
+import { repairCatalog, categories, type Brand, type Category } from "@/lib/repairs-data";
 
 function priceFor(label: string | null): string | null {
   if (!label) return null;
-  const v = priceByLabel[label];
-  return typeof v === "number" ? `Vanaf €${v},-` : null;
+  const entry = Object.values(repairCatalog).find((r) => r.label === label);
+  return entry ? `Vanaf €${entry.from},-` : null;
 }
 
 type AfspraakSearch = {
@@ -42,78 +34,17 @@ export const Route = createFileRoute("/afspraak")({
   component: AfspraakPage,
 });
 
-const devices = [
-  "Smartphone",
-  "Tablet",
-  "Laptop",
-  "MacBook",
-  "Smartwatch",
-  "Gameconsole",
-  "Navigatiesysteem",
-  "Anders",
-] as const;
-const brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi", "Oppo", "Huawei", "Sony", "Microsoft", "Anders"];
-const repairsByDevice: Record<string, string[]> = {
-  Smartphone: [
-    "Scherm vervangen",
-    "Batterij vervangen",
-    "Oplaadpoort reparatie",
-    "Camera reparatie",
-    "Speaker reparatie",
-    "Microfoon reparatie",
-    "Achterkant vervangen",
-    "Face ID reparatie",
-    "Knoppen reparatie",
-    "Waterschade behandeling",
-    "Softwareprobleem oplossen",
-    "Dataherstel",
-    "Moederbord reparatie",
-  ],
-  Tablet: [
-    "Scherm vervangen",
-    "Batterij vervangen",
-    "Oplaadpoort reparatie",
-    "Camera reparatie",
-    "Speaker reparatie",
-    "Knoppen reparatie",
-    "Softwareprobleem oplossen",
-    "Waterschade behandeling",
-  ],
-  Laptop: [
-    "Scherm vervangen",
-    "Batterij vervangen",
-    "Toetsenbord vervangen",
-    "SSD of opslag upgrade",
-    "Koeling en ventilator",
-    "Oplaadpoort reparatie",
-    "Softwareprobleem oplossen",
-    "Waterschade behandeling",
-    "Moederbord reparatie",
-    "Dataherstel",
-  ],
-  MacBook: [
-    "Scherm vervangen",
-    "Batterij vervangen",
-    "Toetsenbord vervangen",
-    "SSD of opslag upgrade",
-    "Koeling en ventilator",
-    "Oplaadpoort reparatie",
-    "Softwareprobleem oplossen",
-    "Waterschade behandeling",
-    "Moederbord reparatie",
-    "Dataherstel",
-  ],
-  Smartwatch: ["Scherm vervangen", "Batterij vervangen", "Achterkant vervangen", "Knoppen reparatie", "Softwareprobleem oplossen"],
-  Gameconsole: ["HDMI poort reparatie", "Controller of joystick reparatie", "Oplaadpoort reparatie", "Koeling en ventilator", "SSD of opslag upgrade", "Softwareprobleem oplossen"],
-  Navigatiesysteem: ["Scherm vervangen", "Batterij vervangen", "Touchscreen probleem", "Softwareprobleem oplossen"],
-  Anders: ["Algemene reparatie", "Diagnose"],
-};
-
 function AfspraakPage() {
   const search = Route.useSearch();
-  const initialDevice = search.device && (devices as readonly string[]).includes(search.device) ? search.device : null;
-  const initialBrand = search.brand ?? null;
-  const initialModel = search.model ?? "";
+  const initialCategory = search.device
+    ? categories.find((c) => c.device === search.device || c.label === search.device || c.id === search.device) ?? null
+    : null;
+  const initialBrand = initialCategory && search.brand
+    ? initialCategory.brands.find((b) => b.name === search.brand) ?? null
+    : null;
+  const initialModel = initialBrand && search.model && initialBrand.models.includes(search.model)
+    ? search.model
+    : null;
   const initialRepair = search.repair ?? null;
   const initialStep = initialRepair
     ? 5
@@ -121,31 +52,54 @@ function AfspraakPage() {
     ? 4
     : initialBrand
     ? 3
-    : initialDevice
+    : initialCategory
     ? 2
     : 1;
 
   const [step, setStep] = useState(initialStep);
-  const [device, setDevice] = useState<string | null>(initialDevice);
-  const [brand, setBrand] = useState<string | null>(initialBrand);
-  const [model, setModel] = useState(initialModel);
+  const [category, setCategory] = useState<Category | null>(initialCategory);
+  const [brand, setBrand] = useState<Brand | null>(initialBrand);
+  const [model, setModel] = useState<string | null>(initialModel);
   const [repair, setRepair] = useState<string | null>(initialRepair);
   const [form, setForm] = useState({ naam: "", email: "", telefoon: "", opmerking: "" });
   const [agree, setAgree] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const totalSteps = 5;
   const canNext =
-    (step === 1 && device) ||
+    (step === 1 && category) ||
     (step === 2 && brand) ||
     (step === 3 && model) ||
     (step === 4 && repair) ||
     step === 5;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!agree) return;
-    setDone(true);
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/public/afspraak", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          device: category?.device,
+          brand: brand?.name,
+          model,
+          repair,
+          price: priceFor(repair),
+          ...form,
+        }),
+      });
+      if (!res.ok) throw new Error("send failed");
+      setDone(true);
+    } catch {
+      setError("Er ging iets mis bij het versturen. Probeer het opnieuw of bel ons.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -190,82 +144,101 @@ function AfspraakPage() {
                     <div className="animate-fade-up">
                       <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">1. Wat voor apparaat?</p>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
-                        {devices.map((d) => (
+                        {categories.map((c) => (
                           <button
-                            key={d}
+                            key={c.id}
                             type="button"
-                            onClick={() => setDevice(d)}
+                            onClick={() => {
+                              setCategory(c);
+                              setBrand(null);
+                              setModel(null);
+                              setRepair(null);
+                            }}
                             className={`px-3 py-4 sm:p-6 rounded-2xl border-2 font-bold text-sm sm:text-base transition-all text-center break-words ${
-                              device === d
+                              category?.id === c.id
                                 ? "border-brand-500 bg-brand-50 text-brand-700"
                                 : "border-transparent bg-brand-50/60 hover:bg-brand-50"
                             }`}
                           >
-                            {d}
+                            {c.label}
                           </button>
                         ))}
                       </div>
                     </div>
                   )}
 
-                  {step === 2 && (
+                  {step === 2 && category && (
                     <div className="animate-fade-up">
                       <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">2. Kies uw merk</p>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        {brands.map((b) => (
+                        {category.brands.map((b) => (
                           <button
-                            key={b}
+                            key={b.name}
                             type="button"
-                            onClick={() => setBrand(b)}
+                            onClick={() => {
+                              setBrand(b);
+                              setModel(null);
+                              setRepair(null);
+                            }}
                             className={`h-16 rounded-xl font-medium transition-all border-2 ${
-                              brand === b
+                              brand?.name === b.name
                                 ? "border-brand-500 bg-brand-50 text-brand-700"
                                 : "border-transparent bg-brand-50/60 hover:bg-brand-50"
                             }`}
                           >
-                            {b}
+                            {b.name}
                           </button>
                         ))}
                       </div>
                     </div>
                   )}
 
-                  {step === 3 && (
+                  {step === 3 && brand && (
                     <div className="animate-fade-up">
                       <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">3. Welk model?</p>
-                      <input
-                        type="text"
-                        value={model}
-                        onChange={(e) => setModel(e.target.value)}
-                        placeholder="bv. iPhone 14 Pro"
-                        className="w-full px-5 py-4 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none text-lg font-medium transition-all"
-                      />
-                    </div>
-                  )}
-
-                  {step === 4 && device && (
-                    <div className="animate-fade-up">
-                      <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">4. Welke reparatie?</p>
-                      <div className="grid sm:grid-cols-2 gap-3">
-                        {(repairsByDevice[device] ?? repairsByDevice.Anders).map((r) => (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[420px] overflow-y-auto pr-1">
+                        {brand.models.map((m) => (
                           <button
-                            key={r}
+                            key={m}
                             type="button"
-                            onClick={() => setRepair(r)}
-                            className={`text-left px-5 py-4 rounded-2xl font-medium transition-all border-2 flex items-center justify-between gap-3 ${
-                              repair === r
+                            onClick={() => setModel(m)}
+                            className={`px-3 py-3 rounded-xl border-2 text-sm font-medium transition-all text-left ${
+                              model === m
                                 ? "border-brand-500 bg-brand-50 text-brand-700"
                                 : "border-transparent bg-brand-50/60 hover:bg-brand-50"
                             }`}
                           >
-                            <span>{r}</span>
-                            {priceFor(r) && (
-                              <span className="text-xs font-semibold text-brand-600 whitespace-nowrap">
-                                {priceFor(r)}
-                              </span>
-                            )}
+                            {m}
                           </button>
                         ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {step === 4 && brand && (
+                    <div className="animate-fade-up">
+                      <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">4. Welke reparatie?</p>
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {brand.repairs.map((key) => {
+                          const r = repairCatalog[key];
+                          return (
+                            <button
+                              key={key}
+                              type="button"
+                              onClick={() => setRepair(r.label)}
+                              className={`text-left px-5 py-4 rounded-2xl font-medium transition-all border-2 flex items-center justify-between gap-3 ${
+                                repair === r.label
+                                  ? "border-brand-500 bg-brand-50 text-brand-700"
+                                  : "border-transparent bg-brand-50/60 hover:bg-brand-50"
+                              }`}
+                            >
+                              <span>{r.label}</span>
+                              <span className="text-xs font-semibold text-brand-600 whitespace-nowrap">
+                                Vanaf €{r.from},-
+                              </span>
+                            </button>
+                          );
+                        })}
                       </div>
                       <p className="mt-4 text-xs text-brand-900/50">
                         Genoemde prijzen zijn indicatief. U ontvangt vooraf altijd een definitieve prijsopgave.
@@ -315,8 +288,8 @@ function AfspraakPage() {
                       />
 
                       <div className="bg-brand-50 rounded-2xl p-5 text-sm space-y-1 text-brand-900/70">
-                        <p><strong>Apparaat:</strong> {device}</p>
-                        <p><strong>Merk:</strong> {brand}</p>
+                        <p><strong>Apparaat:</strong> {category?.label}</p>
+                        <p><strong>Merk:</strong> {brand?.name}</p>
                         <p><strong>Model:</strong> {model}</p>
                         <p><strong>Reparatie:</strong> {repair}</p>
                         {priceFor(repair) && (
@@ -342,6 +315,9 @@ function AfspraakPage() {
                           <Link to="/privacy" className="text-brand-600 font-semibold underline">privacyverklaring</Link>. Mijn gegevens worden uitsluitend gebruikt voor het afhandelen van deze reparatieaanvraag.
                         </span>
                       </label>
+                      {error && (
+                        <p className="text-sm text-red-600 font-medium">{error}</p>
+                      )}
                     </form>
                   )}
 
@@ -368,10 +344,10 @@ function AfspraakPage() {
                       <button
                         type="submit"
                         onClick={handleSubmit}
-                        disabled={!agree}
+                        disabled={!agree || submitting}
                         className="px-5 sm:px-7 py-3 sm:py-3.5 bg-brand-500 text-white rounded-2xl font-semibold text-sm sm:text-base hover:bg-brand-600 transition-all whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed"
                       >
-                        Verstuur aanvraag
+                        {submitting ? "Versturen…" : "Verstuur aanvraag"}
                       </button>
                     )}
                   </div>
