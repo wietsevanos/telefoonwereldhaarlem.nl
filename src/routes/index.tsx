@@ -263,7 +263,7 @@ function Home() {
       </section>
 
       {/* REVIEWS */}
-      <section className="py-14 md:py-20">
+      <section className="py-14 md:py-20 bg-brand-100">
         <div className="max-w-6xl mx-auto px-4 md:px-6">
           <div className="bg-white border border-[color:var(--color-hairline)] rounded-[28px] md:rounded-[36px] shadow-[var(--shadow-soft)] overflow-hidden flex flex-col md:flex-row items-stretch">
             {/* Static branding & score */}
