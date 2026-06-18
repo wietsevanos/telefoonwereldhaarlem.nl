@@ -63,20 +63,23 @@ export const Route = createFileRoute("/api/public/afspraak")({
             </table>
           `;
 
-          const res = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${LOVABLE_API_KEY}`,
-              "X-Connection-Api-Key": RESEND_API_KEY,
-            },
-            body: JSON.stringify({
-              from: "Telefoon Wereld Haarlem <onboarding@resend.dev>",
-              to: ["wietsevanos@gmail.com"],
-              reply_to: email,
-              subject: `Nieuwe afspraak: ${repair} — ${brand} ${model}`.trim(),
-              html,
-            }),
+          const sendEmail = (payload: Record<string, unknown>) =>
+            fetch("https://connector-gateway.lovable.dev/resend/emails", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${LOVABLE_API_KEY}`,
+                "X-Connection-Api-Key": RESEND_API_KEY,
+              },
+              body: JSON.stringify(payload),
+            });
+
+          const res = await sendEmail({
+            from: "Telefoon Wereld Haarlem <onboarding@resend.dev>",
+            to: ["wietsevanos@gmail.com"],
+            reply_to: email,
+            subject: `Nieuwe afspraak: ${repair} — ${brand} ${model}`.trim(),
+            html,
           });
 
           if (!res.ok) {
@@ -86,6 +89,37 @@ export const Route = createFileRoute("/api/public/afspraak")({
               status: 502,
               headers: { "Content-Type": "application/json", ...CORS },
             });
+          }
+
+          // Bevestigingsmail naar de klant (mag falen zonder de hele aanvraag te breken)
+          const firstName = String(naam).split(" ")[0] || "klant";
+          const confirmHtml = `
+            <div style="font-family:Arial,sans-serif;font-size:15px;color:#1a1a1a;max-width:560px;margin:0 auto;padding:24px">
+              <h2 style="margin:0 0 12px">Bedankt voor uw aanvraag, ${esc(firstName)}!</h2>
+              <p>We hebben uw reparatie-aanvraag in goede orde ontvangen. Wij nemen binnen één werkdag persoonlijk contact met u op om de afspraak te bevestigen.</p>
+              <h3 style="margin:24px 0 8px;font-size:15px">Uw aanvraag</h3>
+              <table cellpadding="6" style="font-size:14px;border-collapse:collapse">
+                <tr><td><b>Apparaat</b></td><td>${esc(device)}</td></tr>
+                <tr><td><b>Merk</b></td><td>${esc(brand)}</td></tr>
+                <tr><td><b>Model</b></td><td>${esc(model)}</td></tr>
+                <tr><td><b>Reparatie</b></td><td>${esc(repair)}</td></tr>
+                ${price ? `<tr><td><b>Indicatieve prijs</b></td><td>${esc(price)}</td></tr>` : ""}
+                ${opmerking ? `<tr><td valign="top"><b>Opmerking</b></td><td>${esc(opmerking).replace(/\n/g, "<br/>")}</td></tr>` : ""}
+              </table>
+              <p style="margin-top:24px">Heeft u tussentijds een vraag? Bel ons gerust op <a href="tel:+31235517048">023 551 7048</a>.</p>
+              <p style="margin-top:24px;color:#666;font-size:13px">Met vriendelijke groet,<br/>Telefoon Wereld Haarlem</p>
+            </div>
+          `;
+
+          const confirmRes = await sendEmail({
+            from: "Telefoon Wereld Haarlem <onboarding@resend.dev>",
+            to: [email],
+            reply_to: "wietsevanos@gmail.com",
+            subject: "Bevestiging van uw reparatie-aanvraag — Telefoon Wereld Haarlem",
+            html: confirmHtml,
+          });
+          if (!confirmRes.ok) {
+            console.error("resend confirmation error", confirmRes.status, await confirmRes.text());
           }
 
           return new Response(JSON.stringify({ ok: true }), {
