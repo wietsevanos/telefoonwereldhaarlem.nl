@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { repairCatalog, categories, type Brand, type Category } from "@/lib/repairs-data";
 
@@ -7,6 +7,43 @@ function priceFor(label: string | null): string | null {
   if (!label) return null;
   const entry = Object.values(repairCatalog).find((r) => r.label === label);
   return entry ? `Vanaf €${entry.from},-` : null;
+}
+
+// Openingstijden: ma–vr 10:00–18:00, za 10:00–17:00, zo gesloten. Slots van 30 min.
+function slotsForDate(date: Date): Date[] {
+  const dow = date.getDay(); // 0 = zo
+  if (dow === 0) return [];
+  const endHour = dow === 6 ? 17 : 18;
+  const out: Date[] = [];
+  for (let h = 10; h < endHour; h++) {
+    for (const m of [0, 30]) {
+      out.push(new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, m, 0, 0));
+    }
+  }
+  return out;
+}
+
+function nextDays(count: number): Date[] {
+  const out: Date[] = [];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let i = 0;
+  while (out.length < count) {
+    const d = new Date(today.getFullYear(), today.getMonth(), today.getDate() + i);
+    if (d.getDay() !== 0) out.push(d); // skip zondag
+    i++;
+  }
+  return out;
+}
+
+function fmtDay(d: Date): string {
+  return d.toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "short" });
+}
+function fmtTime(d: Date): string {
+  return d.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
+}
+function sameDay(a: Date, b: Date): boolean {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 }
 
 type AfspraakSearch = {
@@ -61,23 +98,44 @@ function AfspraakPage() {
   const [brand, setBrand] = useState<Brand | null>(initialBrand);
   const [model, setModel] = useState<string | null>(initialModel);
   const [repair, setRepair] = useState<string | null>(initialRepair);
+  const days = useMemo(() => nextDays(14), []);
+  const [selectedDay, setSelectedDay] = useState<Date>(days[0]);
+  const [slot, setSlot] = useState<Date | null>(null);
+  const [taken, setTaken] = useState<Set<string>>(new Set());
+  const [loadingSlots, setLoadingSlots] = useState(false);
   const [form, setForm] = useState({ naam: "", email: "", telefoon: "", opmerking: "" });
   const [agree, setAgree] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const totalSteps = 5;
+  const totalSteps = 6;
   const canNext =
     (step === 1 && category) ||
     (step === 2 && brand) ||
     (step === 3 && model) ||
     (step === 4 && repair) ||
-    step === 5;
+    (step === 5 && slot) ||
+    step === 6;
+
+  // Bezette slots ophalen voor de geselecteerde dag
+  useEffect(() => {
+    if (step !== 5) return;
+    const from = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), selectedDay.getDate(), 0, 0, 0);
+    const to = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), selectedDay.getDate(), 23, 59, 59);
+    setLoadingSlots(true);
+    fetch(`/api/public/slots?from=${encodeURIComponent(from.toISOString())}&to=${encodeURIComponent(to.toISOString())}`)
+      .then((r) => r.json())
+      .then((d: { taken?: string[] }) => {
+        setTaken(new Set((d.taken ?? []).map((s) => new Date(s).toISOString())));
+      })
+      .catch(() => setTaken(new Set()))
+      .finally(() => setLoadingSlots(false));
+  }, [step, selectedDay]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agree) return;
+    if (!agree || !slot) return;
     setSubmitting(true);
     setError(null);
     try {
@@ -90,9 +148,18 @@ function AfspraakPage() {
           model,
           repair,
           price: priceFor(repair),
+          slot_at: slot.toISOString(),
           ...form,
         }),
       });
+      if (res.status === 409) {
+        setError("Dit tijdslot is zojuist bezet geraakt. Kies een ander moment.");
+        // refresh taken slots
+        setTaken((prev) => new Set([...prev, slot.toISOString()]));
+        setSlot(null);
+        setStep(5);
+        return;
+      }
       if (!res.ok) throw new Error("send failed");
       setDone(true);
     } catch {
