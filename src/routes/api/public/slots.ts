@@ -22,8 +22,7 @@ export const Route = createFileRoute("/api/public/slots")({
             });
           }
           const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-          const { data, error } = await supabaseAdmin
-            .from("bookings")
+          const { data, error } = await (supabaseAdmin.from as any)("bookings")
             .select("slot_at")
             .gte("slot_at", from)
             .lte("slot_at", to);
@@ -35,7 +34,7 @@ export const Route = createFileRoute("/api/public/slots")({
             });
           }
           return new Response(
-            JSON.stringify({ taken: (data ?? []).map((r) => r.slot_at) }),
+            JSON.stringify({ taken: (data ?? []).map((r: { slot_at: string }) => r.slot_at) }),
             {
               status: 200,
               headers: {
