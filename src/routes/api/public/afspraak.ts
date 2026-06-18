@@ -13,6 +13,36 @@ function esc(s: unknown) {
     .replace(/>/g, "&gt;");
 }
 
+function nextBusinessDayUTC(): { start: Date; end: Date } {
+  // Tentatief: volgende werkdag, 10:00 Amsterdam (≈ 09:00 UTC), duur 30 min.
+  const d = new Date();
+  d.setUTCDate(d.getUTCDate() + 1);
+  // Skip naar maandag bij weekend (zaterdag=6, zondag=0)
+  while (d.getUTCDay() === 0 || d.getUTCDay() === 6) {
+    d.setUTCDate(d.getUTCDate() + 1);
+  }
+  const start = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 9, 0, 0));
+  const end = new Date(start.getTime() + 30 * 60 * 1000);
+  return { start, end };
+}
+
+function toICSDate(d: Date): string {
+  return d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+}
+
+function buildCalendarLinks(opts: {
+  origin: string;
+  title: string;
+  details: string;
+}) {
+  const { start, end } = nextBusinessDayUTC();
+  const location = "Telefoon Wereld Haarlem, Generaal Cronjéstraat, Haarlem";
+  const dates = `${toICSDate(start)}/${toICSDate(end)}`;
+  const google = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(opts.title)}&dates=${dates}&details=${encodeURIComponent(opts.details)}&location=${encodeURIComponent(location)}`;
+  const ics = `${opts.origin}/api/public/afspraak.ics?title=${encodeURIComponent(opts.title)}&details=${encodeURIComponent(opts.details)}&start=${toICSDate(start)}&end=${toICSDate(end)}&location=${encodeURIComponent(location)}`;
+  return { google, ics, start };
+}
+
 export const Route = createFileRoute("/api/public/afspraak")({
   server: {
     handlers: {
@@ -93,6 +123,14 @@ export const Route = createFileRoute("/api/public/afspraak")({
 
           // Bevestigingsmail naar de klant (mag falen zonder de hele aanvraag te breken)
           const firstName = String(naam).split(" ")[0] || "klant";
+          const origin = new URL(request.url).origin;
+          const calTitle = `Reparatie-afspraak: ${repair} (${brand} ${model})`.trim();
+          const calDetails = `Reparatie-afspraak bij Telefoon Wereld Haarlem.\n\nApparaat: ${device}\nMerk: ${brand}\nModel: ${model}\nReparatie: ${repair}${price ? `\nIndicatieve prijs: ${price}` : ""}\n\nLet op: dit is een voorlopige reservering. We bevestigen de definitieve datum en tijd telefonisch.`;
+          const cal = buildCalendarLinks({ origin, title: calTitle, details: calDetails });
+          const calDateLabel = cal.start.toLocaleDateString("nl-NL", {
+            weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Amsterdam",
+          });
+
           const confirmHtml = `
             <div style="font-family:Arial,sans-serif;font-size:15px;color:#1a1a1a;max-width:560px;margin:0 auto;padding:24px">
               <h2 style="margin:0 0 12px">Bedankt voor uw aanvraag, ${esc(firstName)}!</h2>
@@ -106,6 +144,12 @@ export const Route = createFileRoute("/api/public/afspraak")({
                 ${price ? `<tr><td><b>Indicatieve prijs</b></td><td>${esc(price)}</td></tr>` : ""}
                 ${opmerking ? `<tr><td valign="top"><b>Opmerking</b></td><td>${esc(opmerking).replace(/\n/g, "<br/>")}</td></tr>` : ""}
               </table>
+              <h3 style="margin:28px 0 8px;font-size:15px">Zet vast in uw agenda</h3>
+              <p style="margin:0 0 12px;color:#555;font-size:13px">We plaatsen een voorlopige reservering op <b>${esc(calDateLabel)} om 10:00</b>. Definitieve tijd bevestigen we telefonisch.</p>
+              <p style="margin:0">
+                <a href="${cal.google}" style="display:inline-block;background:#1a73e8;color:#fff;text-decoration:none;padding:12px 18px;border-radius:8px;font-weight:600;margin:4px 6px 4px 0">Toevoegen aan Google Agenda</a>
+                <a href="${cal.ics}" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:12px 18px;border-radius:8px;font-weight:600;margin:4px 0">Apple / Outlook (.ics)</a>
+              </p>
               <p style="margin-top:24px">Heeft u tussentijds een vraag? Bel ons gerust op <a href="tel:+31235517048">023 551 7048</a>.</p>
               <p style="margin-top:24px;color:#666;font-size:13px">Met vriendelijke groet,<br/>Telefoon Wereld Haarlem</p>
             </div>
