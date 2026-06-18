@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { repairCatalog } from "@/lib/repairs-data";
@@ -131,6 +131,7 @@ function AfspraakPage() {
   const [model, setModel] = useState(initialModel);
   const [repair, setRepair] = useState<string | null>(initialRepair);
   const [form, setForm] = useState({ naam: "", email: "", telefoon: "", opmerking: "" });
+  const [agree, setAgree] = useState(false);
   const [done, setDone] = useState(false);
 
   const totalSteps = 5;
@@ -143,6 +144,7 @@ function AfspraakPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!agree) return;
     setDone(true);
   };
 
@@ -277,6 +279,7 @@ function AfspraakPage() {
                       <input
                         type="text"
                         required
+                        maxLength={100}
                         value={form.naam}
                         onChange={(e) => setForm({ ...form, naam: e.target.value })}
                         placeholder="Volledige naam"
@@ -286,6 +289,7 @@ function AfspraakPage() {
                         <input
                           type="email"
                           required
+                          maxLength={255}
                           value={form.email}
                           onChange={(e) => setForm({ ...form, email: e.target.value })}
                           placeholder="E-mailadres"
@@ -294,6 +298,7 @@ function AfspraakPage() {
                         <input
                           type="tel"
                           required
+                          maxLength={20}
                           value={form.telefoon}
                           onChange={(e) => setForm({ ...form, telefoon: e.target.value })}
                           placeholder="Telefoonnummer"
@@ -302,6 +307,7 @@ function AfspraakPage() {
                       </div>
                       <textarea
                         rows={3}
+                        maxLength={1000}
                         value={form.opmerking}
                         onChange={(e) => setForm({ ...form, opmerking: e.target.value })}
                         placeholder="Aanvullende informatie (optioneel)"
@@ -322,6 +328,20 @@ function AfspraakPage() {
                           </p>
                         )}
                       </div>
+
+                      <label className="flex items-start gap-3 text-sm text-brand-900/70 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          required
+                          checked={agree}
+                          onChange={(e) => setAgree(e.target.checked)}
+                          className="mt-1 accent-brand-500"
+                        />
+                        <span>
+                          Ik ga akkoord met de{" "}
+                          <Link to="/privacy" className="text-brand-600 font-semibold underline">privacyverklaring</Link>. Mijn gegevens worden uitsluitend gebruikt voor het afhandelen van deze reparatieaanvraag.
+                        </span>
+                      </label>
                     </form>
                   )}
 
@@ -348,7 +368,8 @@ function AfspraakPage() {
                       <button
                         type="submit"
                         onClick={handleSubmit}
-                        className="px-5 sm:px-7 py-3 sm:py-3.5 bg-brand-500 text-white rounded-2xl font-semibold text-sm sm:text-base hover:bg-brand-600 transition-all whitespace-nowrap"
+                        disabled={!agree}
+                        className="px-5 sm:px-7 py-3 sm:py-3.5 bg-brand-500 text-white rounded-2xl font-semibold text-sm sm:text-base hover:bg-brand-600 transition-all whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         Verstuur aanvraag
                       </button>
