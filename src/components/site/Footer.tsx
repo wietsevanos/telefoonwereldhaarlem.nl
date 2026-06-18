@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import logoTw from "@/assets/logo-tw.png.asset.json";
+import wordmark from "@/assets/telefoon-wereld-wordmark.png.asset.json";
 
 export function Footer() {
   return (
@@ -7,16 +7,12 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-10 sm:gap-12 lg:gap-16 mb-10 sm:mb-16 text-center md:text-left">
           <div className="md:col-span-2">
-            <div className="flex items-center justify-center md:justify-start gap-3 mb-5 sm:mb-6">
+            <div className="flex items-center justify-center md:justify-start mb-5 sm:mb-6">
               <img
-                src={logoTw.url}
+                src={wordmark.url}
                 alt="Telefoon Wereld Haarlem"
-                className="h-9 sm:h-10 w-auto object-contain"
-                style={{ filter: "brightness(0)" }}
+                className="h-8 sm:h-10 w-auto object-contain"
               />
-              <span className="font-bold text-base sm:text-lg tracking-tight">
-                TELEFOON WERELD <span className="font-light text-brand-500">HAARLEM</span>
-              </span>
             </div>
             <p className="text-brand-900/60 max-w-sm mx-auto md:mx-0 leading-relaxed mb-6 sm:mb-8 text-[15px]">
               De premium reparatiepartner voor smartphones, tablets en laptops in Haarlem.

@@ -62,18 +62,18 @@ const reviews = [
 ];
 
 const repairBrands = [
-  { name: "Apple", logo: brandApple.url },
-  { name: "Samsung", logo: brandSamsung.url },
-  { name: "Google", logo: brandGoogle.url },
-  { name: "OnePlus", logo: brandOnePlus.url },
-  { name: "Xiaomi", logo: brandXiaomi.url },
-  { name: "Oppo", logo: brandOppo.url },
-  { name: "Huawei", logo: brandHuawei.url },
-  { name: "Sony", logo: brandSony.url },
-  { name: "Microsoft", logo: brandMicrosoft.url },
-  { name: "Nintendo", logo: brandNintendo.url },
-  { name: "Honor", logo: brandHonor.url },
-  { name: "Dell", logo: brandDell.url },
+  { name: "Apple", logo: brandApple.url, cat: "smartphones", brand: "Apple" },
+  { name: "Samsung", logo: brandSamsung.url, cat: "smartphones", brand: "Samsung" },
+  { name: "Google", logo: brandGoogle.url, cat: "smartphones", brand: "Google" },
+  { name: "OnePlus", logo: brandOnePlus.url, cat: "smartphones", brand: "OnePlus" },
+  { name: "Xiaomi", logo: brandXiaomi.url, cat: "smartphones", brand: "Xiaomi" },
+  { name: "Oppo", logo: brandOppo.url, cat: "smartphones", brand: "Oppo" },
+  { name: "Huawei", logo: brandHuawei.url, cat: "smartphones", brand: "Huawei" },
+  { name: "Sony", logo: brandSony.url, cat: "smartphones", brand: "Sony" },
+  { name: "Microsoft", logo: brandMicrosoft.url, cat: "laptops", brand: "Microsoft Surface" },
+  { name: "Nintendo", logo: brandNintendo.url, cat: "consoles", brand: "Nintendo" },
+  { name: "Honor", logo: brandHonor.url, cat: "smartphones", brand: "Honor" },
+  { name: "Dell", logo: brandDell.url, cat: "laptops", brand: "Dell" },
 ];
 
 function Home() {
@@ -246,17 +246,20 @@ function Home() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-px bg-[color:var(--color-hairline)] rounded-3xl overflow-hidden border border-[color:var(--color-hairline)]">
             {repairBrands.map((b) => (
-              <div
+              <Link
                 key={b.name}
-                className="bg-white aspect-[3/2] grid place-items-center p-4 sm:p-6 hover:bg-brand-50 transition-colors"
+                to="/reparaties"
+                search={{ cat: b.cat, brand: b.brand }}
+                aria-label={`Bekijk reparaties voor ${b.name}`}
+                className="group bg-white aspect-[3/2] grid place-items-center p-4 sm:p-6 hover:bg-brand-50 transition-colors"
               >
                 <img
                   src={b.logo}
                   alt={b.name}
                   loading="lazy"
-                  className="max-h-8 sm:max-h-10 max-w-[80%] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity"
+                  className="max-h-8 sm:max-h-10 max-w-[80%] w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity"
                 />
-              </div>
+              </Link>
             ))}
           </div>
         </div>
