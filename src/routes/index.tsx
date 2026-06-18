@@ -1,9 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import heroPhone from "@/assets/hero-phone.jpg";
-import repairScreen from "@/assets/repair-screen.jpg";
-import repairBattery from "@/assets/repair-battery.jpg";
-import repairSamsung from "@/assets/repair-samsung.jpg";
+import popIphoneScreen from "@/assets/popular-9.png.asset.json";
+import popIphoneBattery from "@/assets/popular-10.png.asset.json";
+import popSamsungScreen from "@/assets/popular-11.png.asset.json";
+import popSamsungBattery from "@/assets/popular-12.png.asset.json";
+import popChargePort from "@/assets/popular-13.png.asset.json";
+import popWater from "@/assets/popular-14.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,12 +28,12 @@ const reasons = [
 ];
 
 const popularRepairs = [
-  { name: "iPhone scherm vervangen", price: "Vanaf €89,-", image: repairScreen, desc: "Originele kwaliteit OLED of LCD schermen." },
-  { name: "iPhone batterij vervangen", price: "Vanaf €49,-", image: repairBattery, desc: "Nieuwe batterij voor een hele dag gebruik." },
-  { name: "Samsung scherm reparatie", price: "Vanaf €119,-", image: repairSamsung, desc: "Originele Samsung onderdelen voor een perfect resultaat." },
-  { name: "Samsung batterij vervangen", price: "Vanaf €59,-", image: repairBattery, desc: "Direct weer een volle dag accu." },
-  { name: "Oplaadpoort reparatie", price: "Vanaf €45,-", image: repairScreen, desc: "Slechte verbinding of niet meer opladen? Snel verholpen." },
-  { name: "Waterschade herstel", price: "Op offerte", image: repairBattery, desc: "Ultrasone reiniging, 85% wordt succesvol hersteld." },
+  { name: "iPhone scherm vervangen", price: "Vanaf €89,-", image: popIphoneScreen.url, desc: "Originele kwaliteit OLED of LCD schermen." },
+  { name: "iPhone batterij vervangen", price: "Vanaf €49,-", image: popIphoneBattery.url, desc: "Nieuwe batterij voor een hele dag gebruik." },
+  { name: "Samsung scherm reparatie", price: "Vanaf €119,-", image: popSamsungScreen.url, desc: "Originele Samsung onderdelen voor een perfect resultaat." },
+  { name: "Samsung batterij vervangen", price: "Vanaf €59,-", image: popSamsungBattery.url, desc: "Direct weer een volle dag accu." },
+  { name: "Oplaadpoort reparatie", price: "Vanaf €45,-", image: popChargePort.url, desc: "Slechte verbinding of niet meer opladen? Snel verholpen." },
+  { name: "Waterschade herstel", price: "Op offerte", image: popWater.url, desc: "Ultrasone reiniging, 85% wordt succesvol hersteld." },
 ];
 
 const steps = [
