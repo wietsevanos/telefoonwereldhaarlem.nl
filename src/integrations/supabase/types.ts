@@ -14,51 +14,7 @@ export type Database = {
   }
   public: {
     Tables: {
-      bookings: {
-        Row: {
-          apparaat: string | null
-          created_at: string
-          email: string
-          id: string
-          merk: string | null
-          model: string | null
-          naam: string
-          opmerking: string | null
-          prijs: string | null
-          reparatie: string
-          slot_at: string
-          telefoon: string
-        }
-        Insert: {
-          apparaat?: string | null
-          created_at?: string
-          email: string
-          id?: string
-          merk?: string | null
-          model?: string | null
-          naam: string
-          opmerking?: string | null
-          prijs?: string | null
-          reparatie: string
-          slot_at: string
-          telefoon: string
-        }
-        Update: {
-          apparaat?: string | null
-          created_at?: string
-          email?: string
-          id?: string
-          merk?: string | null
-          model?: string | null
-          naam?: string
-          opmerking?: string | null
-          prijs?: string | null
-          reparatie?: string
-          slot_at?: string
-          telefoon?: string
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
