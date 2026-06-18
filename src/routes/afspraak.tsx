@@ -579,13 +579,6 @@ function AfspraakPage() {
                         >
                           Toevoegen aan Google Agenda
                         </a>
-                        <a
-                          href={icsUrl}
-                          download="afspraak.ics"
-                          className="px-5 py-3 rounded-2xl border-2 border-brand-900/15 text-brand-900 font-semibold text-sm hover:bg-brand-50 transition-all"
-                        >
-                          Apple / Outlook (.ics)
-                        </a>
                       </div>
                     );
                   })()}

@@ -183,22 +183,17 @@ Deno.serve(async (req: Request) => {
         <h3 style="margin:28px 0 8px;font-size:15px">Zet vast in uw agenda</h3>
         <p style="margin:0">
           <a href="${googleUrl}" style="display:inline-block;background:#1a73e8;color:#fff;text-decoration:none;padding:12px 18px;border-radius:8px;font-weight:600;margin:4px 6px 4px 0">Toevoegen aan Google Agenda</a>
-          <a href="${icsDataUri}" download="afspraak.ics" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:12px 18px;border-radius:8px;font-weight:600;margin:4px 0">Apple / Outlook (.ics)</a>
         </p>
         <p style="margin-top:24px">Heeft u tussentijds een vraag? Bel ons gerust op <a href="tel:+31235517048">023 551 7048</a>.</p>
         <p style="margin-top:24px;color:#666;font-size:13px">Met vriendelijke groet,<br/>Telefoon Wereld Haarlem</p>
       </div>`;
 
-    const icsAttachment = btoa(unescape(encodeURIComponent(icsContent)));
     const confirmRes = await sendEmail({
       from: FROM_ADDRESS,
       to: [email],
       reply_to: SHOP_EMAIL,
       subject: "Bevestiging van uw reparatie-aanvraag — Telefoon Wereld Haarlem",
       html: confirmHtml,
-      attachments: [
-        { filename: "afspraak.ics", content: icsAttachment },
-      ],
     });
     if (!confirmRes.ok) {
       console.error("resend confirmation error", confirmRes.status, await confirmRes.text());
