@@ -126,22 +126,12 @@ function Home() {
 
           <div className="relative animate-fade-up [animation-delay:200ms]">
             <div className="absolute -inset-12 bg-brand-500/15 blur-3xl rounded-full" />
-            <div className="relative rounded-[40px] overflow-hidden bg-transparent shadow-[var(--shadow-lift)] border border-[color:var(--color-hairline)] animate-float-soft aspect-square">
-              <iframe
-                title="iphone 17 pro max silver"
-                frameBorder="0"
-                allowFullScreen
-                mozallowfullscreen="true"
-                webkitallowfullscreen="true"
-                allow="autoplay; fullscreen; xr-spatial-tracking"
-                xr-spatial-tracking=""
-                execution-while-out-of-viewport=""
-                execution-while-not-rendered=""
-                web-share=""
-                src="https://sketchfab.com/models/9dbfe0d846f341bf9fc501a854f5de1a/embed?autospin=1&camera=0&transparent=1"
-                className="w-full h-full"
-              />
-            </div>
+            <div
+              className="relative rounded-[40px] overflow-hidden bg-transparent shadow-[var(--shadow-lift)] border border-[color:var(--color-hairline)] animate-float-soft aspect-square"
+              dangerouslySetInnerHTML={{
+                __html: `<iframe title="iphone 17 pro max silver" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/9dbfe0d846f341bf9fc501a854f5de1a/embed?autospin=1&camera=0&transparent=1" style="width:100%;height:100%;border:0;"></iframe>`,
+              }}
+            />
             <div className="absolute -bottom-6 -left-6 bg-white/80 backdrop-blur-xl rounded-2xl px-5 py-4 border border-[color:var(--color-hairline)] shadow-[var(--shadow-soft)] hidden md:block">
               <div className="text-2xl font-bold text-brand-600">30 min</div>
               <div className="text-xs text-brand-900/60 uppercase tracking-wider mt-0.5">Gemiddelde reparatietijd</div>
