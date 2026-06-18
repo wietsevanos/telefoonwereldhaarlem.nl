@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
-import heroPhone from "@/assets/hero-phone.jpg";
 import popIphoneScreen from "@/assets/popular-9.png.asset.json";
 import popIphoneBattery from "@/assets/popular-10.png.asset.json";
 import popSamsungScreen from "@/assets/popular-11.png.asset.json";
