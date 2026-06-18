@@ -20,6 +20,7 @@ import { Route as AfspraakRouteImport } from './routes/afspraak'
 import { Route as AccessoiresRouteImport } from './routes/accessoires'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiPublicAfspraakRouteImport } from './routes/api/public/afspraak'
+import { Route as ApiPublicAfspraakIcsRouteImport } from './routes/api/public/afspraak.ics'
 
 const VoorwaardenRoute = VoorwaardenRouteImport.update({
   id: '/voorwaarden',
@@ -76,6 +77,11 @@ const ApiPublicAfspraakRoute = ApiPublicAfspraakRouteImport.update({
   path: '/api/public/afspraak',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicAfspraakIcsRoute = ApiPublicAfspraakIcsRouteImport.update({
+  id: '/ics',
+  path: '/ics',
+  getParentRoute: () => ApiPublicAfspraakRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -88,7 +94,8 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
   '/voorwaarden': typeof VoorwaardenRoute
-  '/api/public/afspraak': typeof ApiPublicAfspraakRoute
+  '/api/public/afspraak': typeof ApiPublicAfspraakRouteWithChildren
+  '/api/public/afspraak/ics': typeof ApiPublicAfspraakIcsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -101,7 +108,8 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
   '/voorwaarden': typeof VoorwaardenRoute
-  '/api/public/afspraak': typeof ApiPublicAfspraakRoute
+  '/api/public/afspraak': typeof ApiPublicAfspraakRouteWithChildren
+  '/api/public/afspraak/ics': typeof ApiPublicAfspraakIcsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -115,7 +123,8 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
   '/voorwaarden': typeof VoorwaardenRoute
-  '/api/public/afspraak': typeof ApiPublicAfspraakRoute
+  '/api/public/afspraak': typeof ApiPublicAfspraakRouteWithChildren
+  '/api/public/afspraak/ics': typeof ApiPublicAfspraakIcsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/reparaties'
     | '/voorwaarden'
     | '/api/public/afspraak'
+    | '/api/public/afspraak/ics'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/reparaties'
     | '/voorwaarden'
     | '/api/public/afspraak'
+    | '/api/public/afspraak/ics'
   id:
     | '__root__'
     | '/'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/reparaties'
     | '/voorwaarden'
     | '/api/public/afspraak'
+    | '/api/public/afspraak/ics'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -170,7 +182,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ReparatiesRoute: typeof ReparatiesRoute
   VoorwaardenRoute: typeof VoorwaardenRoute
-  ApiPublicAfspraakRoute: typeof ApiPublicAfspraakRoute
+  ApiPublicAfspraakRoute: typeof ApiPublicAfspraakRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -252,8 +264,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicAfspraakRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/afspraak/ics': {
+      id: '/api/public/afspraak/ics'
+      path: '/ics'
+      fullPath: '/api/public/afspraak/ics'
+      preLoaderRoute: typeof ApiPublicAfspraakIcsRouteImport
+      parentRoute: typeof ApiPublicAfspraakRoute
+    }
   }
 }
+
+interface ApiPublicAfspraakRouteChildren {
+  ApiPublicAfspraakIcsRoute: typeof ApiPublicAfspraakIcsRoute
+}
+
+const ApiPublicAfspraakRouteChildren: ApiPublicAfspraakRouteChildren = {
+  ApiPublicAfspraakIcsRoute: ApiPublicAfspraakIcsRoute,
+}
+
+const ApiPublicAfspraakRouteWithChildren =
+  ApiPublicAfspraakRoute._addFileChildren(ApiPublicAfspraakRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -266,7 +296,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ReparatiesRoute: ReparatiesRoute,
   VoorwaardenRoute: VoorwaardenRoute,
-  ApiPublicAfspraakRoute: ApiPublicAfspraakRoute,
+  ApiPublicAfspraakRoute: ApiPublicAfspraakRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
