@@ -96,9 +96,8 @@ export const Route = createFileRoute("/api/public/afspraak")({
             });
           }
 
-          const LOVABLE_API_KEY = process.env.LOVABLE_API_KEY;
           const RESEND_API_KEY = process.env.RESEND_API_KEY;
-          if (!LOVABLE_API_KEY || !RESEND_API_KEY) {
+          if (!RESEND_API_KEY) {
             return new Response(JSON.stringify({ error: "email_not_configured" }), {
               status: 500,
               headers: { "Content-Type": "application/json", ...CORS },
@@ -126,20 +125,21 @@ export const Route = createFileRoute("/api/public/afspraak")({
             </table>
           `;
 
+          const MAIL_FROM = process.env.MAIL_FROM || "Telefoon Wereld Haarlem <onboarding@resend.dev>";
+          const MAIL_TO = process.env.MAIL_TO || "wietsevanos@gmail.com";
           const sendEmail = (payload: Record<string, unknown>) =>
-            fetch("https://connector-gateway.lovable.dev/resend/emails", {
+            fetch("https://api.resend.com/emails", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${LOVABLE_API_KEY}`,
-                "X-Connection-Api-Key": RESEND_API_KEY,
+                Authorization: `Bearer ${RESEND_API_KEY}`,
               },
               body: JSON.stringify(payload),
             });
 
           const res = await sendEmail({
-            from: "Telefoon Wereld Haarlem <onboarding@resend.dev>",
-            to: ["wietsevanos@gmail.com"],
+            from: MAIL_FROM,
+            to: [MAIL_TO],
             reply_to: email,
             subject: `Nieuwe afspraak: ${repair} — ${brand} ${model}`.trim(),
             html,
@@ -186,9 +186,9 @@ export const Route = createFileRoute("/api/public/afspraak")({
           `;
 
           const confirmRes = await sendEmail({
-            from: "Telefoon Wereld Haarlem <onboarding@resend.dev>",
+            from: MAIL_FROM,
             to: [email],
-            reply_to: "wietsevanos@gmail.com",
+            reply_to: MAIL_TO,
             subject: "Bevestiging van uw reparatie-aanvraag — Telefoon Wereld Haarlem",
             html: confirmHtml,
           });
