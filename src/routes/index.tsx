@@ -7,6 +7,16 @@ import popSamsungScreen from "@/assets/popular-11.png.asset.json";
 import popSamsungBattery from "@/assets/popular-12.png.asset.json";
 import popChargePort from "@/assets/popular-13.png.asset.json";
 import popWater from "@/assets/popular-14.png.asset.json";
+import brandApple from "@/assets/brands/apple.png.asset.json";
+import brandSamsung from "@/assets/brands/samsung.png.asset.json";
+import brandGoogle from "@/assets/brands/google.png.asset.json";
+import brandOnePlus from "@/assets/brands/oneplus.png.asset.json";
+import brandXiaomi from "@/assets/brands/xiaomi.png.asset.json";
+import brandOppo from "@/assets/brands/oppo.png.asset.json";
+import brandHuawei from "@/assets/brands/huawei.png.asset.json";
+import brandSony from "@/assets/brands/sony.png.asset.json";
+import brandMicrosoft from "@/assets/brands/microsoft.png.asset.json";
+import brandNintendo from "@/assets/brands/nintendo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -50,18 +60,16 @@ const reviews = [
 ];
 
 const repairBrands = [
-  "Apple",
-  "Samsung",
-  "Google",
-  "OnePlus",
-  "Xiaomi",
-  "Oppo",
-  "Huawei",
-  "Sony",
-  "Microsoft",
-  "Nintendo",
-  "Honor",
-  "Motorola",
+  { name: "Apple", logo: brandApple.url },
+  { name: "Samsung", logo: brandSamsung.url },
+  { name: "Google", logo: brandGoogle.url },
+  { name: "OnePlus", logo: brandOnePlus.url },
+  { name: "Xiaomi", logo: brandXiaomi.url },
+  { name: "Oppo", logo: brandOppo.url },
+  { name: "Huawei", logo: brandHuawei.url },
+  { name: "Sony", logo: brandSony.url },
+  { name: "Microsoft", logo: brandMicrosoft.url },
+  { name: "Nintendo", logo: brandNintendo.url },
 ];
 
 function Home() {
@@ -235,10 +243,15 @@ function Home() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-px bg-[color:var(--color-hairline)] rounded-3xl overflow-hidden border border-[color:var(--color-hairline)]">
             {repairBrands.map((b) => (
               <div
-                key={b}
-                className="bg-white aspect-[3/2] grid place-items-center text-brand-900/70 font-semibold tracking-tight text-lg hover:bg-brand-50 transition-colors"
+                key={b.name}
+                className="bg-white aspect-[3/2] grid place-items-center p-4 sm:p-6 hover:bg-brand-50 transition-colors"
               >
-                {b}
+                <img
+                  src={b.logo}
+                  alt={b.name}
+                  loading="lazy"
+                  className="max-h-8 sm:max-h-10 max-w-[80%] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity"
+                />
               </div>
             ))}
           </div>
