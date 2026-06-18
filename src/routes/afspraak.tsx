@@ -267,68 +267,32 @@ function AfspraakPage() {
                   {step === 5 && (
                     <div className="animate-fade-up">
                       <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">5. Kies datum & tijd</p>
-                      <div className="flex gap-2 overflow-x-auto pb-3 -mx-1 px-1 snap-x">
-                        {days.map((d) => {
-                          const active = sameDay(d, selectedDay);
-                          return (
-                            <button
-                              key={d.toISOString()}
-                              type="button"
-                              onClick={() => { setSelectedDay(d); setSlot(null); }}
-                              className={`shrink-0 snap-start px-4 py-3 rounded-xl border-2 text-center min-w-[88px] transition-all ${
-                                active
-                                  ? "border-brand-500 bg-brand-50 text-brand-700"
-                                  : "border-transparent bg-brand-50/60 hover:bg-brand-50"
-                              }`}
-                            >
-                              <span className="block text-xs font-semibold capitalize">{fmtDay(d)}</span>
-                            </button>
-                          );
-                        })}
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <label className="block">
+                          <span className="block text-xs font-semibold text-brand-900/60 mb-2">Datum</span>
+                          <input
+                            type="date"
+                            required
+                            min={todayISO()}
+                            value={datum}
+                            onChange={(e) => setDatum(e.target.value)}
+                            className="w-full px-5 py-4 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none transition-all"
+                          />
+                        </label>
+                        <label className="block">
+                          <span className="block text-xs font-semibold text-brand-900/60 mb-2">Tijd</span>
+                          <input
+                            type="time"
+                            required
+                            value={tijd}
+                            onChange={(e) => setTijd(e.target.value)}
+                            className="w-full px-5 py-4 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none transition-all"
+                          />
+                        </label>
                       </div>
-                      <div className="mt-5">
-                        {(() => {
-                          const all = slotsForDate(selectedDay);
-                          const now = Date.now();
-                          const future = all.filter((s) => s.getTime() > now + 30 * 60 * 1000);
-                          if (future.length === 0) {
-                            return <p className="text-sm text-brand-900/60">Geen beschikbare tijden meer op deze dag.</p>;
-                          }
-                          return (
-                            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
-                              {future.map((s) => {
-                                const iso = s.toISOString();
-                                const isTaken = taken.has(iso);
-                                const isSelected = slot && slot.getTime() === s.getTime();
-                                return (
-                                  <button
-                                    key={iso}
-                                    type="button"
-                                    disabled={isTaken}
-                                    onClick={() => setSlot(s)}
-                                    className={`px-3 py-3 rounded-xl border-2 text-sm font-semibold transition-all ${
-                                      isTaken
-                                        ? "border-transparent bg-brand-50/40 text-brand-900/30 line-through cursor-not-allowed"
-                                        : isSelected
-                                        ? "border-brand-500 bg-brand-50 text-brand-700"
-                                        : "border-transparent bg-brand-50/60 hover:bg-brand-50 text-brand-900"
-                                    }`}
-                                    title={isTaken ? "Bezet" : ""}
-                                  >
-                                    {fmtTime(s)}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          );
-                        })()}
-                        {loadingSlots && (
-                          <p className="mt-3 text-xs text-brand-900/40">Beschikbaarheid laden…</p>
-                        )}
-                        <p className="mt-4 text-xs text-brand-900/50">
-                          Tijden met een streep zijn al door iemand anders geboekt.
-                        </p>
-                      </div>
+                      <p className="mt-4 text-xs text-brand-900/50">
+                        Openingstijden: ma–vr 10:00–18:00, za 10:00–17:00, zo gesloten. We bevestigen uw afspraak persoonlijk per e-mail of telefoon.
+                      </p>
                     </div>
                   )}
 
