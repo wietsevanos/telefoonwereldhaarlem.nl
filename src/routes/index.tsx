@@ -17,6 +17,8 @@ import brandHuawei from "@/assets/brands/huawei.png.asset.json";
 import brandSony from "@/assets/brands/sony.png.asset.json";
 import brandMicrosoft from "@/assets/brands/microsoft.png.asset.json";
 import brandNintendo from "@/assets/brands/nintendo.png.asset.json";
+import brandHonor from "@/assets/brands/honor.png.asset.json";
+import brandDell from "@/assets/brands/dell.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -70,6 +72,8 @@ const repairBrands = [
   { name: "Sony", logo: brandSony.url },
   { name: "Microsoft", logo: brandMicrosoft.url },
   { name: "Nintendo", logo: brandNintendo.url },
+  { name: "Honor", logo: brandHonor.url },
+  { name: "Dell", logo: brandDell.url },
 ];
 
 function Home() {
