@@ -9,17 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VoorwaardenRouteImport } from './routes/voorwaarden'
 import { Route as ReparatiesRouteImport } from './routes/reparaties'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PakketpuntRouteImport } from './routes/pakketpunt'
 import { Route as OverOnsRouteImport } from './routes/over-ons'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AfspraakRouteImport } from './routes/afspraak'
 import { Route as AccessoiresRouteImport } from './routes/accessoires'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VoorwaardenRoute = VoorwaardenRouteImport.update({
+  id: '/voorwaarden',
+  path: '/voorwaarden',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReparatiesRoute = ReparatiesRouteImport.update({
   id: '/reparaties',
   path: '/reparaties',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PakketpuntRoute = PakketpuntRouteImport.update({
@@ -30,6 +43,11 @@ const PakketpuntRoute = PakketpuntRouteImport.update({
 const OverOnsRoute = OverOnsRouteImport.update({
   id: '/over-ons',
   path: '/over-ons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -58,18 +76,24 @@ export interface FileRoutesByFullPath {
   '/accessoires': typeof AccessoiresRoute
   '/afspraak': typeof AfspraakRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/over-ons': typeof OverOnsRoute
   '/pakketpunt': typeof PakketpuntRoute
+  '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
+  '/voorwaarden': typeof VoorwaardenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accessoires': typeof AccessoiresRoute
   '/afspraak': typeof AfspraakRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/over-ons': typeof OverOnsRoute
   '/pakketpunt': typeof PakketpuntRoute
+  '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
+  '/voorwaarden': typeof VoorwaardenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,9 +101,12 @@ export interface FileRoutesById {
   '/accessoires': typeof AccessoiresRoute
   '/afspraak': typeof AfspraakRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/over-ons': typeof OverOnsRoute
   '/pakketpunt': typeof PakketpuntRoute
+  '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
+  '/voorwaarden': typeof VoorwaardenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -88,27 +115,36 @@ export interface FileRouteTypes {
     | '/accessoires'
     | '/afspraak'
     | '/contact'
+    | '/cookies'
     | '/over-ons'
     | '/pakketpunt'
+    | '/privacy'
     | '/reparaties'
+    | '/voorwaarden'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/accessoires'
     | '/afspraak'
     | '/contact'
+    | '/cookies'
     | '/over-ons'
     | '/pakketpunt'
+    | '/privacy'
     | '/reparaties'
+    | '/voorwaarden'
   id:
     | '__root__'
     | '/'
     | '/accessoires'
     | '/afspraak'
     | '/contact'
+    | '/cookies'
     | '/over-ons'
     | '/pakketpunt'
+    | '/privacy'
     | '/reparaties'
+    | '/voorwaarden'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -116,18 +152,35 @@ export interface RootRouteChildren {
   AccessoiresRoute: typeof AccessoiresRoute
   AfspraakRoute: typeof AfspraakRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   OverOnsRoute: typeof OverOnsRoute
   PakketpuntRoute: typeof PakketpuntRoute
+  PrivacyRoute: typeof PrivacyRoute
   ReparatiesRoute: typeof ReparatiesRoute
+  VoorwaardenRoute: typeof VoorwaardenRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/voorwaarden': {
+      id: '/voorwaarden'
+      path: '/voorwaarden'
+      fullPath: '/voorwaarden'
+      preLoaderRoute: typeof VoorwaardenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reparaties': {
       id: '/reparaties'
       path: '/reparaties'
       fullPath: '/reparaties'
       preLoaderRoute: typeof ReparatiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pakketpunt': {
@@ -142,6 +195,13 @@ declare module '@tanstack/react-router' {
       path: '/over-ons'
       fullPath: '/over-ons'
       preLoaderRoute: typeof OverOnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -180,9 +240,12 @@ const rootRouteChildren: RootRouteChildren = {
   AccessoiresRoute: AccessoiresRoute,
   AfspraakRoute: AfspraakRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   OverOnsRoute: OverOnsRoute,
   PakketpuntRoute: PakketpuntRoute,
+  PrivacyRoute: PrivacyRoute,
   ReparatiesRoute: ReparatiesRoute,
+  VoorwaardenRoute: VoorwaardenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
