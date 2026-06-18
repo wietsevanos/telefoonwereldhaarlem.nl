@@ -3,7 +3,16 @@ import { useMemo, useState } from "react";
 import { SiteShell, PageHero } from "@/components/site/SiteShell";
 import { categories, specialServices, repairCatalog } from "@/lib/repairs-data";
 
+type ReparatiesSearch = {
+  cat?: string;
+  brand?: string;
+};
+
 export const Route = createFileRoute("/reparaties")({
+  validateSearch: (search: Record<string, unknown>): ReparatiesSearch => ({
+    cat: typeof search.cat === "string" ? search.cat : undefined,
+    brand: typeof search.brand === "string" ? search.brand : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Reparaties, prijzen en modellen — Telefoon Wereld Haarlem" },
@@ -23,9 +32,19 @@ export const Route = createFileRoute("/reparaties")({
 });
 
 function ReparatiesPage() {
-  const [activeCat, setActiveCat] = useState(categories[0].id);
+  const search = Route.useSearch();
+  const initialCat =
+    (search.cat && categories.find((c) => c.id === search.cat)?.id) ||
+    (search.brand &&
+      categories.find((c) => c.brands.some((b) => b.name === search.brand))?.id) ||
+    categories[0].id;
+  const [activeCat, setActiveCat] = useState(initialCat);
   const cat = categories.find((c) => c.id === activeCat)!;
-  const [openBrand, setOpenBrand] = useState<string | null>(cat.brands[0]?.name ?? null);
+  const initialBrand =
+    (search.brand && cat.brands.find((b) => b.name === search.brand)?.name) ||
+    cat.brands[0]?.name ||
+    null;
+  const [openBrand, setOpenBrand] = useState<string | null>(initialBrand);
   const [openModel, setOpenModel] = useState<string | null>(null);
 
   const brand = useMemo(() => cat.brands.find((b) => b.name === openBrand) ?? null, [cat, openBrand]);
