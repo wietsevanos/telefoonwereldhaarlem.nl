@@ -37,11 +37,38 @@ function ContactPage() {
             </div>
             <div className="bg-white rounded-3xl p-8 border border-[color:var(--color-hairline)]">
               <h3 className="text-sm font-bold uppercase tracking-widest text-brand-900/50 mb-4">Openingstijden</h3>
-              <ul className="space-y-2 text-[15px] text-brand-900/70">
-                <li className="flex justify-between"><span>Maandag</span><span className="tabular-nums">10:00 – 18:00</span></li>
-                <li className="flex justify-between"><span>Di – Vr</span><span className="tabular-nums">09:30 – 18:00</span></li>
-                <li className="flex justify-between"><span>Zaterdag</span><span className="tabular-nums">10:00 – 17:00</span></li>
-                <li className="flex justify-between text-brand-900/40"><span>Zondag</span><span>Gesloten</span></li>
+              <ul className="space-y-1 text-[15px] text-brand-900/70">
+                {[
+                  { day: "Maandag", hours: "10:00 – 18:00" },
+                  { day: "Dinsdag", hours: "09:30 – 18:00" },
+                  { day: "Woensdag", hours: "09:30 – 18:00" },
+                  { day: "Donderdag", hours: "09:30 – 18:00" },
+                  { day: "Vrijdag", hours: "09:30 – 18:00" },
+                  { day: "Zaterdag", hours: "10:00 – 17:00" },
+                  { day: "Zondag", hours: "Gesloten", closed: true },
+                ].map((item, index) => {
+                  const todayIndex = (new Date().getDay() + 6) % 7; // 0=Maandag, 6=Zondag
+                  const isToday = index === todayIndex;
+                  return (
+                    <li
+                      key={item.day}
+                      className={`flex justify-between items-center rounded-xl px-3 py-1.5 -mx-3 transition-colors ${
+                        isToday ? "bg-brand-50 font-semibold text-brand-900" : ""
+                      } ${item.closed ? "text-brand-900/40" : ""}`}
+                    >
+                      <span className="flex items-center gap-2">
+                        {isToday && (
+                          <span className="relative flex h-2 w-2">
+                            <span className="absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75 animate-ping" />
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500" />
+                          </span>
+                        )}
+                        {item.day}
+                      </span>
+                      <span className={`tabular-nums ${item.closed ? "" : ""}`}>{item.hours}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
