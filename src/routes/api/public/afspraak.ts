@@ -137,20 +137,3 @@ export const Route = createFileRoute("/api/public/afspraak")({
     },
   },
 });
-
-// legacy block removed below
-const _unused = async () => {
-  await fetch("https://connector-gateway.lovable.dev/resend/emails", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              from: "Telefoon Wereld Haarlem <onboarding@resend.dev>",
-              to: ["wietsevanos@gmail.com"],
-              reply_to: email,
-              subject: `Nieuwe afspraak: ${repair} — ${brand} ${model}`.trim(),
-              html,
-            }),
-          });
-};
