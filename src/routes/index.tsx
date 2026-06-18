@@ -129,7 +129,7 @@ function Home() {
             <div
               className="relative rounded-[40px] overflow-hidden bg-transparent shadow-[var(--shadow-lift)] border border-[color:var(--color-hairline)] animate-float-soft aspect-square"
               dangerouslySetInnerHTML={{
-                __html: `<iframe title="iphone 17 pro max silver" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/9dbfe0d846f341bf9fc501a854f5de1a/embed?autospin=1&camera=0&transparent=1" style="width:100%;height:100%;border:0;"></iframe>`,
+                __html: `<iframe title="iphone 17 pro max silver" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/9dbfe0d846f341bf9fc501a854f5de1a/embed?autospin=1&autostart=1&camera=0&preload=1&transparent=1&ui_hint=0&dnt=1" style="width:100%;height:100%;border:0;"></iframe>`,
               }}
             />
             <div className="absolute -bottom-6 -left-6 bg-white/80 backdrop-blur-xl rounded-2xl px-5 py-4 border border-[color:var(--color-hairline)] shadow-[var(--shadow-soft)] hidden md:block">
