@@ -342,8 +342,8 @@ function AfspraakPage() {
                         <p><strong>Merk:</strong> {brand?.name}</p>
                         <p><strong>Model:</strong> {model}</p>
                         <p><strong>Reparatie:</strong> {repair}</p>
-                        {slot && (
-                          <p><strong>Datum & tijd:</strong> {fmtDay(slot)} om {fmtTime(slot)}</p>
+                        {datum && tijd && (
+                          <p><strong>Datum & tijd:</strong> {fmtNLDate(datum)} om {tijd}</p>
                         )}
                         {priceFor(repair) && (
                           <p className="pt-2 mt-2 border-t border-brand-900/10">
@@ -410,7 +410,7 @@ function AfspraakPage() {
                   <div className="size-16 mx-auto mb-6 rounded-full bg-brand-500 grid place-items-center text-white text-2xl">✓</div>
                   <h2 className="text-3xl font-bold tracking-tight">Bedankt, {form.naam.split(" ")[0] || "klant"}!</h2>
                   <p className="mt-3 text-brand-900/60 max-w-md mx-auto">
-                    Uw afspraak is ingepland{slot ? ` op ${fmtDay(slot)} om ${fmtTime(slot)}` : ""}. U ontvangt een bevestiging per e-mail.
+                    We hebben uw aanvraag{datum && tijd ? ` voor ${fmtNLDate(datum)} om ${tijd}` : ""} ontvangen. U krijgt direct een bevestiging per e-mail en we nemen zo snel mogelijk contact op om de afspraak definitief in te plannen.
                   </p>
                 </div>
               )}
