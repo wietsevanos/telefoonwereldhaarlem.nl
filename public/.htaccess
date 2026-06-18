@@ -1,0 +1,23 @@
+# SPA fallback voor statische DirectAdmin hosting:
+# alle onbekende paden moeten index.html serveren zodat de React-router
+# (TanStack Router) zelf de juiste pagina kan renderen.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  # Laat bestaande bestanden en mappen met rust
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  # Alles wat geen bestand is → index.html
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Caching voor gehashte assets (Vite zet hashes in bestandsnamen)
+<IfModule mod_headers.c>
+  <FilesMatch "\.(?:js|css|woff2?|ttf|otf|eot|svg|png|jpg|jpeg|webp|gif|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { repairCatalog, categories, type Brand, type Category } from "@/lib/repairs-data";
+import { supabase } from "@/integrations/supabase/client";
 
 function priceFor(label: string | null): string | null {
   if (!label) return null;
@@ -44,6 +45,37 @@ function fmtTime(d: Date): string {
 }
 function sameDay(a: Date, b: Date): boolean {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+// .ics-bestand in de browser genereren, zodat we geen server-endpoint nodig hebben.
+function toICSStamp(d: Date): string {
+  return d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+}
+function buildCalendarLinks(slot: Date, title: string, details: string) {
+  const end = new Date(slot.getTime() + 30 * 60 * 1000);
+  const location = "Telefoon Wereld Haarlem, Generaal Cronjéstraat, Haarlem";
+  const dates = `${toICSStamp(slot)}/${toICSStamp(end)}`;
+  const google = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${dates}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`;
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Telefoon Wereld Haarlem//Afspraak//NL",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "BEGIN:VEVENT",
+    `UID:${toICSStamp(slot)}-${Math.random().toString(36).slice(2, 10)}@telefoonwereldhaarlem`,
+    `DTSTAMP:${toICSStamp(new Date())}`,
+    `DTSTART:${toICSStamp(slot)}`,
+    `DTEND:${toICSStamp(end)}`,
+    `SUMMARY:${title}`,
+    `DESCRIPTION:${details.replace(/\n/g, "\\n")}`,
+    `LOCATION:${location}`,
+    "STATUS:TENTATIVE",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+  const icsUrl = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
+  return { google, icsUrl };
 }
 
 type AfspraakSearch = {
@@ -124,10 +156,21 @@ function AfspraakPage() {
     const from = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), selectedDay.getDate(), 0, 0, 0);
     const to = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), selectedDay.getDate(), 23, 59, 59);
     setLoadingSlots(true);
-    fetch(`/api/public/slots?from=${encodeURIComponent(from.toISOString())}&to=${encodeURIComponent(to.toISOString())}`)
-      .then((r) => r.json())
-      .then((d: { taken?: string[] }) => {
-        setTaken(new Set((d.taken ?? []).map((s) => new Date(s).toISOString())));
+    (supabase as unknown as {
+      from: (t: string) => {
+        select: (c: string) => {
+          gte: (c: string, v: string) => {
+            lte: (c: string, v: string) => Promise<{ data: { slot_at: string }[] | null }>;
+          };
+        };
+      };
+    })
+      .from("bookings")
+      .select("slot_at")
+      .gte("slot_at", from.toISOString())
+      .lte("slot_at", to.toISOString())
+      .then(({ data }) => {
+        setTaken(new Set((data ?? []).map((r) => new Date(r.slot_at).toISOString())));
       })
       .catch(() => setTaken(new Set()))
       .finally(() => setLoadingSlots(false));
@@ -139,28 +182,53 @@ function AfspraakPage() {
     setSubmitting(true);
     setError(null);
     try {
-      const res = await fetch("/api/public/afspraak", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          device: category?.device,
-          brand: brand?.name,
-          model,
-          repair,
-          price: priceFor(repair),
-          slot_at: slot.toISOString(),
-          ...form,
-        }),
-      });
-      if (res.status === 409) {
-        setError("Dit tijdslot is zojuist bezet geraakt. Kies een ander moment.");
-        // refresh taken slots
-        setTaken((prev) => new Set([...prev, slot.toISOString()]));
-        setSlot(null);
-        setStep(5);
-        return;
+      const payload = {
+        slot_at: slot.toISOString(),
+        naam: form.naam,
+        email: form.email,
+        telefoon: form.telefoon,
+        apparaat: category?.device ?? null,
+        merk: brand?.name ?? null,
+        model: model ?? null,
+        reparatie: repair ?? "",
+        prijs: priceFor(repair),
+        opmerking: form.opmerking || null,
+      };
+      // 1) Boeking opslaan — uniciteit op slot_at voorkomt dubbele boekingen.
+      const { error: insertError } = await (
+        supabase as unknown as { from: (t: string) => { insert: (r: unknown) => Promise<{ error: { code?: string } | null }> } }
+      )
+        .from("bookings")
+        .insert(payload);
+      if (insertError) {
+        if ((insertError as { code?: string }).code === "23505") {
+          setError("Dit tijdslot is zojuist bezet geraakt. Kies een ander moment.");
+          setTaken((prev) => new Set([...prev, slot.toISOString()]));
+          setSlot(null);
+          setStep(5);
+          return;
+        }
+        throw new Error("insert failed");
       }
-      if (!res.ok) throw new Error("send failed");
+      // 2) Mails versturen via edge function (niet-fataal als het faalt — boeking staat al vast).
+      try {
+        await supabase.functions.invoke("send-afspraak", {
+          body: {
+            device: category?.device,
+            brand: brand?.name,
+            model,
+            repair,
+            price: priceFor(repair),
+            slot_at: slot.toISOString(),
+            naam: form.naam,
+            email: form.email,
+            telefoon: form.telefoon,
+            opmerking: form.opmerking,
+          },
+        });
+      } catch (mailErr) {
+        console.error("send-afspraak invoke failed", mailErr);
+      }
       setDone(true);
     } catch {
       setError("Er ging iets mis bij het versturen. Probeer het opnieuw of bel ons.");
@@ -497,6 +565,30 @@ function AfspraakPage() {
                   <p className="mt-3 text-brand-900/60 max-w-md mx-auto">
                     Uw afspraak is ingepland{slot ? ` op ${fmtDay(slot)} om ${fmtTime(slot)}` : ""}. U ontvangt een bevestiging per e-mail.
                   </p>
+                  {slot && (() => {
+                    const title = `Reparatie-afspraak: ${repair ?? ""} (${brand?.name ?? ""} ${model ?? ""})`.trim();
+                    const details = `Reparatie-afspraak bij Telefoon Wereld Haarlem.\n\nApparaat: ${category?.label ?? ""}\nMerk: ${brand?.name ?? ""}\nModel: ${model ?? ""}\nReparatie: ${repair ?? ""}`;
+                    const { google, icsUrl } = buildCalendarLinks(slot, title, details);
+                    return (
+                      <div className="mt-8 flex flex-wrap justify-center gap-3">
+                        <a
+                          href={google}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-5 py-3 rounded-2xl bg-brand-900 text-white font-semibold text-sm hover:bg-brand-600 transition-all"
+                        >
+                          Toevoegen aan Google Agenda
+                        </a>
+                        <a
+                          href={icsUrl}
+                          download="afspraak.ics"
+                          className="px-5 py-3 rounded-2xl border-2 border-brand-900/15 text-brand-900 font-semibold text-sm hover:bg-brand-50 transition-all"
+                        >
+                          Apple / Outlook (.ics)
+                        </a>
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
             </div>
