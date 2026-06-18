@@ -16,6 +16,7 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [agree, setAgree] = useState(false);
   return (
     <SiteShell>
       <PageHero eyebrow="Contact" title="Kom langs of" highlight="stuur een bericht." intro="Wij zijn er voor u tijdens onze openingstijden. Bellen, mailen of binnenlopen mag altijd." />
@@ -84,7 +85,7 @@ function ContactPage() {
             </div>
 
             <form
-              onSubmit={(e) => { e.preventDefault(); setSent(true); }}
+              onSubmit={(e) => { e.preventDefault(); if (!agree) return; setSent(true); }}
               className="bg-white rounded-3xl p-8 border border-[color:var(--color-hairline)] space-y-4"
             >
               <h3 className="text-xl font-bold">Stuur ons een bericht</h3>
@@ -92,10 +93,23 @@ function ContactPage() {
                 <p className="text-brand-600 font-semibold">Bedankt! We nemen snel contact op.</p>
               ) : (
                 <>
-                  <input required placeholder="Naam" className="w-full px-5 py-3.5 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none transition-all" />
-                  <input required type="email" placeholder="E-mail" className="w-full px-5 py-3.5 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none transition-all" />
-                  <textarea required rows={4} placeholder="Uw vraag" className="w-full px-5 py-3.5 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none resize-none transition-all" />
-                  <button className="px-6 py-3.5 bg-brand-900 text-white rounded-2xl font-semibold hover:bg-brand-600 transition-all">Verstuur bericht</button>
+                  <input required maxLength={100} placeholder="Naam" className="w-full px-5 py-3.5 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none transition-all" />
+                  <input required type="email" maxLength={255} placeholder="E-mail" className="w-full px-5 py-3.5 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none transition-all" />
+                  <textarea required maxLength={1000} rows={4} placeholder="Uw vraag" className="w-full px-5 py-3.5 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none resize-none transition-all" />
+                  <label className="flex items-start gap-3 text-sm text-brand-900/70 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={agree}
+                      onChange={(e) => setAgree(e.target.checked)}
+                      className="mt-1 accent-brand-500"
+                    />
+                    <span>
+                      Ik ga akkoord met de{" "}
+                      <Link to="/privacy" className="text-brand-600 font-semibold underline">privacyverklaring</Link>. Mijn gegevens worden uitsluitend gebruikt voor het beantwoorden van dit contactverzoek.
+                    </span>
+                  </label>
+                  <button disabled={!agree} className="px-6 py-3.5 bg-brand-900 text-white rounded-2xl font-semibold hover:bg-brand-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed">Verstuur bericht</button>
                 </>
               )}
             </form>

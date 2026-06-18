@@ -64,9 +64,9 @@ export function Footer() {
             © {new Date().getFullYear()} Telefoon Wereld Haarlem. Alle rechten voorbehouden.
           </p>
           <div className="flex gap-6 text-xs text-brand-900/50">
-            <a href="#" className="hover:text-brand-900">Privacy</a>
-            <a href="#" className="hover:text-brand-900">Voorwaarden</a>
-            <a href="#" className="hover:text-brand-900">Cookies</a>
+            <Link to="/privacy" className="hover:text-brand-900">Privacy</Link>
+            <Link to="/voorwaarden" className="hover:text-brand-900">Voorwaarden</Link>
+            <Link to="/cookies" className="hover:text-brand-900">Cookies</Link>
           </div>
         </div>
       </div>
