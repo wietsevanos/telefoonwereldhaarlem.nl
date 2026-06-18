@@ -270,14 +270,14 @@ function Home() {
         <div className="max-w-6xl mx-auto px-4 md:px-6">
           <div className="bg-white border border-[color:var(--color-hairline)] rounded-[28px] md:rounded-[36px] shadow-[var(--shadow-soft)] overflow-hidden flex flex-col md:flex-row items-stretch">
             {/* Static branding & score */}
-            <div className="p-6 md:p-8 lg:p-10 flex flex-row md:flex-col gap-5 md:gap-6 md:w-[34%] shrink-0 border-b md:border-b-0 md:border-r border-[color:var(--color-hairline)] bg-white relative z-10 items-center md:items-start">
-              <div className="min-w-0">
+            <div className="p-6 md:p-8 lg:p-10 flex flex-col gap-5 md:gap-6 md:w-[34%] shrink-0 border-b md:border-b-0 md:border-r border-[color:var(--color-hairline)] bg-white relative z-10 items-center md:items-start">
+              <div>
                 <span className="text-[11px] font-bold uppercase tracking-widest text-brand-500">Klanten</span>
-                <h2 className="mt-2 md:mt-3 text-xl md:text-2xl lg:text-[26px] font-semibold tracking-tight leading-tight truncate">
+                <h2 className="mt-2 md:mt-3 text-lg md:text-2xl lg:text-[26px] font-semibold tracking-tight leading-tight">
                   Wat klanten over ons zeggen.
                 </h2>
               </div>
-              <div className="flex items-center gap-3 md:gap-4 ml-auto md:ml-0 shrink-0">
+              <div className="flex items-center gap-3 md:gap-4 shrink-0">
                 <div className="flex items-center justify-center size-10 md:size-12 rounded-2xl bg-brand-50 border border-[color:var(--color-hairline)] shadow-sm shrink-0">
                   <svg viewBox="0 0 24 24" className="size-5 md:size-6" aria-hidden>
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
@@ -297,7 +297,7 @@ function Home() {
             </div>
 
             {/* Marquee */}
-            <div className="relative flex-1 overflow-hidden h-[190px] md:h-[240px] flex items-center bg-brand-50/30">
+            <div className="relative flex-1 overflow-hidden h-[220px] md:h-[240px] flex items-center bg-brand-50/30">
               <div className="pointer-events-none absolute inset-y-0 left-0 w-12 md:w-20 bg-gradient-to-r from-white to-transparent z-10" />
               <div className="pointer-events-none absolute inset-y-0 right-0 w-12 md:w-20 bg-gradient-to-l from-white to-transparent z-10" />
 
@@ -312,7 +312,7 @@ function Home() {
                   return (
                     <figure
                       key={`${r.name}-${i}`}
-                      className="w-[280px] md:w-80 mx-2 md:mx-3 p-5 md:p-6 bg-white rounded-2xl md:rounded-3xl border border-[color:var(--color-hairline)] shadow-[0_4px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between h-[150px] md:h-[180px] shrink-0"
+                      className="w-[280px] md:w-80 mx-2 md:mx-3 p-5 md:p-6 bg-white rounded-2xl md:rounded-3xl border border-[color:var(--color-hairline)] shadow-[0_4px_12px_rgba(15,23,42,0.03)] flex flex-col justify-between h-[160px] md:h-[180px] shrink-0"
                     >
                       <blockquote className="text-[13px] md:text-[14px] leading-relaxed text-brand-900/70">
                         "{r.quote}"
