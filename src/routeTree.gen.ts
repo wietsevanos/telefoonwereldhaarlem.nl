@@ -19,6 +19,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AfspraakRouteImport } from './routes/afspraak'
 import { Route as AccessoiresRouteImport } from './routes/accessoires'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicAfspraakRouteImport } from './routes/api/public/afspraak'
 
 const VoorwaardenRoute = VoorwaardenRouteImport.update({
   id: '/voorwaarden',
@@ -70,6 +71,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicAfspraakRoute = ApiPublicAfspraakRouteImport.update({
+  id: '/api/public/afspraak',
+  path: '/api/public/afspraak',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
   '/voorwaarden': typeof VoorwaardenRoute
+  '/api/public/afspraak': typeof ApiPublicAfspraakRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
   '/voorwaarden': typeof VoorwaardenRoute
+  '/api/public/afspraak': typeof ApiPublicAfspraakRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/reparaties': typeof ReparatiesRoute
   '/voorwaarden': typeof VoorwaardenRoute
+  '/api/public/afspraak': typeof ApiPublicAfspraakRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/reparaties'
     | '/voorwaarden'
+    | '/api/public/afspraak'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/reparaties'
     | '/voorwaarden'
+    | '/api/public/afspraak'
   id:
     | '__root__'
     | '/'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/reparaties'
     | '/voorwaarden'
+    | '/api/public/afspraak'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -158,6 +170,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ReparatiesRoute: typeof ReparatiesRoute
   VoorwaardenRoute: typeof VoorwaardenRoute
+  ApiPublicAfspraakRoute: typeof ApiPublicAfspraakRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -232,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/afspraak': {
+      id: '/api/public/afspraak'
+      path: '/api/public/afspraak'
+      fullPath: '/api/public/afspraak'
+      preLoaderRoute: typeof ApiPublicAfspraakRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -246,17 +266,8 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ReparatiesRoute: ReparatiesRoute,
   VoorwaardenRoute: VoorwaardenRoute,
+  ApiPublicAfspraakRoute: ApiPublicAfspraakRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
