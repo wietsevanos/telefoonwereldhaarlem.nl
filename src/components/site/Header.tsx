@@ -36,7 +36,7 @@ export function Header() {
           <img
             src={logoTw.url}
             alt="Telefoon Wereld Haarlem"
-            className="h-9 w-auto object-contain"
+            className="h-12 w-auto object-contain"
             style={{ filter: "brightness(0)" }}
           />
         </Link>
