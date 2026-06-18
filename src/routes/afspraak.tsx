@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { repairCatalog, categories, type Brand, type Category } from "@/lib/repairs-data";
 
@@ -9,41 +9,17 @@ function priceFor(label: string | null): string | null {
   return entry ? `Vanaf €${entry.from},-` : null;
 }
 
-// Openingstijden: ma–vr 10:00–18:00, za 10:00–17:00, zo gesloten. Slots van 30 min.
-function slotsForDate(date: Date): Date[] {
-  const dow = date.getDay(); // 0 = zo
-  if (dow === 0) return [];
-  const endHour = dow === 6 ? 17 : 18;
-  const out: Date[] = [];
-  for (let h = 10; h < endHour; h++) {
-    for (const m of [0, 30]) {
-      out.push(new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, m, 0, 0));
-    }
-  }
-  return out;
+function todayISO(): string {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
 }
-
-function nextDays(count: number): Date[] {
-  const out: Date[] = [];
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  let i = 0;
-  while (out.length < count) {
-    const d = new Date(today.getFullYear(), today.getMonth(), today.getDate() + i);
-    if (d.getDay() !== 0) out.push(d); // skip zondag
-    i++;
-  }
-  return out;
-}
-
-function fmtDay(d: Date): string {
-  return d.toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "short" });
-}
-function fmtTime(d: Date): string {
-  return d.toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
-}
-function sameDay(a: Date, b: Date): boolean {
-  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+function fmtNLDate(iso: string): string {
+  const d = new Date(`${iso}T00:00:00`);
+  if (isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long" });
 }
 
 type AfspraakSearch = {
@@ -98,11 +74,8 @@ function AfspraakPage() {
   const [brand, setBrand] = useState<Brand | null>(initialBrand);
   const [model, setModel] = useState<string | null>(initialModel);
   const [repair, setRepair] = useState<string | null>(initialRepair);
-  const days = useMemo(() => nextDays(14), []);
-  const [selectedDay, setSelectedDay] = useState<Date>(days[0]);
-  const [slot, setSlot] = useState<Date | null>(null);
-  const [taken, setTaken] = useState<Set<string>>(new Set());
-  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [datum, setDatum] = useState<string>("");
+  const [tijd, setTijd] = useState<string>("");
   const [form, setForm] = useState({ naam: "", email: "", telefoon: "", opmerking: "" });
   const [agree, setAgree] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -115,27 +88,12 @@ function AfspraakPage() {
     (step === 2 && brand) ||
     (step === 3 && model) ||
     (step === 4 && repair) ||
-    (step === 5 && slot) ||
+    (step === 5 && datum && tijd) ||
     step === 6;
-
-  // Bezette slots ophalen voor de geselecteerde dag
-  useEffect(() => {
-    if (step !== 5) return;
-    const from = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), selectedDay.getDate(), 0, 0, 0);
-    const to = new Date(selectedDay.getFullYear(), selectedDay.getMonth(), selectedDay.getDate(), 23, 59, 59);
-    setLoadingSlots(true);
-    fetch(`/api/public/slots?from=${encodeURIComponent(from.toISOString())}&to=${encodeURIComponent(to.toISOString())}`)
-      .then((r) => r.json())
-      .then((d: { taken?: string[] }) => {
-        setTaken(new Set((d.taken ?? []).map((s) => new Date(s).toISOString())));
-      })
-      .catch(() => setTaken(new Set()))
-      .finally(() => setLoadingSlots(false));
-  }, [step, selectedDay]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agree || !slot) return;
+    if (!agree || !datum || !tijd) return;
     setSubmitting(true);
     setError(null);
     try {
@@ -148,18 +106,11 @@ function AfspraakPage() {
           model,
           repair,
           price: priceFor(repair),
-          slot_at: slot.toISOString(),
+          datum,
+          tijd,
           ...form,
         }),
       });
-      if (res.status === 409) {
-        setError("Dit tijdslot is zojuist bezet geraakt. Kies een ander moment.");
-        // refresh taken slots
-        setTaken((prev) => new Set([...prev, slot.toISOString()]));
-        setSlot(null);
-        setStep(5);
-        return;
-      }
       if (!res.ok) throw new Error("send failed");
       setDone(true);
     } catch {
@@ -316,68 +267,32 @@ function AfspraakPage() {
                   {step === 5 && (
                     <div className="animate-fade-up">
                       <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">5. Kies datum & tijd</p>
-                      <div className="flex gap-2 overflow-x-auto pb-3 -mx-1 px-1 snap-x">
-                        {days.map((d) => {
-                          const active = sameDay(d, selectedDay);
-                          return (
-                            <button
-                              key={d.toISOString()}
-                              type="button"
-                              onClick={() => { setSelectedDay(d); setSlot(null); }}
-                              className={`shrink-0 snap-start px-4 py-3 rounded-xl border-2 text-center min-w-[88px] transition-all ${
-                                active
-                                  ? "border-brand-500 bg-brand-50 text-brand-700"
-                                  : "border-transparent bg-brand-50/60 hover:bg-brand-50"
-                              }`}
-                            >
-                              <span className="block text-xs font-semibold capitalize">{fmtDay(d)}</span>
-                            </button>
-                          );
-                        })}
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <label className="block">
+                          <span className="block text-xs font-semibold text-brand-900/60 mb-2">Datum</span>
+                          <input
+                            type="date"
+                            required
+                            min={todayISO()}
+                            value={datum}
+                            onChange={(e) => setDatum(e.target.value)}
+                            className="w-full px-5 py-4 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none transition-all"
+                          />
+                        </label>
+                        <label className="block">
+                          <span className="block text-xs font-semibold text-brand-900/60 mb-2">Tijd</span>
+                          <input
+                            type="time"
+                            required
+                            value={tijd}
+                            onChange={(e) => setTijd(e.target.value)}
+                            className="w-full px-5 py-4 rounded-2xl bg-brand-50/60 border-2 border-transparent focus:border-brand-500 focus:bg-white outline-none transition-all"
+                          />
+                        </label>
                       </div>
-                      <div className="mt-5">
-                        {(() => {
-                          const all = slotsForDate(selectedDay);
-                          const now = Date.now();
-                          const future = all.filter((s) => s.getTime() > now + 30 * 60 * 1000);
-                          if (future.length === 0) {
-                            return <p className="text-sm text-brand-900/60">Geen beschikbare tijden meer op deze dag.</p>;
-                          }
-                          return (
-                            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5">
-                              {future.map((s) => {
-                                const iso = s.toISOString();
-                                const isTaken = taken.has(iso);
-                                const isSelected = slot && slot.getTime() === s.getTime();
-                                return (
-                                  <button
-                                    key={iso}
-                                    type="button"
-                                    disabled={isTaken}
-                                    onClick={() => setSlot(s)}
-                                    className={`px-3 py-3 rounded-xl border-2 text-sm font-semibold transition-all ${
-                                      isTaken
-                                        ? "border-transparent bg-brand-50/40 text-brand-900/30 line-through cursor-not-allowed"
-                                        : isSelected
-                                        ? "border-brand-500 bg-brand-50 text-brand-700"
-                                        : "border-transparent bg-brand-50/60 hover:bg-brand-50 text-brand-900"
-                                    }`}
-                                    title={isTaken ? "Bezet" : ""}
-                                  >
-                                    {fmtTime(s)}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          );
-                        })()}
-                        {loadingSlots && (
-                          <p className="mt-3 text-xs text-brand-900/40">Beschikbaarheid laden…</p>
-                        )}
-                        <p className="mt-4 text-xs text-brand-900/50">
-                          Tijden met een streep zijn al door iemand anders geboekt.
-                        </p>
-                      </div>
+                      <p className="mt-4 text-xs text-brand-900/50">
+                        Openingstijden: ma–vr 10:00–18:00, za 10:00–17:00, zo gesloten. We bevestigen uw afspraak persoonlijk per e-mail of telefoon.
+                      </p>
                     </div>
                   )}
 
@@ -427,8 +342,8 @@ function AfspraakPage() {
                         <p><strong>Merk:</strong> {brand?.name}</p>
                         <p><strong>Model:</strong> {model}</p>
                         <p><strong>Reparatie:</strong> {repair}</p>
-                        {slot && (
-                          <p><strong>Datum & tijd:</strong> {fmtDay(slot)} om {fmtTime(slot)}</p>
+                        {datum && tijd && (
+                          <p><strong>Datum & tijd:</strong> {fmtNLDate(datum)} om {tijd}</p>
                         )}
                         {priceFor(repair) && (
                           <p className="pt-2 mt-2 border-t border-brand-900/10">
@@ -495,7 +410,7 @@ function AfspraakPage() {
                   <div className="size-16 mx-auto mb-6 rounded-full bg-brand-500 grid place-items-center text-white text-2xl">✓</div>
                   <h2 className="text-3xl font-bold tracking-tight">Bedankt, {form.naam.split(" ")[0] || "klant"}!</h2>
                   <p className="mt-3 text-brand-900/60 max-w-md mx-auto">
-                    Uw afspraak is ingepland{slot ? ` op ${fmtDay(slot)} om ${fmtTime(slot)}` : ""}. U ontvangt een bevestiging per e-mail.
+                    We hebben uw aanvraag{datum && tijd ? ` voor ${fmtNLDate(datum)} om ${tijd}` : ""} ontvangen. U krijgt direct een bevestiging per e-mail en we nemen zo snel mogelijk contact op om de afspraak definitief in te plannen.
                   </p>
                 </div>
               )}
