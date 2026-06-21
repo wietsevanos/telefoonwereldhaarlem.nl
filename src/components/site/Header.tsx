@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Search } from "lucide-react";
 import logoTw from "@/assets/logo-tw.png.asset.json";
+import { SearchDialog } from "./SearchDialog";
 
 const navItems = [
   { to: "/", label: "Home" },
@@ -15,6 +17,7 @@ const navItems = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -55,6 +58,14 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            aria-label="Zoeken"
+            onClick={() => setSearchOpen(true)}
+            className="size-10 grid place-items-center rounded-full bg-white/70 border border-[color:var(--color-hairline)] hover:bg-brand-50 transition-colors"
+          >
+            <Search className="size-4 text-brand-900" />
+          </button>
           <Link
             to="/afspraak"
             className="hidden sm:inline-flex px-5 py-2.5 bg-brand-900 text-white rounded-full text-sm font-semibold hover:bg-brand-600 transition-all active:scale-95"
@@ -98,6 +109,7 @@ export function Header() {
           </nav>
         </div>
       )}
+      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }
