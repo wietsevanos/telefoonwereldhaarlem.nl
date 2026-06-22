@@ -77,6 +77,19 @@ const phoneRepairs: RepairKey[] = [
 
 const phoneRepairsNoFaceId: RepairKey[] = phoneRepairs.filter((r) => r !== "faceid");
 
+// Apple iPhone reparaties zoals op de officiële prijslijst (PDF).
+const applePhoneRepairs: RepairKey[] = [
+  "scherm",
+  "schermPremium",
+  "camera",
+  "batterij",
+  "achterkant",
+  "speaker",
+  "laadpoort",
+  "knoppen",
+  "waterschade",
+];
+
 const tabletRepairs: RepairKey[] = [
   "scherm",
   "batterij",
