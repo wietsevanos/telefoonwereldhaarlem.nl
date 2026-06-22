@@ -114,6 +114,11 @@ Deno.serve(async (req: Request) => {
       hour: "2-digit", minute: "2-digit", timeZone: "Europe/Amsterdam",
     });
 
+    const location = "Telefoon Wereld Haarlem, Generaal Cronjéstraat, Haarlem";
+    const calTitle = `Reparatie-afspraak: ${repair} (${brand} ${model})`.trim();
+    const calDetails = `Reparatie-afspraak bij Telefoon Wereld Haarlem.\n\nApparaat: ${device}\nMerk: ${brand}\nModel: ${model}\nReparatie: ${repair}${price ? `\nIndicatieve prijs: ${price}` : ""}`;
+    const googleUrl = buildGoogleLink(slotDate, calTitle, calDetails, location);
+
     const sendEmail = (payload: Record<string, unknown>) =>
       fetch("https://connector-gateway.lovable.dev/resend/emails", {
         method: "POST",
@@ -139,7 +144,10 @@ Deno.serve(async (req: Request) => {
         <tr><td><b>Reparatie</b></td><td>${esc(repair)}</td></tr>
         <tr><td><b>Indicatieve prijs</b></td><td>${esc(price)}</td></tr>
         <tr><td valign="top"><b>Opmerking</b></td><td>${esc(opmerking).replace(/\n/g, "<br/>")}</td></tr>
-      </table>`;
+      </table>
+      <p style="margin-top:20px;font-family:Arial,sans-serif;font-size:14px">
+        <a href="${googleUrl}" style="display:inline-block;background:#1a73e8;color:#fff;text-decoration:none;padding:12px 18px;border-radius:8px;font-weight:600">Toevoegen aan Google Agenda</a>
+      </p>`;
 
     const shopRes = await sendEmail({
       from: FROM_ADDRESS,
@@ -159,10 +167,6 @@ Deno.serve(async (req: Request) => {
 
     // 2) Bevestiging naar de klant met agenda-links
     const firstName = String(naam).split(" ")[0] || "klant";
-    const location = "Telefoon Wereld Haarlem, Generaal Cronjéstraat, Haarlem";
-    const calTitle = `Reparatie-afspraak: ${repair} (${brand} ${model})`.trim();
-    const calDetails = `Reparatie-afspraak bij Telefoon Wereld Haarlem.\n\nApparaat: ${device}\nMerk: ${brand}\nModel: ${model}\nReparatie: ${repair}${price ? `\nIndicatieve prijs: ${price}` : ""}`;
-    const googleUrl = buildGoogleLink(slotDate, calTitle, calDetails, location);
     const icsContent = buildICS(slotDate, calTitle, calDetails, location);
     const icsDataUri = `data:text/calendar;charset=utf-8;base64,${btoa(unescape(encodeURIComponent(icsContent)))}`;
 
