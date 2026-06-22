@@ -49,6 +49,8 @@ export type Brand = {
   name: string;
   models: string[];
   repairs: RepairKey[];
+  /** Optional sub-grouping van modellen binnen één merk (bv. Samsung Galaxy S/A/J/Xcover/Z). */
+  series?: { name: string; models: string[] }[];
 };
 
 export type Category = {
