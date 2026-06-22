@@ -203,9 +203,9 @@ function AfspraakPage() {
         naam: form.naam,
         email: form.email,
         telefoon: form.telefoon,
-        apparaat: category?.device ?? null,
-        merk: brand?.name ?? null,
-        model: model ?? null,
+        apparaat: isOtherCategory ? (customDevice || "Anders") : (category?.device ?? null),
+        merk: isOtherCategory ? null : (brand?.name ?? null),
+        model: isOtherCategory ? null : (model ?? null),
         reparatie: repair ?? "",
         prijs: priceFor(repair, model),
         opmerking: form.opmerking || null,
@@ -230,9 +230,9 @@ function AfspraakPage() {
       try {
         await supabase.functions.invoke("send-afspraak", {
           body: {
-            device: category?.device,
-            brand: brand?.name,
-            model,
+            device: isOtherCategory ? (customDevice || "Anders") : category?.device,
+            brand: isOtherCategory ? null : brand?.name,
+            model: isOtherCategory ? null : model,
             repair,
             price: priceFor(repair, model),
             slot_at: slot.toISOString(),
