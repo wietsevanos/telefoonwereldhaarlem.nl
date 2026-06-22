@@ -1,13 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
-import { repairCatalog, categories, type Brand, type Category } from "@/lib/repairs-data";
+import { repairCatalog, categories, getRepairPrice, type Brand, type Category } from "@/lib/repairs-data";
 import { supabase } from "@/integrations/supabase/client";
 
-function priceFor(label: string | null): string | null {
+function priceFor(label: string | null, model: string | null): string | null {
   if (!label) return null;
-  const entry = Object.values(repairCatalog).find((r) => r.label === label);
-  return entry ? `Vanaf €${entry.from},-` : null;
+  const entry = Object.entries(repairCatalog).find(([, r]) => r.label === label);
+  if (!entry) return null;
+  const info = getRepairPrice(model, entry[0] as keyof typeof repairCatalog);
+  return info.onRequest ? "Prijs op aanvraag" : `${info.fromLabel},-`;
 }
 
 // Openingstijden: ma–vr 10:00–18:00, za 10:00–17:00, zo gesloten. Slots van 30 min.
