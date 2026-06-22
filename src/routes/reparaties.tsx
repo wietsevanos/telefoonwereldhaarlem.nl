@@ -46,8 +46,16 @@ function ReparatiesPage() {
     null;
   const [openBrand, setOpenBrand] = useState<string | null>(initialBrand);
   const [openModel, setOpenModel] = useState<string | null>(null);
+  const [openSeries, setOpenSeries] = useState<string | null>(null);
 
   const brand = useMemo(() => cat.brands.find((b) => b.name === openBrand) ?? null, [cat, openBrand]);
+
+  // Bij wisselen van merk: series-keuze resetten naar eerste beschikbare serie.
+  const seriesList = brand?.series ?? null;
+  const activeSeries = seriesList
+    ? seriesList.find((s) => s.name === openSeries) ?? seriesList[0]
+    : null;
+  const shownModels = activeSeries ? activeSeries.models : brand?.models ?? [];
 
   return (
     <SiteShell>
@@ -103,6 +111,7 @@ function ReparatiesPage() {
                     onClick={() => {
                       setOpenBrand(b.name);
                       setOpenModel(null);
+                      setOpenSeries(null);
                     }}
                     className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all flex items-center justify-between ${
                       openBrand === b.name ? "bg-brand-50 text-brand-700" : "hover:bg-brand-50/60"
@@ -119,7 +128,35 @@ function ReparatiesPage() {
             <div>
               {brand ? (
                 <div className="space-y-3">
-                  {brand.models.map((m) => {
+                  {seriesList && (
+                    <div className="mb-4 flex flex-wrap gap-2">
+                      {seriesList.map((s) => {
+                        const active = (activeSeries?.name ?? seriesList[0].name) === s.name;
+                        return (
+                          <button
+                            key={s.name}
+                            onClick={() => {
+                              setOpenSeries(s.name);
+                              setOpenModel(null);
+                            }}
+                            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all border ${
+                              active
+                                ? "bg-brand-900 text-white border-brand-900"
+                                : "bg-white text-brand-900/70 border-[color:var(--color-hairline)] hover:text-brand-900"
+                            }`}
+                          >
+                            {s.name}
+                            <span className="ml-2 text-xs opacity-70 tabular-nums">{s.models.length}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {shownModels.length === 0 ? (
+                    <p className="text-sm text-brand-900/60 bg-white rounded-2xl border border-[color:var(--color-hairline)] p-6">
+                      Modellen voor deze serie worden binnenkort toegevoegd. Neem contact op voor een prijsopgave.
+                    </p>
+                  ) : shownModels.map((m) => {
                     const open = openModel === m;
                     const repairs = brand.repairs;
                     return (

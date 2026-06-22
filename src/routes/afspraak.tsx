@@ -131,6 +131,7 @@ function AfspraakPage() {
   const [category, setCategory] = useState<Category | null>(initialCategory);
   const [brand, setBrand] = useState<Brand | null>(initialBrand);
   const [model, setModel] = useState<string | null>(initialModel);
+  const [series, setSeries] = useState<string | null>(null);
   const [repair, setRepair] = useState<string | null>(initialRepair);
   const days = useMemo(() => nextDays(14), []);
   const [selectedDay, setSelectedDay] = useState<Date>(days[0]);
@@ -333,8 +334,35 @@ function AfspraakPage() {
                   {step === 3 && brand && (
                     <div className="animate-fade-up">
                       <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">3. Welk model?</p>
+                      {brand.series && (
+                        <div className="mb-4 flex flex-wrap gap-2">
+                          {brand.series.map((s) => {
+                            const active = (series ?? brand.series![0].name) === s.name;
+                            return (
+                              <button
+                                key={s.name}
+                                type="button"
+                                onClick={() => {
+                                  setSeries(s.name);
+                                  setModel(null);
+                                }}
+                                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                                  active
+                                    ? "bg-brand-900 text-white border-brand-900"
+                                    : "bg-white text-brand-900/70 border-[color:var(--color-hairline)] hover:text-brand-900"
+                                }`}
+                              >
+                                {s.name}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[420px] overflow-y-auto pr-1">
-                        {brand.models.map((m) => (
+                        {(brand.series
+                          ? (brand.series.find((s) => s.name === (series ?? brand.series![0].name))?.models ?? [])
+                          : brand.models
+                        ).map((m) => (
                           <button
                             key={m}
                             type="button"
