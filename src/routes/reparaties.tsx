@@ -46,8 +46,16 @@ function ReparatiesPage() {
     null;
   const [openBrand, setOpenBrand] = useState<string | null>(initialBrand);
   const [openModel, setOpenModel] = useState<string | null>(null);
+  const [openSeries, setOpenSeries] = useState<string | null>(null);
 
   const brand = useMemo(() => cat.brands.find((b) => b.name === openBrand) ?? null, [cat, openBrand]);
+
+  // Bij wisselen van merk: series-keuze resetten naar eerste beschikbare serie.
+  const seriesList = brand?.series ?? null;
+  const activeSeries = seriesList
+    ? seriesList.find((s) => s.name === openSeries) ?? seriesList[0]
+    : null;
+  const shownModels = activeSeries ? activeSeries.models : brand?.models ?? [];
 
   return (
     <SiteShell>
