@@ -655,7 +655,7 @@ function AfspraakPage() {
                   <div className="mt-8 sm:mt-10 flex items-center justify-between gap-3">
                     <button
                       type="button"
-                      onClick={() => setStep((s) => Math.max(1, s - 1))}
+                      onClick={goBack}
                       disabled={step === 1}
                       className="px-3 sm:px-5 py-3 rounded-2xl text-sm font-semibold text-brand-900/60 hover:text-brand-900 disabled:opacity-30 whitespace-nowrap"
                     >
@@ -664,7 +664,7 @@ function AfspraakPage() {
                     {step < totalSteps ? (
                       <button
                         type="button"
-                        onClick={() => canNext && setStep((s) => s + 1)}
+                        onClick={goNext}
                         disabled={!canNext}
                         className="px-5 sm:px-7 py-3 sm:py-3.5 bg-brand-900 text-white rounded-2xl font-semibold text-sm sm:text-base hover:bg-brand-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
                       >
