@@ -193,7 +193,7 @@ function AfspraakPage() {
         merk: brand?.name ?? null,
         model: model ?? null,
         reparatie: repair ?? "",
-        prijs: priceFor(repair),
+        prijs: priceFor(repair, model),
         opmerking: form.opmerking || null,
       };
       // 1) Boeking opslaan — uniciteit op slot_at voorkomt dubbele boekingen.
@@ -220,7 +220,7 @@ function AfspraakPage() {
             brand: brand?.name,
             model,
             repair,
-            price: priceFor(repair),
+            price: priceFor(repair, model),
             slot_at: slot.toISOString(),
             naam: form.naam,
             email: form.email,
@@ -500,9 +500,9 @@ function AfspraakPage() {
                         {slot && (
                           <p><strong>Datum & tijd:</strong> {fmtDay(slot)} om {fmtTime(slot)}</p>
                         )}
-                        {priceFor(repair) && (
+                        {priceFor(repair, model) && (
                           <p className="pt-2 mt-2 border-t border-brand-900/10">
-                            <strong>Indicatieve prijs:</strong> {priceFor(repair)}
+                            <strong>Indicatieve prijs:</strong> {priceFor(repair, model)}
                             <span className="block text-xs text-brand-900/50 mt-1">
                               Definitieve prijs volgt na diagnose in de winkel.
                             </span>
