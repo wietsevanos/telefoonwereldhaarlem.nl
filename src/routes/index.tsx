@@ -132,8 +132,8 @@ function Home() {
                 src={heroPhone.url}
                 alt="Premium smartphone weergave"
                 width={1024}
-                height={2048}
-                className="w-full h-auto aspect-[9/16] object-cover"
+                height={1024}
+                className="w-full h-auto aspect-square object-cover"
               />
             </div>
             <div className="absolute -bottom-6 -left-6 bg-white/80 backdrop-blur-xl rounded-2xl px-5 py-4 border border-[color:var(--color-hairline)] shadow-[var(--shadow-soft)] hidden md:block">
