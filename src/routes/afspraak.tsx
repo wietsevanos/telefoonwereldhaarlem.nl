@@ -129,6 +129,7 @@ function AfspraakPage() {
 
   const [step, setStep] = useState(initialStep);
   const [category, setCategory] = useState<Category | null>(initialCategory);
+  const [customDevice, setCustomDevice] = useState<string>("");
   const [brand, setBrand] = useState<Brand | null>(initialBrand);
   const [model, setModel] = useState<string | null>(initialModel);
   const [series, setSeries] = useState<string | null>(null);
@@ -145,13 +146,25 @@ function AfspraakPage() {
   const [error, setError] = useState<string | null>(null);
 
   const totalSteps = 6;
+  const isOtherCategory = category?.id === "anders";
   const canNext =
     (step === 1 && category) ||
     (step === 2 && brand) ||
     (step === 3 && model) ||
-    (step === 4 && repair) ||
+    (step === 4 && (isOtherCategory ? customDevice.trim() && repair && repair.trim() : repair)) ||
     (step === 5 && slot) ||
     step === 6;
+
+  const goNext = () => {
+    if (!canNext) return;
+    // Bij "Anders" slaan we merk- en modelstappen over.
+    if (step === 1 && isOtherCategory) setStep(4);
+    else setStep((s) => s + 1);
+  };
+  const goBack = () => {
+    if (step === 4 && isOtherCategory) setStep(1);
+    else setStep((s) => Math.max(1, s - 1));
+  };
 
   // Bezette slots ophalen voor de geselecteerde dag
   useEffect(() => {
@@ -190,9 +203,9 @@ function AfspraakPage() {
         naam: form.naam,
         email: form.email,
         telefoon: form.telefoon,
-        apparaat: category?.device ?? null,
-        merk: brand?.name ?? null,
-        model: model ?? null,
+        apparaat: isOtherCategory ? (customDevice || "Anders") : (category?.device ?? null),
+        merk: isOtherCategory ? null : (brand?.name ?? null),
+        model: isOtherCategory ? null : (model ?? null),
         reparatie: repair ?? "",
         prijs: priceFor(repair, model),
         opmerking: form.opmerking || null,
@@ -217,9 +230,9 @@ function AfspraakPage() {
       try {
         await supabase.functions.invoke("send-afspraak", {
           body: {
-            device: category?.device,
-            brand: brand?.name,
-            model,
+            device: isOtherCategory ? (customDevice || "Anders") : category?.device,
+            brand: isOtherCategory ? null : brand?.name,
+            model: isOtherCategory ? null : model,
             repair,
             price: priceFor(repair, model),
             slot_at: slot.toISOString(),
@@ -301,6 +314,22 @@ function AfspraakPage() {
                             {c.label}
                           </button>
                         ))}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCategory({ id: "anders", label: "Anders", device: "Anders", brands: [] } as unknown as Category);
+                            setBrand(null);
+                            setModel(null);
+                            setRepair(null);
+                          }}
+                          className={`px-3 py-4 sm:p-6 rounded-2xl border-2 font-bold text-sm sm:text-base transition-all text-center break-words ${
+                            isOtherCategory
+                              ? "border-brand-500 bg-brand-50 text-brand-700"
+                              : "border-transparent bg-brand-50/60 hover:bg-brand-50"
+                          }`}
+                        >
+                          Anders
+                        </button>
                       </div>
                     </div>
                   )}
@@ -380,7 +409,36 @@ function AfspraakPage() {
                     </div>
                   )}
 
-                  {step === 4 && brand && (
+                  {step === 4 && isOtherCategory && (
+                    <div className="animate-fade-up space-y-4">
+                      <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-2">4. Vertel ons over uw apparaat</p>
+                      <div>
+                        <label className="text-xs font-semibold text-brand-900/60 mb-1.5 block">Apparaat</label>
+                        <input
+                          type="text"
+                          value={customDevice}
+                          onChange={(e) => setCustomDevice(e.target.value)}
+                          placeholder="Bijv. e-reader, drone, oude tablet…"
+                          className="w-full px-4 py-3 rounded-xl border-2 border-brand-100 focus:border-brand-500 outline-none transition-colors text-sm"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-semibold text-brand-900/60 mb-1.5 block">Wat is er aan de hand?</label>
+                        <input
+                          type="text"
+                          value={repair ?? ""}
+                          onChange={(e) => setRepair(e.target.value)}
+                          placeholder="Beschrijf het probleem of de gewenste reparatie"
+                          className="w-full px-4 py-3 rounded-xl border-2 border-brand-100 focus:border-brand-500 outline-none transition-colors text-sm"
+                        />
+                      </div>
+                      <p className="mt-2 text-xs text-brand-900/50">
+                        Wij beoordelen uw aanvraag persoonlijk en geven u vrijblijvend een prijsopgave.
+                      </p>
+                    </div>
+                  )}
+
+                  {step === 4 && brand && !isOtherCategory && (
                     <div className="animate-fade-up">
                       <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">4. Welke reparatie?</p>
                       <div className="grid sm:grid-cols-2 gap-3">
@@ -557,9 +615,9 @@ function AfspraakPage() {
                       />
 
                       <div className="bg-brand-50 rounded-2xl p-5 text-sm space-y-1 text-brand-900/70">
-                        <p><strong>Apparaat:</strong> {category?.label}</p>
-                        <p><strong>Merk:</strong> {brand?.name}</p>
-                        <p><strong>Model:</strong> {model}</p>
+                        <p><strong>Apparaat:</strong> {isOtherCategory ? customDevice : category?.label}</p>
+                        {!isOtherCategory && <p><strong>Merk:</strong> {brand?.name}</p>}
+                        {!isOtherCategory && <p><strong>Model:</strong> {model}</p>}
                         <p><strong>Reparatie:</strong> {repair}</p>
                         {slot && (
                           <p><strong>Datum & tijd:</strong> {fmtDay(slot)} om {fmtTime(slot)}</p>
@@ -597,7 +655,7 @@ function AfspraakPage() {
                   <div className="mt-8 sm:mt-10 flex items-center justify-between gap-3">
                     <button
                       type="button"
-                      onClick={() => setStep((s) => Math.max(1, s - 1))}
+                      onClick={goBack}
                       disabled={step === 1}
                       className="px-3 sm:px-5 py-3 rounded-2xl text-sm font-semibold text-brand-900/60 hover:text-brand-900 disabled:opacity-30 whitespace-nowrap"
                     >
@@ -606,7 +664,7 @@ function AfspraakPage() {
                     {step < totalSteps ? (
                       <button
                         type="button"
-                        onClick={() => canNext && setStep((s) => s + 1)}
+                        onClick={goNext}
                         disabled={!canNext}
                         className="px-5 sm:px-7 py-3 sm:py-3.5 bg-brand-900 text-white rounded-2xl font-semibold text-sm sm:text-base hover:bg-brand-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
                       >
