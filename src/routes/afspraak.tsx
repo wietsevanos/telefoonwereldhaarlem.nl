@@ -409,7 +409,36 @@ function AfspraakPage() {
                     </div>
                   )}
 
-                  {step === 4 && brand && (
+                  {step === 4 && isOtherCategory && (
+                    <div className="animate-fade-up space-y-4">
+                      <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-2">4. Vertel ons over uw apparaat</p>
+                      <div>
+                        <label className="text-xs font-semibold text-brand-900/60 mb-1.5 block">Apparaat</label>
+                        <input
+                          type="text"
+                          value={customDevice}
+                          onChange={(e) => setCustomDevice(e.target.value)}
+                          placeholder="Bijv. e-reader, drone, oude tablet…"
+                          className="w-full px-4 py-3 rounded-xl border-2 border-brand-100 focus:border-brand-500 outline-none transition-colors text-sm"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-semibold text-brand-900/60 mb-1.5 block">Wat is er aan de hand?</label>
+                        <input
+                          type="text"
+                          value={repair ?? ""}
+                          onChange={(e) => setRepair(e.target.value)}
+                          placeholder="Beschrijf het probleem of de gewenste reparatie"
+                          className="w-full px-4 py-3 rounded-xl border-2 border-brand-100 focus:border-brand-500 outline-none transition-colors text-sm"
+                        />
+                      </div>
+                      <p className="mt-2 text-xs text-brand-900/50">
+                        Wij beoordelen uw aanvraag persoonlijk en geven u vrijblijvend een prijsopgave.
+                      </p>
+                    </div>
+                  )}
+
+                  {step === 4 && brand && !isOtherCategory && (
                     <div className="animate-fade-up">
                       <p className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-4">4. Welke reparatie?</p>
                       <div className="grid sm:grid-cols-2 gap-3">
