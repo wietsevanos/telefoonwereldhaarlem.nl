@@ -135,13 +135,6 @@ const consoleRepairs: RepairKey[] = [
   "ssd",
 ];
 
-const navRepairs: RepairKey[] = [
-  "scherm",
-  "batterij",
-  "touchscreen",
-  "software",
-];
-
 export const categories: Category[] = [
   {
     id: "smartphones",
