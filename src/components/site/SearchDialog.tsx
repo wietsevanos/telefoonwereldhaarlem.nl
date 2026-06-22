@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "@tanstack/react-router";
 import { Search, X } from "lucide-react";
 import { categories, repairCatalog, specialServices, getRepairPrice } from "@/lib/repairs-data";
@@ -84,7 +85,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
     navigate({ to: it.to, search: it.search });
   };
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-[100] bg-brand-900/40 backdrop-blur-sm animate-fade-in"
       onClick={onClose}
@@ -163,6 +164,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
