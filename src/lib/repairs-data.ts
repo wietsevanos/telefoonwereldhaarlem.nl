@@ -371,7 +371,6 @@ export const categories: Category[] = [
         name: "Google",
         repairs: phoneRepairsNoFaceId,
         models: [
-        models: [
           "Google Pixel 10 Pro Fold",
           "Google Pixel 10 Pro XL",
           "Google Pixel 10 Pro",
