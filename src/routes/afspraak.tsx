@@ -314,6 +314,22 @@ function AfspraakPage() {
                             {c.label}
                           </button>
                         ))}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCategory({ id: "anders", label: "Anders", device: "Anders", brands: [] } as unknown as Category);
+                            setBrand(null);
+                            setModel(null);
+                            setRepair(null);
+                          }}
+                          className={`px-3 py-4 sm:p-6 rounded-2xl border-2 font-bold text-sm sm:text-base transition-all text-center break-words ${
+                            isOtherCategory
+                              ? "border-brand-500 bg-brand-50 text-brand-700"
+                              : "border-transparent bg-brand-50/60 hover:bg-brand-50"
+                          }`}
+                        >
+                          Anders
+                        </button>
                       </div>
                     </div>
                   )}
