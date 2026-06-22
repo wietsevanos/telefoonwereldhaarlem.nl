@@ -131,6 +131,7 @@ function AfspraakPage() {
   const [category, setCategory] = useState<Category | null>(initialCategory);
   const [brand, setBrand] = useState<Brand | null>(initialBrand);
   const [model, setModel] = useState<string | null>(initialModel);
+  const [series, setSeries] = useState<string | null>(null);
   const [repair, setRepair] = useState<string | null>(initialRepair);
   const days = useMemo(() => nextDays(14), []);
   const [selectedDay, setSelectedDay] = useState<Date>(days[0]);
