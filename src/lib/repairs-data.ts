@@ -1,5 +1,6 @@
 export type RepairKey =
   | "scherm"
+  | "schermPremium"
   | "batterij"
   | "laadpoort"
   | "camera"
@@ -22,6 +23,7 @@ export type RepairKey =
 
 export const repairCatalog: Record<RepairKey, { label: string; from: number }> = {
   scherm: { label: "Scherm vervangen", from: 89 },
+  schermPremium: { label: "Scherm vervangen (Premium)", from: 199 },
   batterij: { label: "Batterij vervangen", from: 49 },
   laadpoort: { label: "Oplaadpoort reparatie", from: 59 },
   camera: { label: "Camera reparatie", from: 69 },
