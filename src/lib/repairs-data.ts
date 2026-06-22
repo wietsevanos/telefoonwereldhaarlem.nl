@@ -197,7 +197,7 @@ export const categories: Category[] = [
         ],
       },
       {
-        name: "Samsung",
+        name: "Samsung Galaxy S",
         repairs: phoneRepairsNoFaceId,
         models: [
           "Galaxy S24 Ultra",
@@ -219,6 +219,12 @@ export const categories: Category[] = [
           "Galaxy S20+",
           "Galaxy S20",
           "Galaxy S20 FE",
+        ],
+      },
+      {
+        name: "Samsung Galaxy A",
+        repairs: phoneRepairsNoFaceId,
+        models: [
           "Galaxy A73",
           "Galaxy A72",
           "Galaxy A55",
@@ -234,11 +240,22 @@ export const categories: Category[] = [
           "Galaxy A15",
           "Galaxy A14",
           "Galaxy A13",
-          "Galaxy Note 20 Ultra",
-          "Galaxy Note 20",
-          "Galaxy Note 10+",
-          "Galaxy Note 10",
-          "Galaxy Note 9",
+        ],
+      },
+      {
+        name: "Samsung Galaxy J",
+        repairs: phoneRepairsNoFaceId,
+        models: [],
+      },
+      {
+        name: "Samsung Galaxy Xcover",
+        repairs: phoneRepairsNoFaceId,
+        models: [],
+      },
+      {
+        name: "Samsung Galaxy Z",
+        repairs: phoneRepairsNoFaceId,
+        models: [
           "Galaxy Z Fold 6",
           "Galaxy Z Fold 5",
           "Galaxy Z Fold 4",
