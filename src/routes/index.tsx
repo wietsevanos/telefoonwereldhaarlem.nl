@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
-import heroPhone from "@/assets/hero-phone.jpg";
+import heroPhone from "@/assets/hero-blue.png.asset.json";
 import popIphoneScreen from "@/assets/popular-9.png.asset.json";
 import popIphoneBattery from "@/assets/popular-10.png.asset.json";
 import popSamsungScreen from "@/assets/popular-11.png.asset.json";
@@ -129,11 +129,11 @@ function Home() {
             <div className="absolute -inset-12 bg-brand-500/15 blur-3xl rounded-full" />
             <div className="relative rounded-[40px] overflow-hidden bg-white shadow-[var(--shadow-lift)] border border-[color:var(--color-hairline)] animate-float-soft">
               <img
-                src={heroPhone}
+                src={heroPhone.url}
                 alt="Premium smartphone weergave"
                 width={1024}
-                height={1024}
-                className="w-full h-auto aspect-square object-cover"
+                height={2048}
+                className="w-full h-auto aspect-[9/16] object-cover"
               />
             </div>
             <div className="absolute -bottom-6 -left-6 bg-white/80 backdrop-blur-xl rounded-2xl px-5 py-4 border border-[color:var(--color-hairline)] shadow-[var(--shadow-soft)] hidden md:block">
