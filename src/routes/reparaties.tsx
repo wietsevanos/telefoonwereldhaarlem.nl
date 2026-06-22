@@ -19,7 +19,7 @@ export const Route = createFileRoute("/reparaties")({
       {
         name: "description",
         content:
-          "Reparaties voor smartphones, tablets, laptops, MacBooks, smartwatches, gameconsoles en navigatiesystemen. Bekijk modellen, indicatieve prijzen en plan direct uw afspraak.",
+          "Reparaties voor smartphones, tablets, laptops, MacBooks, smartwatches en gameconsoles. Bekijk modellen, indicatieve prijzen en plan direct uw afspraak.",
       },
       { property: "og:title", content: "Reparaties, prijzen en modellen, Telefoon Wereld Haarlem" },
       {
@@ -63,7 +63,7 @@ function ReparatiesPage() {
         eyebrow="Reparaties"
         title="Elk merk, elk model,"
         highlight="vakkundig hersteld."
-        intro="Wij repareren smartphones, tablets, laptops, MacBooks, smartwatches, gameconsoles en navigatiesystemen. Kies hieronder uw categorie, merk en model voor de indicatieve prijs en plan direct uw afspraak."
+        intro="Wij repareren smartphones, tablets, laptops, MacBooks, smartwatches en gameconsoles. Kies hieronder uw categorie, merk en model voor de indicatieve prijs en plan direct uw afspraak."
       />
 
       <section className="pb-6">
