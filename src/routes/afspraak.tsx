@@ -358,6 +358,7 @@ function AfspraakPage() {
                       <div className="grid sm:grid-cols-2 gap-3">
                         {brand.repairs.map((key) => {
                           const r = repairCatalog[key];
+                          const priceInfo = getRepairPrice(model, key);
                           return (
                             <button
                               key={key}
@@ -371,7 +372,7 @@ function AfspraakPage() {
                             >
                               <span>{r.label}</span>
                               <span className="text-xs font-semibold text-brand-600 whitespace-nowrap">
-                                Vanaf €{r.from},-
+                                {priceInfo.onRequest ? "Op aanvraag" : `${priceInfo.fromLabel},-`}
                               </span>
                             </button>
                           );
