@@ -1,13 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { SiteShell } from "@/components/site/SiteShell";
-import { repairCatalog, categories, type Brand, type Category } from "@/lib/repairs-data";
+import { repairCatalog, categories, getRepairPrice, type Brand, type Category } from "@/lib/repairs-data";
 import { supabase } from "@/integrations/supabase/client";
 
-function priceFor(label: string | null): string | null {
+function priceFor(label: string | null, model: string | null): string | null {
   if (!label) return null;
-  const entry = Object.values(repairCatalog).find((r) => r.label === label);
-  return entry ? `Vanaf €${entry.from},-` : null;
+  const entry = Object.entries(repairCatalog).find(([, r]) => r.label === label);
+  if (!entry) return null;
+  const info = getRepairPrice(model, entry[0] as keyof typeof repairCatalog);
+  return info.onRequest ? "Prijs op aanvraag" : `${info.fromLabel},-`;
 }
 
 // Openingstijden: ma–vr 10:00–18:00, za 10:00–17:00, zo gesloten. Slots van 30 min.
@@ -191,7 +193,7 @@ function AfspraakPage() {
         merk: brand?.name ?? null,
         model: model ?? null,
         reparatie: repair ?? "",
-        prijs: priceFor(repair),
+        prijs: priceFor(repair, model),
         opmerking: form.opmerking || null,
       };
       // 1) Boeking opslaan — uniciteit op slot_at voorkomt dubbele boekingen.
@@ -218,7 +220,7 @@ function AfspraakPage() {
             brand: brand?.name,
             model,
             repair,
-            price: priceFor(repair),
+            price: priceFor(repair, model),
             slot_at: slot.toISOString(),
             naam: form.naam,
             email: form.email,
@@ -356,6 +358,7 @@ function AfspraakPage() {
                       <div className="grid sm:grid-cols-2 gap-3">
                         {brand.repairs.map((key) => {
                           const r = repairCatalog[key];
+                          const priceInfo = getRepairPrice(model, key);
                           return (
                             <button
                               key={key}
@@ -369,7 +372,7 @@ function AfspraakPage() {
                             >
                               <span>{r.label}</span>
                               <span className="text-xs font-semibold text-brand-600 whitespace-nowrap">
-                                Vanaf €{r.from},-
+                                {priceInfo.onRequest ? "Op aanvraag" : `${priceInfo.fromLabel},-`}
                               </span>
                             </button>
                           );
@@ -498,9 +501,9 @@ function AfspraakPage() {
                         {slot && (
                           <p><strong>Datum & tijd:</strong> {fmtDay(slot)} om {fmtTime(slot)}</p>
                         )}
-                        {priceFor(repair) && (
+                        {priceFor(repair, model) && (
                           <p className="pt-2 mt-2 border-t border-brand-900/10">
-                            <strong>Indicatieve prijs:</strong> {priceFor(repair)}
+                            <strong>Indicatieve prijs:</strong> {priceFor(repair, model)}
                             <span className="block text-xs text-brand-900/50 mt-1">
                               Definitieve prijs volgt na diagnose in de winkel.
                             </span>

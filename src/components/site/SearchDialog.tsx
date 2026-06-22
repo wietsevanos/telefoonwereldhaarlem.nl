@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Search, X } from "lucide-react";
-import { categories, repairCatalog, specialServices } from "@/lib/repairs-data";
+import { categories, repairCatalog, specialServices, getRepairPrice } from "@/lib/repairs-data";
 
 type Item = {
   id: string;
@@ -19,10 +19,11 @@ function buildIndex(): Item[] {
       for (const model of brand.models) {
         for (const key of brand.repairs) {
           const r = repairCatalog[key];
+          const price = getRepairPrice(model, key);
           items.push({
             id: `${cat.id}-${brand.name}-${model}-${key}`,
             label: `${r.label} — ${model}`,
-            sub: `${brand.name} · ${cat.label} · vanaf €${r.from}`,
+            sub: `${brand.name} · ${cat.label} · ${price.onRequest ? "prijs op aanvraag" : `vanaf ${price.display}`}`,
             haystack: `${r.label} ${model} ${brand.name} ${cat.label}`.toLowerCase(),
             to: "/afspraak",
             search: { device: cat.device, brand: brand.name, model, repair: r.label },

@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { SiteShell, PageHero } from "@/components/site/SiteShell";
-import { categories, specialServices, repairCatalog } from "@/lib/repairs-data";
+import { categories, specialServices, repairCatalog, getRepairPrice } from "@/lib/repairs-data";
 
 type ReparatiesSearch = {
   cat?: string;
@@ -149,6 +149,7 @@ function ReparatiesPage() {
                           <div className="border-t border-[color:var(--color-hairline)] divide-y divide-[color:var(--color-hairline)] animate-fade-in">
                             {repairs.map((key) => {
                               const r = repairCatalog[key];
+                              const price = getRepairPrice(m, key);
                               return (
                                 <div
                                   key={key}
@@ -157,8 +158,14 @@ function ReparatiesPage() {
                                   <div className="min-w-0">
                                     <p className="font-medium text-sm">{r.label}</p>
                                     <p className="text-xs text-brand-900/50 mt-0.5">
-                                      Indicatief vanaf{" "}
-                                      <span className="font-semibold text-brand-700">€{r.from}</span>
+                                      {price.onRequest ? (
+                                        <span className="font-semibold text-brand-700">Prijs op aanvraag</span>
+                                      ) : (
+                                        <>
+                                          Indicatief vanaf{" "}
+                                          <span className="font-semibold text-brand-700">{price.display}</span>
+                                        </>
+                                      )}
                                     </p>
                                   </div>
                                   <Link

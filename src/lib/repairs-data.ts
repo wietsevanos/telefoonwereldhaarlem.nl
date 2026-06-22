@@ -1,5 +1,6 @@
 export type RepairKey =
   | "scherm"
+  | "schermPremium"
   | "batterij"
   | "laadpoort"
   | "camera"
@@ -22,6 +23,7 @@ export type RepairKey =
 
 export const repairCatalog: Record<RepairKey, { label: string; from: number }> = {
   scherm: { label: "Scherm vervangen", from: 89 },
+  schermPremium: { label: "Scherm vervangen (Premium)", from: 199 },
   batterij: { label: "Batterij vervangen", from: 49 },
   laadpoort: { label: "Oplaadpoort reparatie", from: 59 },
   camera: { label: "Camera reparatie", from: 69 },
@@ -74,6 +76,19 @@ const phoneRepairs: RepairKey[] = [
 ];
 
 const phoneRepairsNoFaceId: RepairKey[] = phoneRepairs.filter((r) => r !== "faceid");
+
+// Apple iPhone reparaties zoals op de officiële prijslijst (PDF).
+const applePhoneRepairs: RepairKey[] = [
+  "scherm",
+  "schermPremium",
+  "camera",
+  "batterij",
+  "achterkant",
+  "speaker",
+  "laadpoort",
+  "knoppen",
+  "waterschade",
+];
 
 const tabletRepairs: RepairKey[] = [
   "scherm",
@@ -133,46 +148,52 @@ export const categories: Category[] = [
     brands: [
       {
         name: "Apple",
-        repairs: phoneRepairs,
+        repairs: applePhoneRepairs,
         models: [
-          "iPhone 16 Pro Max",
-          "iPhone 16 Pro",
-          "iPhone 16 Plus",
-          "iPhone 16",
-          "iPhone 15 Pro Max",
-          "iPhone 15 Pro",
-          "iPhone 15 Plus",
-          "iPhone 15",
-          "iPhone 14 Pro Max",
-          "iPhone 14 Pro",
-          "iPhone 14 Plus",
-          "iPhone 14",
-          "iPhone 13 Pro Max",
-          "iPhone 13 Pro",
-          "iPhone 13",
-          "iPhone 13 mini",
-          "iPhone 12 Pro Max",
-          "iPhone 12 Pro",
-          "iPhone 12",
-          "iPhone 12 mini",
-          "iPhone 11 Pro Max",
-          "iPhone 11 Pro",
-          "iPhone 11",
-          "iPhone SE (2022)",
-          "iPhone SE (2020)",
-          "iPhone XS Max",
-          "iPhone XS",
-          "iPhone XR",
-          "iPhone X",
-          "iPhone 8 Plus",
-          "iPhone 8",
-          "iPhone 7 Plus",
-          "iPhone 7",
-          "iPhone 6s Plus",
-          "iPhone 6s",
-          "iPhone 6 Plus",
-          "iPhone 6",
-          "iPhone SE (2016)",
+          "iPhone 17 Pro Max A3526",
+          "iPhone Air A3517",
+          "iPhone 17 Pro A3523",
+          "iPhone 17 A3520",
+          "iPhone 16 Pro Max A3296",
+          "iPhone 16 Pro A3293",
+          "iPhone 16 Plus A3290",
+          "iPhone 16 A3287",
+          "iPhone 16e A3409",
+          "iPhone 15 Pro Max A3106",
+          "iPhone 15 Pro A3102",
+          "iPhone 15 Plus A3094",
+          "iPhone 15 A3090",
+          "iPhone 14 Pro Max A2894",
+          "iPhone 14 Pro A2890",
+          "iPhone 14 Plus A2886",
+          "iPhone 14 A2882",
+          "iPhone 13 Pro Max A2643",
+          "iPhone 13 Pro A2638",
+          "iPhone 13 A2633",
+          "iPhone 13 Mini A2628",
+          "iPhone 12 Pro Max A2411",
+          "iPhone 12 Pro A2407",
+          "iPhone 12 A2403",
+          "iPhone 12 Mini A2399",
+          "iPhone 11 Pro Max A2218",
+          "iPhone 11 Pro A2215",
+          "iPhone 11 A2221",
+          "iPhone SE 2022 A2873",
+          "iPhone SE 2020 A2296",
+          "iPhone XS Max A1921",
+          "iPhone XS A1920",
+          "iPhone XR A1984",
+          "iPhone X A1901",
+          "iPhone 8 Plus A1864",
+          "iPhone 8 A1863",
+          "iPhone 7 Plus A1611",
+          "iPhone 7 A1660",
+          "iPhone SE A1723 (1e gen)",
+          "iPhone 6S Plus A1634",
+          "iPhone 6S A1633",
+          "iPhone 6 Plus A1522",
+          "iPhone 6 A1549",
+          "iPhone 5S A1457",
         ],
       },
       {
@@ -1262,3 +1283,84 @@ export const specialServices = [
     price: "op aanvraag",
   },
 ];
+// ============================================================
+// Per-model prijsoverrides (PDF prijslijst leidend).
+// Gebruik "request" voor "Op aanvraag" / "Price on request" / "niet vermeld".
+// ============================================================
+
+export type PriceValue = number | "request";
+export type ModelPricing = Partial<Record<RepairKey, PriceValue>>;
+
+export const modelPricing: Record<string, ModelPricing> = {
+  // ===== Apple iPhone (officiële prijslijst) =====
+  "iPhone 17 Pro Max A3526": { scherm: 599, schermPremium: "request", camera: 299, batterij: 179, achterkant: 279, speaker: 189, laadpoort: 189, knoppen: 189, waterschade: 39 },
+  "iPhone Air A3517":        { scherm: 529, schermPremium: "request", camera: 279, batterij: 179, achterkant: 239, speaker: 179, laadpoort: 179, knoppen: 179, waterschade: 39 },
+  // iPhone 17 — detailprijslijst is leidend
+  "iPhone 17 A3520":          { scherm: 529, schermPremium: "request", camera: 289, batterij: 169, achterkant: 279, speaker: 179, laadpoort: 179, knoppen: 179, waterschade: 39 },
+  "iPhone 17 Pro A3523":     { scherm: 529, schermPremium: "request", camera: 299, batterij: 169, achterkant: 279, speaker: 179, laadpoort: 179, knoppen: 179, waterschade: 39 },
+  "iPhone 16 Pro Max A3296": { scherm: 399, schermPremium: 269, camera: 139, batterij: 119, achterkant: 189, speaker: 89,  laadpoort: 119, knoppen: 119, waterschade: 39 },
+  "iPhone 16 Pro A3293":     { scherm: 339, schermPremium: 299, camera: 129, batterij: 119, achterkant: 179, speaker: 89,  laadpoort: 109, knoppen: 89,  waterschade: 39 },
+  "iPhone 16 Plus A3290":    { scherm: 249, schermPremium: 209, camera: 119, batterij: 119, achterkant: 169, speaker: 89,  laadpoort: 109, knoppen: 99,  waterschade: 39 },
+  "iPhone 16 A3287":         { scherm: 229, schermPremium: 199, camera: 129, batterij: 99,  achterkant: 149, speaker: 99,  laadpoort: 109, knoppen: "request", waterschade: 39 },
+  "iPhone 16e A3409":        { scherm: 199, schermPremium: 169, camera: 129, batterij: 129, achterkant: 169, speaker: 89,  laadpoort: 109, knoppen: 89,  waterschade: 39 },
+  "iPhone 15 Pro Max A3106": { scherm: 369, schermPremium: 269, camera: 129, batterij: 99,  achterkant: 159, speaker: 99,  laadpoort: 99,  knoppen: 99,  waterschade: 39 },
+  "iPhone 15 Pro A3102":     { scherm: 339, schermPremium: 239, camera: 189, batterij: 89,  achterkant: 169, speaker: 99,  laadpoort: 99,  knoppen: 99,  waterschade: 39 },
+  "iPhone 15 Plus A3094":    { scherm: 249, schermPremium: 199, camera: 119, batterij: 89,  achterkant: 149, speaker: 79,  laadpoort: 89,  knoppen: 79,  waterschade: 39 },
+  "iPhone 15 A3090":         { scherm: 249, schermPremium: 209, camera: 109, batterij: 79,  achterkant: 109, speaker: 79,  laadpoort: 79,  knoppen: 79,  waterschade: 39 },
+  "iPhone 14 Pro Max A2894": { scherm: 299, schermPremium: 199, camera: 129, batterij: 89,  achterkant: 169, speaker: 109, laadpoort: 109, knoppen: 109, waterschade: 39 },
+  "iPhone 14 Pro A2890":     { scherm: 279, schermPremium: 219, camera: 139, batterij: 89,  achterkant: 169, speaker: 99,  laadpoort: 99,  knoppen: 99,  waterschade: 39 },
+  "iPhone 14 Plus A2886":    { scherm: 199, schermPremium: 179, camera: 119, batterij: 89,  achterkant: 189, speaker: 99,  laadpoort: 99,  knoppen: 99,  waterschade: 39 },
+  "iPhone 14 A2882":         { scherm: 169, schermPremium: 149, camera: 119, batterij: 89,  achterkant: 169, speaker: 99,  laadpoort: 99,  knoppen: 99,  waterschade: 39 },
+  "iPhone 13 Pro Max A2643": { scherm: 249, schermPremium: 199, camera: 119, batterij: 79,  achterkant: 119, speaker: 89,  laadpoort: 99,  knoppen: 89,  waterschade: 39 },
+  "iPhone 13 Pro A2638":     { scherm: 219, schermPremium: 139, camera: 119, batterij: 79,  achterkant: 99,  speaker: 89,  laadpoort: 89,  knoppen: 89,  waterschade: 39 },
+  "iPhone 13 A2633":         { scherm: 139, schermPremium: 109, camera: 89,  batterij: 79,  achterkant: 99,  speaker: 79,  laadpoort: 79,  knoppen: 79,  waterschade: 39 },
+  "iPhone 13 Mini A2628":    { scherm: 159, schermPremium: 119, camera: 99,  batterij: 79,  achterkant: 99,  speaker: 79,  laadpoort: 79,  knoppen: 79,  waterschade: 39 },
+  "iPhone 12 Pro Max A2411": { scherm: 199, schermPremium: 149, camera: 109, batterij: 79,  achterkant: 99,  speaker: 79,  laadpoort: 79,  knoppen: 79,  waterschade: 39 },
+  "iPhone 12 Pro A2407":     { scherm: 149, schermPremium: 129, camera: 129, batterij: 79,  achterkant: 99,  speaker: 69,  laadpoort: 69,  knoppen: 69,  waterschade: 39 },
+  "iPhone 12 A2403":         { scherm: 149, schermPremium: 129, camera: 99,  batterij: 79,  achterkant: 99,  speaker: 69,  laadpoort: 69,  knoppen: 69,  waterschade: 39 },
+  "iPhone 12 Mini A2399":    { scherm: 149, schermPremium: 119, camera: 79,  batterij: 69,  achterkant: 99,  speaker: 69,  laadpoort: 69,  knoppen: 69,  waterschade: 39 },
+  "iPhone 11 Pro Max A2218": { scherm: 159, schermPremium: 129, camera: 109, batterij: 69,  achterkant: 109, speaker: 69,  laadpoort: 69,  knoppen: 69,  waterschade: 39 },
+  "iPhone 11 Pro A2215":     { scherm: 129, schermPremium: 109, camera: 79,  batterij: 69,  achterkant: 79,  speaker: 69,  laadpoort: 69,  knoppen: 69,  waterschade: 39 },
+  "iPhone 11 A2221":         { scherm: 119, schermPremium: 89,  camera: 89,  batterij: 59,  achterkant: 79,  speaker: 69,  laadpoort: 69,  knoppen: 69,  waterschade: 39 },
+  "iPhone SE 2022 A2873":    { scherm: 89,  schermPremium: 79,  camera: 79,  batterij: 59,  achterkant: 69,  speaker: 49,  laadpoort: 49,  knoppen: 49,  waterschade: 39 },
+  "iPhone SE 2020 A2296":    { scherm: 69,  schermPremium: 59,  camera: 69,  batterij: 59,  achterkant: 79,  speaker: 49,  laadpoort: 49,  knoppen: 49,  waterschade: 39 },
+  "iPhone XS Max A1921":     { scherm: 149, schermPremium: 119, camera: 99,  batterij: 89,  achterkant: 99,  speaker: 69,  laadpoort: 69,  knoppen: 89,  waterschade: 39 },
+  "iPhone XS A1920":         { scherm: 109, schermPremium: 89,  camera: 79,  batterij: 59,  achterkant: 79,  speaker: 59,  laadpoort: 59,  knoppen: 59,  waterschade: 39 },
+  "iPhone XR A1984":         { scherm: 79,  schermPremium: 69,  camera: 69,  batterij: 59,  achterkant: 79,  speaker: 59,  laadpoort: 59,  knoppen: 59,  waterschade: 39 },
+  "iPhone X A1901":          { scherm: 109, schermPremium: 89,  camera: 69,  batterij: 59,  achterkant: 69,  speaker: 49,  laadpoort: 49,  knoppen: 49,  waterschade: 39 },
+  "iPhone 8 Plus A1864":     { scherm: 79,  schermPremium: 59,  camera: 89,  batterij: 49,  achterkant: 69,  speaker: 49,  laadpoort: 49,  knoppen: 49,  waterschade: 39 },
+  "iPhone 8 A1863":          { scherm: 79,  schermPremium: 59,  camera: 69,  batterij: 49,  achterkant: 69,  speaker: 49,  laadpoort: 49,  knoppen: 49,  waterschade: "request" },
+  "iPhone 7 Plus A1611":     { scherm: 69,  schermPremium: 59,  camera: 69,  batterij: 49,  achterkant: 69,  speaker: 49,  laadpoort: 49,  knoppen: 49,  waterschade: 39 },
+  "iPhone 7 A1660":          { scherm: 69,  schermPremium: 59,  camera: 49,  batterij: 39,  achterkant: 69,  speaker: 49,  laadpoort: 39,  knoppen: 39,  waterschade: 39 },
+  "iPhone SE A1723 (1e gen)": { scherm: 69, schermPremium: "request", camera: 49, batterij: 39, achterkant: 69, speaker: 39, laadpoort: 39, knoppen: 39, waterschade: 39 },
+  "iPhone 6S Plus A1634":    { scherm: 69,  schermPremium: 59,  camera: 59,  batterij: 39,  achterkant: 69,  speaker: 49,  laadpoort: 49,  knoppen: 49,  waterschade: 39 },
+  "iPhone 6S A1633":         { scherm: 49,  schermPremium: 39,  camera: 49,  batterij: 39,  achterkant: 69,  speaker: 39,  laadpoort: 39,  knoppen: 39,  waterschade: 39 },
+  "iPhone 6 Plus A1522":     { scherm: 59,  schermPremium: 49,  camera: 39,  batterij: 39,  achterkant: 89,  speaker: 39,  laadpoort: 39,  knoppen: 39,  waterschade: 39 },
+  "iPhone 6 A1549":          { scherm: 59,  schermPremium: 49,  camera: 39,  batterij: 39,  achterkant: 69,  speaker: 39,  laadpoort: 49,  knoppen: 39,  waterschade: 39 },
+  "iPhone 5S A1457":         { scherm: 49,  schermPremium: "request", camera: 29, batterij: 29, achterkant: 69, speaker: 29, laadpoort: 29, knoppen: 29, waterschade: 39 },
+};
+
+export type RepairPriceInfo = {
+  /** Numeriek bedrag in euro, of null bij "op aanvraag". */
+  from: number | null;
+  /** Klaar voor weergave: "€599" of "Op aanvraag". */
+  display: string;
+  /** Korte regel voor in lijsten: "Vanaf €599" of "Prijs op aanvraag". */
+  fromLabel: string;
+  /** True wanneer de prijs niet numeriek bekend is. */
+  onRequest: boolean;
+};
+
+export function getRepairPrice(model: string | null | undefined, key: RepairKey): RepairPriceInfo {
+  const override = model ? modelPricing[model]?.[key] : undefined;
+  if (override === "request") {
+    return { from: null, display: "Op aanvraag", fromLabel: "Prijs op aanvraag", onRequest: true };
+  }
+  const value = typeof override === "number" ? override : repairCatalog[key].from;
+  return {
+    from: value,
+    display: `€${value}`,
+    fromLabel: `Vanaf €${value}`,
+    onRequest: false,
+  };
+}
