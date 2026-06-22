@@ -615,9 +615,9 @@ function AfspraakPage() {
                       />
 
                       <div className="bg-brand-50 rounded-2xl p-5 text-sm space-y-1 text-brand-900/70">
-                        <p><strong>Apparaat:</strong> {category?.label}</p>
-                        <p><strong>Merk:</strong> {brand?.name}</p>
-                        <p><strong>Model:</strong> {model}</p>
+                        <p><strong>Apparaat:</strong> {isOtherCategory ? customDevice : category?.label}</p>
+                        {!isOtherCategory && <p><strong>Merk:</strong> {brand?.name}</p>}
+                        {!isOtherCategory && <p><strong>Model:</strong> {model}</p>}
                         <p><strong>Reparatie:</strong> {repair}</p>
                         {slot && (
                           <p><strong>Datum & tijd:</strong> {fmtDay(slot)} om {fmtTime(slot)}</p>
