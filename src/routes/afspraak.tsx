@@ -405,7 +405,42 @@ function AfspraakPage() {
                             </button>
                           );
                         })}
+                        {(() => {
+                          const knownLabels = brand.repairs.map((k) => repairCatalog[k].label);
+                          const isOther = repair !== null && !knownLabels.includes(repair);
+                          return (
+                            <button
+                              type="button"
+                              onClick={() => setRepair(isOther ? repair : "")}
+                              className={`text-left px-5 py-4 rounded-2xl font-medium transition-all border-2 flex items-center justify-between gap-3 ${
+                                isOther
+                                  ? "border-brand-500 bg-brand-50 text-brand-700"
+                                  : "border-transparent bg-brand-50/60 hover:bg-brand-50"
+                              }`}
+                            >
+                              <span>Anders</span>
+                              <span className="text-xs font-semibold text-brand-600 whitespace-nowrap">
+                                Op aanvraag
+                              </span>
+                            </button>
+                          );
+                        })()}
                       </div>
+                      {repair !== null && !brand.repairs.map((k) => repairCatalog[k].label).includes(repair) && (
+                        <div className="mt-4">
+                          <label className="text-xs font-bold uppercase tracking-widest text-brand-900/40 mb-2 block">
+                            Beschrijf uw reparatie
+                          </label>
+                          <input
+                            type="text"
+                            value={repair}
+                            onChange={(e) => setRepair(e.target.value)}
+                            placeholder="Bijv. knop werkt niet, vreemd geluid…"
+                            className="w-full px-4 py-3 rounded-xl border-2 border-brand-100 focus:border-brand-500 outline-none transition-colors text-sm"
+                            autoFocus
+                          />
+                        </div>
+                      )}
                       <p className="mt-4 text-xs text-brand-900/50">
                         Genoemde prijzen zijn indicatief. U ontvangt vooraf altijd een definitieve prijsopgave.
                       </p>
