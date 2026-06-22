@@ -129,6 +129,7 @@ function AfspraakPage() {
 
   const [step, setStep] = useState(initialStep);
   const [category, setCategory] = useState<Category | null>(initialCategory);
+  const [customDevice, setCustomDevice] = useState<string>("");
   const [brand, setBrand] = useState<Brand | null>(initialBrand);
   const [model, setModel] = useState<string | null>(initialModel);
   const [series, setSeries] = useState<string | null>(null);
@@ -145,13 +146,25 @@ function AfspraakPage() {
   const [error, setError] = useState<string | null>(null);
 
   const totalSteps = 6;
+  const isOtherCategory = category?.id === "anders";
   const canNext =
     (step === 1 && category) ||
     (step === 2 && brand) ||
     (step === 3 && model) ||
-    (step === 4 && repair) ||
+    (step === 4 && (isOtherCategory ? customDevice.trim() && repair && repair.trim() : repair)) ||
     (step === 5 && slot) ||
     step === 6;
+
+  const goNext = () => {
+    if (!canNext) return;
+    // Bij "Anders" slaan we merk- en modelstappen over.
+    if (step === 1 && isOtherCategory) setStep(4);
+    else setStep((s) => s + 1);
+  };
+  const goBack = () => {
+    if (step === 4 && isOtherCategory) setStep(1);
+    else setStep((s) => Math.max(1, s - 1));
+  };
 
   // Bezette slots ophalen voor de geselecteerde dag
   useEffect(() => {
