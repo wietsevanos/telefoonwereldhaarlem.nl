@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import popIphoneScreen from "@/assets/popular-9.png.asset.json";
 import popIphoneBattery from "@/assets/popular-10.png.asset.json";
 import popSamsungScreen from "@/assets/popular-11.png.asset.json";
@@ -331,6 +332,50 @@ function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-24 bg-white border-y border-[color:var(--color-hairline)]">
+        <div className="max-w-3xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-brand-500">Veelgestelde vragen</span>
+            <h2 className="mt-3 text-3xl md:text-4xl font-bold tracking-tight">Alles wat je wilt weten.</h2>
+          </div>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="duur" className="border border-[color:var(--color-hairline)] rounded-2xl px-6 mb-4 bg-white">
+              <AccordionTrigger className="text-base font-semibold hover:no-underline py-5">
+                Hoe lang duurt een reparatie?
+              </AccordionTrigger>
+              <AccordionContent className="text-brand-900/60 text-[15px] leading-relaxed pb-5">
+                De meeste reparaties — zoals een scherm- of batterijvervanging — zijn binnen 30 minuten klaar terwijl u wacht. Complexere reparaties nemen maximaal een paar uur in beslag. We communiceren de exacte tijd altijd vooraf.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="garantie" className="border border-[color:var(--color-hairline)] rounded-2xl px-6 mb-4 bg-white">
+              <AccordionTrigger className="text-base font-semibold hover:no-underline py-5">
+                Krijg ik garantie?
+              </AccordionTrigger>
+              <AccordionContent className="text-brand-900/60 text-[15px] leading-relaxed pb-5">
+                Ja, op alle reparaties geven wij standaard garantie. De garantieperiode is afhankelijk van het type reparatie en het gebruikte onderdeel, maar geldt altijd minimaal 3 maanden. Bij originele onderdelen geldt vaak een langere garantietermijn.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="afspraak" className="border border-[color:var(--color-hairline)] rounded-2xl px-6 mb-4 bg-white">
+              <AccordionTrigger className="text-base font-semibold hover:no-underline py-5">
+                Moet ik een afspraak maken?
+              </AccordionTrigger>
+              <AccordionContent className="text-brand-900/60 text-[15px] leading-relaxed pb-5">
+                Een afspraak maken is niet verplicht, maar wordt wel aanbevolen. Met een afspraak heeft u geen wachttijd en kunnen wij uw reparatie direct inplannen. Loop gerust binnen, maar houd rekening met een eventuele wachttijd.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="gegevens" className="border border-[color:var(--color-hairline)] rounded-2xl px-6 mb-4 bg-white">
+              <AccordionTrigger className="text-base font-semibold hover:no-underline py-5">
+                Blijven mijn gegevens behouden?
+              </AccordionTrigger>
+              <AccordionContent className="text-brand-900/60 text-[15px] leading-relaxed pb-5">
+                In de overgrote meerderheid van de gevallen blijven alle gegevens op uw toestel gewoon behouden. Bij een scherm- of batterijreparatie wordt er niets gewist. Wij adviseren altijd om voor de zekerheid een back-up te maken, zodat u zeker weet dat uw foto's, contacten en bestanden veilig zijn.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </section>
 
