@@ -379,6 +379,8 @@ function Home() {
         </div>
       </section>
 
+      {/* FINAL CTA */}
+      <section className="py-24">
         <div className="max-w-5xl mx-auto px-6">
           <div className="relative overflow-hidden rounded-[40px] bg-brand-900 px-8 sm:px-14 py-16 text-center text-white shadow-[var(--shadow-lift)]">
             <div className="absolute -top-40 -right-20 size-[400px] bg-brand-500/30 blur-3xl rounded-full" />
