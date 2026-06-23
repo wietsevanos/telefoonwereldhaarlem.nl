@@ -335,8 +335,36 @@ function Home() {
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="py-24">
+      {/* FAQ */}
+      <section className="py-24 bg-white border-y border-[color:var(--color-hairline)]">
+        <div className="max-w-3xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <span className="text-[11px] font-bold uppercase tracking-widest text-brand-500">Veelgestelde vragen</span>
+            <h2 className="mt-3 text-3xl md:text-4xl font-bold tracking-tight">Alles wat je wilt weten.</h2>
+          </div>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="duur" className="border border-[color:var(--color-hairline)] rounded-2xl px-6 mb-4 bg-white">
+              <AccordionTrigger className="text-base font-semibold hover:no-underline py-5">
+                Hoe lang duurt een reparatie?
+              </AccordionTrigger>
+              <AccordionContent className="text-brand-900/60 text-[15px] leading-relaxed pb-5">
+                De meeste reparaties — zoals een scherm- of batterijvervanging — zijn binnen 30 minuten klaar terwijl u wacht. Complexere reparaties nemen maximaal een paar uur in beslag. We communiceren de exacte tijd altijd vooraf.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="garantie" className="border border-[color:var(--color-hairline)] rounded-2xl px-6 mb-4 bg-white">
+              <AccordionTrigger className="text-base font-semibold hover:no-underline py-5">
+                Krijg ik garantie?
+              </AccordionTrigger>
+              <AccordionContent className="text-brand-900/60 text-[15px] leading-relaxed pb-5">
+                Ja, op alle reparaties geven wij standaard garantie. De garantieperiode is afhankelijk van het type reparatie en het gebruikte onderdeel, maar geldt altijd minimaal 3 maanden. Bij originele onderdelen geldt vaak een langere garantietermijn.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="afspraak" className="border border-[color:var(--color-hairline)] rounded-2xl px-6 mb-4 bg-white">
+              <AccordionTrigger className="text-base font-semibold hover:no-underline py-5">
+                Moet ik een afspraak maken?
+              </AccordionThe user wants a FAQ section added to the homepage in the style of the rest of the page. I need to place it somewhere logical. The existing sections are: Hero, Why Us, Popular Repairs, How It Works, Brands, Reviews, Final CTA. FAQ would fit well before the Final CTA or after Reviews. Let me place it before the Final CTA, using a white background to match other sections. I should use the Accordion component which is already in the project.
+
+Let me complete the edit that was cut off. I was replacing content near the Final CTA section. I need to view more of the file to get the exact text to match for the line replacement. Let me view the file around that area.
         <div className="max-w-5xl mx-auto px-6">
           <div className="relative overflow-hidden rounded-[40px] bg-brand-900 px-8 sm:px-14 py-16 text-center text-white shadow-[var(--shadow-lift)]">
             <div className="absolute -top-40 -right-20 size-[400px] bg-brand-500/30 blur-3xl rounded-full" />
