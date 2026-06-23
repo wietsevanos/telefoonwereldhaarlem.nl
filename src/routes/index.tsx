@@ -129,8 +129,8 @@ function Home() {
             <div className="absolute -inset-12 bg-brand-500/15 blur-3xl rounded-full" />
             <div className="relative rounded-[40px] overflow-hidden bg-white shadow-[var(--shadow-lift)] border border-[color:var(--color-hairline)] animate-float-soft">
               <img
-                src="/hero-blue.png"
-                alt="Premium smartphone weergave"
+                src="/hero-customer.png"
+                alt="Tevreden klant met gerepareerde smartphone"
                 width={1024}
                 height={1024}
                 className="w-full h-auto aspect-square object-cover"
