@@ -133,7 +133,7 @@ function Home() {
                 alt="Premium smartphone weergave"
                 width={1024}
                 height={1024}
-                className="w-full h-auto aspect-square object-cover object-right"
+                className="w-full h-auto aspect-square object-cover"
               />
             </div>
             <div className="absolute -bottom-6 -left-6 bg-white/80 backdrop-blur-xl rounded-2xl px-5 py-4 border border-[color:var(--color-hairline)] shadow-[var(--shadow-soft)] hidden md:block">
