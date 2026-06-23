@@ -362,9 +362,23 @@ function Home() {
             <AccordionItem value="afspraak" className="border border-[color:var(--color-hairline)] rounded-2xl px-6 mb-4 bg-white">
               <AccordionTrigger className="text-base font-semibold hover:no-underline py-5">
                 Moet ik een afspraak maken?
-              </AccordionThe user wants a FAQ section added to the homepage in the style of the rest of the page. I need to place it somewhere logical. The existing sections are: Hero, Why Us, Popular Repairs, How It Works, Brands, Reviews, Final CTA. FAQ would fit well before the Final CTA or after Reviews. Let me place it before the Final CTA, using a white background to match other sections. I should use the Accordion component which is already in the project.
+              </AccordionTrigger>
+              <AccordionContent className="text-brand-900/60 text-[15px] leading-relaxed pb-5">
+                Een afspraak maken is niet verplicht, maar wordt wel aanbevolen. Met een afspraak heeft u geen wachttijd en kunnen wij uw reparatie direct inplannen. Loop gerust binnen, maar houd rekening met een eventuele wachttijd.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="gegevens" className="border border-[color:var(--color-hairline)] rounded-2xl px-6 mb-4 bg-white">
+              <AccordionTrigger className="text-base font-semibold hover:no-underline py-5">
+                Blijven mijn gegevens behouden?
+              </AccordionTrigger>
+              <AccordionContent className="text-brand-900/60 text-[15px] leading-relaxed pb-5">
+                In de overgrote meerderheid van de gevallen blijven alle gegevens op uw toestel gewoon behouden. Bij een scherm- of batterijreparatie wordt er niets gewist. Wij adviseren altijd om voor de zekerheid een back-up te maken, zodat u zeker weet dat uw foto's, contacten en bestanden veilig zijn.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </section>
 
-Let me complete the edit that was cut off. I was replacing content near the Final CTA section. I need to view more of the file to get the exact text to match for the line replacement. Let me view the file around that area.
         <div className="max-w-5xl mx-auto px-6">
           <div className="relative overflow-hidden rounded-[40px] bg-brand-900 px-8 sm:px-14 py-16 text-center text-white shadow-[var(--shadow-lift)]">
             <div className="absolute -top-40 -right-20 size-[400px] bg-brand-500/30 blur-3xl rounded-full" />
