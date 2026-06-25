@@ -74,7 +74,9 @@ function OverOnsPage() {
             <p>
               Wat in 2003 begon als een passie voor techniek aan de keukentafel, groeide uit tot een
               vertrouwd adres aan de Zijlweg. Inmiddels al meer dan twintig jaar helpen wij Haarlemmers
-              met hun apparatuur. Wij geloven dat een kapotte telefoon geen reden hoeft te zijn voor
+              met hun apparatuur. Daarnaast zijn wij een officieel DHL pakketpunt waar u terechtkunt
+              voor het verzenden, ontvangen en retourneren van pakketten via DHL Express en DHL Parcel.
+              Wij geloven dat een kapotte telefoon geen reden hoeft te zijn voor
               stress — een goede reparateur lost het op terwijl u koffie drinkt.
             </p>
             <p>
