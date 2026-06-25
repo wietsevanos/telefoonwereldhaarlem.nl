@@ -15,7 +15,7 @@ export const Route = createFileRoute("/over-ons")({
 });
 
 const stats = [
-  { value: "10+", label: "jaar in Haarlem" },
+  { value: "2003", label: "sinds onze start" },
   { value: "20K+", label: "reparaties uitgevoerd" },
   { value: "4,8", label: "gemiddelde review" },
   { value: "30 min", label: "gemiddelde tijd" },
