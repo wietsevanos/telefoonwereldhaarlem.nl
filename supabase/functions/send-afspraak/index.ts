@@ -100,7 +100,7 @@ Deno.serve(async (req: Request) => {
     }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY_NEW");
     if (!LOVABLE_API_KEY || !RESEND_API_KEY) {
       console.error("missing email credentials");
       return new Response(JSON.stringify({ error: "email_not_configured" }), {
