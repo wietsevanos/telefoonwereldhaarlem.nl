@@ -44,6 +44,15 @@ export function Footer() {
 
           <div>
             <h5 className="font-semibold text-xs uppercase tracking-widest text-brand-900/50 mb-4 sm:mb-6">
+              DHL pakketpunt
+            </h5>
+            <p className="text-brand-900/70 text-[15px] leading-relaxed max-w-[14rem] mx-auto md:mx-0">
+              Uitsluitend diensten van DHL Express en DHL Parcel. Verzenden, ontvangen en retourneren.
+            </p>
+          </div>
+
+          <div>
+            <h5 className="font-semibold text-xs uppercase tracking-widest text-brand-900/50 mb-4 sm:mb-6">
               Openingstijden
             </h5>
             <ul className="space-y-1.5 sm:space-y-2 text-[14px] text-brand-900/70">
