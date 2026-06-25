@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-white pt-12 pb-8 sm:pt-24 sm:pb-12 border-t border-[color:var(--color-hairline)]">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-10 sm:gap-12 lg:gap-16 mb-10 sm:mb-16 text-center md:text-left">
+        <div className="grid md:grid-cols-5 gap-10 sm:gap-12 lg:gap-16 mb-10 sm:mb-16 text-center md:text-left">
           <div className="md:col-span-2">
             <div className="flex items-center justify-center md:justify-start mb-5 sm:mb-6">
               <img
