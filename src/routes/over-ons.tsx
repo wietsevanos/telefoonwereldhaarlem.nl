@@ -15,7 +15,7 @@ export const Route = createFileRoute("/over-ons")({
 });
 
 const stats = [
-  { value: "10+", label: "jaar in Haarlem" },
+  { value: "2003", label: "sinds onze start" },
   { value: "20K+", label: "reparaties uitgevoerd" },
   { value: "4,8", label: "gemiddelde review" },
   { value: "30 min", label: "gemiddelde tijd" },
@@ -72,9 +72,10 @@ function OverOnsPage() {
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-8">Het verhaal achter de winkel.</h2>
           <div className="space-y-6 text-brand-900/70 text-lg leading-relaxed">
             <p>
-              Wat begon als een passie voor techniek aan de keukentafel, groeide uit tot een vertrouwd
-              adres aan de Zijlweg. Wij geloven dat een kapotte telefoon geen reden hoeft te zijn voor
-              stress, een goede reparateur lost het op terwijl u koffie drinkt.
+              Wat in 2003 begon als een passie voor techniek aan de keukentafel, groeide uit tot een
+              vertrouwd adres aan de Zijlweg. Inmiddels al meer dan twintig jaar helpen wij Haarlemmers
+              met hun apparatuur. Wij geloven dat een kapotte telefoon geen reden hoeft te zijn voor
+              stress — een goede reparateur lost het op terwijl u koffie drinkt.
             </p>
             <p>
               Onze technici werken alleen met originele en hoogwaardige onderdelen. Of het nu gaat om
