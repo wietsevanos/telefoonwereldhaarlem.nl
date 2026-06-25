@@ -33,6 +33,12 @@ function ContactPage() {
               </a>
             </div>
             <div className="bg-white rounded-3xl p-8 border border-[color:var(--color-hairline)]">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-brand-900/50 mb-4">DHL pakketpunt</h3>
+              <p className="text-brand-900/80 leading-relaxed text-[15px]">
+                Dit pakketpunt biedt uitsluitend diensten van <strong className="text-brand-900">DHL Express</strong> en <strong className="text-brand-900">DHL Parcel</strong>. U kunt hier terecht voor het verzenden, ontvangen en retourneren van pakketten.
+              </p>
+            </div>
+            <div className="bg-white rounded-3xl p-8 border border-[color:var(--color-hairline)]">
               <h3 className="text-sm font-bold uppercase tracking-widest text-brand-900/50 mb-4">Telefoon</h3>
               <a href="tel:+31235517048" className="text-lg font-semibold text-brand-600">023 551 7048</a>
             </div>
