@@ -15,7 +15,7 @@ const CORS = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const SHOP_EMAIL = "wietsevanos@gmail.com";
+const SHOP_EMAIL = "telefoonwereldafspraken@gmail.com";
 const FROM_ADDRESS = "Telefoon Wereld Haarlem <onboarding@resend.dev>";
 
 function esc(s: unknown): string {
