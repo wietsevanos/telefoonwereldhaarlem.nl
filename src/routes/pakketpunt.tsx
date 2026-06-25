@@ -23,6 +23,21 @@ function PakketpuntPage() {
         intro="Onze winkel is officieel DHL pakketpunt. Loop binnen tijdens openingstijden, zonder wachtrij en met persoonlijke service."
       />
 
+      <section className="pb-12">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="rounded-3xl border border-[color:var(--color-hairline)] overflow-hidden bg-[#FFCC00]">
+            <div className="flex flex-col md:flex-row items-center gap-6 p-8 md:p-10">
+              <img src="/dhl-logo.png" alt="DHL logo" className="h-10 md:h-12 w-auto shrink-0" />
+              <div className="text-center md:text-left">
+                <p className="text-brand-900 font-semibold text-[15px] leading-relaxed">
+                  Dit pakketpunt biedt uitsluitend diensten van <strong>DHL Express</strong> en <strong>DHL Parcel</strong>. U kunt hier terecht voor het verzenden, ontvangen en retourneren van pakketten.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="pb-24">
         <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-6">
           <div className="bg-white rounded-3xl p-8 border border-[color:var(--color-hairline)]">
