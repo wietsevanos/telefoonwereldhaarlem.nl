@@ -36,7 +36,7 @@ const reasons = [
   { title: "Snelle reparaties", body: "De meeste reparaties zijn binnen 30 minuten klaar terwijl u geniet van een kop koffie." },
   { title: "Ervaren specialisten", body: "Gecertificeerde technici met jarenlange ervaring in alle grote merken." },
   { title: "Eerlijke prijzen", body: "Geen verborgen kosten. We communiceren de exacte reparatieprijs altijd vooraf." },
-  { title: "Lokale service", body: "Uw vertrouwde tech-buurman aan de Zijlweg in Haarlem." },
+  { title: "DHL pakketpunt", body: "Verzenden, ontvangen en retourneren van pakketten via DHL Express en DHL Parcel." },
 ];
 
 const popularRepairs = [
