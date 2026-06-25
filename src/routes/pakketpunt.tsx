@@ -20,7 +20,7 @@ function PakketpuntPage() {
         eyebrow="Pakketpunt"
         title="Pakketten halen en"
         highlight="brengen in Haarlem."
-        intro="Onze winkel is officieel pakketpunt. Loop binnen tijdens openingstijden, zonder wachtrij en met persoonlijke service."
+        intro="Onze winkel is officieel DHL pakketpunt. Loop binnen tijdens openingstijden, zonder wachtrij en met persoonlijke service."
       />
 
       <section className="pb-24">
