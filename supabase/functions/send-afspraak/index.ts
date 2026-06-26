@@ -99,9 +99,8 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY_NEW");
-    if (!LOVABLE_API_KEY || !RESEND_API_KEY) {
+    if (!RESEND_API_KEY) {
       console.error("missing email credentials");
       return new Response(JSON.stringify({ error: "email_not_configured" }), {
         status: 500,
@@ -120,12 +119,11 @@ Deno.serve(async (req: Request) => {
     const googleUrl = buildGoogleLink(slotDate, calTitle, calDetails, location);
 
     const sendEmail = (payload: Record<string, unknown>) =>
-      fetch("https://connector-gateway.lovable.dev/resend/emails", {
+      fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-          "X-Connection-Api-Key": RESEND_API_KEY,
+          Authorization: `Bearer ${RESEND_API_KEY}`,
         },
         body: JSON.stringify(payload),
       });
