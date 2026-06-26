@@ -23,10 +23,10 @@ import brandDell from "@/assets/brands/dell.png.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Telefoon Wereld Haarlem — Premium telefoonreparaties in Haarlem" },
-      { name: "description", content: "Snelle, eerlijke en professionele smartphone-, tablet- en laptopreparaties aan de Zijlweg in Haarlem. Klaar terwijl u wacht." },
+      { title: "Telefoon Wereld Haarlem — Alle reparaties in Haarlem" },
+      { name: "description", content: "Snelle, eerlijke en professionele smartphone-, tablet-, laptop- en gameconsole-reparaties aan de Zijlweg in Haarlem. Klaar terwijl u wacht." },
       { property: "og:title", content: "Telefoon Wereld Haarlem" },
-      { property: "og:description", content: "Premium telefoonreparaties in het hart van Haarlem." },
+      { property: "og:description", content: "Alle reparaties in het hart van Haarlem — telefoon, laptop, tablet en meer." },
     ],
   }),
   component: Home,
@@ -94,7 +94,7 @@ function Home() {
               Vandaag geopend · Haarlem
             </span>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-balance">
-              Telefoon kapot?{" "}
+              Apparaat kapot?{" "}
               <span className="text-brand-500">Binnen no-time weer als nieuw.</span>
             </h1>
             <p className="mt-8 text-lg md:text-xl text-brand-900/60 max-w-lg leading-relaxed">
