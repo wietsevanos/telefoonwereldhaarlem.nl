@@ -24,37 +24,24 @@ function PakketpuntPage() {
       />
 
       <section className="pb-12">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="rounded-3xl border border-[color:var(--color-hairline)] bg-white overflow-hidden">
-            <div className="flex flex-col items-center text-center px-8 py-14 md:py-20">
-              <img
-                src="/dhl-logo-transparent.png"
-                alt="DHL logo"
-                className="h-16 md:h-24 w-auto mb-8"
-              />
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-brand-900 mb-4">
+        <div className="max-w-2xl mx-auto px-6">
+          <div className="rounded-3xl border border-[color:var(--color-hairline)] bg-white overflow-hidden shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+            <img
+              src="/dhl-banner.png"
+              alt="DHL"
+              className="block w-full h-auto"
+            />
+            <div className="px-8 py-10 text-center">
+              <h2 className="text-xl md:text-2xl font-bold tracking-tight text-brand-900 mb-3">
                 Officieel DHL Pakketpunt
               </h2>
-              <p className="text-brand-900/60 leading-relaxed max-w-xl text-[15px] md:text-base mb-10">
-                Dit pakketpunt biedt uitsluitend diensten van <strong className="text-brand-900">DHL Express</strong> en <strong className="text-brand-900">DHL Parcel</strong>. Loop binnen tijdens openingstijden — zonder wachtrij en met persoonlijke service.
+              <p className="text-brand-900/60 leading-relaxed text-[14px] md:text-[15px] max-w-md mx-auto">
+                Uitsluitend diensten van <strong className="text-brand-900">DHL Express</strong> en <strong className="text-brand-900">DHL Parcel</strong> — verzenden, ontvangen en retourneren tijdens openingstijden.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
-                <div className="rounded-2xl bg-brand-50/60 p-5 flex flex-col items-center gap-2">
-                  <span className="text-xl">📦</span>
-                  <span className="text-sm font-semibold text-brand-900">Verzenden</span>
-                </div>
-                <div className="rounded-2xl bg-brand-50/60 p-5 flex flex-col items-center gap-2">
-                  <span className="text-xl">🚚</span>
-                  <span className="text-sm font-semibold text-brand-900">Ontvangen</span>
-                </div>
-                <div className="rounded-2xl bg-brand-50/60 p-5 flex flex-col items-center gap-2">
-                  <span className="text-xl">↩️</span>
-                  <span className="text-sm font-semibold text-brand-900">Retourneren</span>
-                </div>
-              </div>
-              <div className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#FFCC00]/15 px-4 py-2 text-sm font-medium text-brand-900">
-                <span className="inline-block h-2 w-2 rounded-full bg-[#FFCC00]" />
-                DHL Express & DHL Parcel
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-2 text-[13px] text-brand-900/70">
+                <span className="px-3 py-1.5 rounded-full bg-brand-50/80">Verzenden</span>
+                <span className="px-3 py-1.5 rounded-full bg-brand-50/80">Ontvangen</span>
+                <span className="px-3 py-1.5 rounded-full bg-brand-50/80">Retourneren</span>
               </div>
             </div>
           </div>
