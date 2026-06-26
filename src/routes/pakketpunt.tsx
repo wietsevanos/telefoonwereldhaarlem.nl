@@ -36,7 +36,7 @@ function PakketpuntPage() {
                 Officieel DHL Pakketpunt
               </h2>
               <p className="text-brand-900/60 leading-relaxed text-[14px] md:text-[15px] max-w-md mx-auto">
-                Uitsluitend diensten van <strong className="text-brand-900">DHL Express</strong> en <strong className="text-brand-900">DHL Parcel</strong> — verzenden, ontvangen en retourneren tijdens openingstijden.
+                Uitsluitend diensten van <strong className="text-brand-900">DHL Express</strong> en <strong className="text-brand-900">DHL Parcel</strong>&nbsp; verzenden, ontvangen en retourneren tijdens openingstijden.
               </p>
               <div className="mt-7 flex flex-wrap items-center justify-center gap-2 text-[13px] text-brand-900/70">
                 <span className="px-3 py-1.5 rounded-full bg-brand-50/80">Verzenden</span>
