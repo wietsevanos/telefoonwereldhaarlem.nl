@@ -94,7 +94,7 @@ function Home() {
               Vandaag geopend · Haarlem
             </span>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-balance">
-              Telefoon kapot?{" "}
+              Apparaat kapot?{" "}
               <span className="text-brand-500">Binnen no-time weer als nieuw.</span>
             </h1>
             <p className="mt-8 text-lg md:text-xl text-brand-900/60 max-w-lg leading-relaxed">
