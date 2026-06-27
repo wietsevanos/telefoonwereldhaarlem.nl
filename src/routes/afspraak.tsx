@@ -687,7 +687,7 @@ function AfspraakPage() {
                   <div className="size-16 mx-auto mb-6 rounded-full bg-brand-500 grid place-items-center text-white text-2xl">✓</div>
                   <h2 className="text-3xl font-bold tracking-tight">Bedankt, {form.naam.split(" ")[0] || "klant"}!</h2>
                   <p className="mt-3 text-brand-900/60 max-w-md mx-auto">
-                    Uw afspraak is ingepland{slot ? ` op ${fmtDay(slot)} om ${fmtTime(slot)}` : ""}. U ontvangt een bevestiging per e-mail.
+                    Uw afspraak is ingepland{slot ? ` op ${fmtDay(slot)} om ${fmtTime(slot)}` : ""}. Wij zien u graag terug.
                   </p>
                   {slot && (() => {
                     const title = `Reparatie-afspraak: ${repair ?? ""} (${brand?.name ?? ""} ${model ?? ""})`.trim();
