@@ -1243,6 +1243,20 @@ export const categories: Category[] = [
       },
     ],
   },
+  const watchModels = new Set<string>();
+  for (const b of categories.find((c) => c.id === "smartwatches")!.brands) {
+    for (const m of b.models) watchModels.add(m);
+  }
+
+  const consoleModels = new Set<string>();
+  for (const b of categories.find((c) => c.id === "consoles")!.brands) {
+    for (const m of b.models) consoleModels.add(m);
+  }
+
+  export function isWatchOrConsole(model: string | null | undefined): boolean {
+    return !!model && (watchModels.has(model) || consoleModels.has(model));
+  }
+
   {
     id: "smartwatches",
     label: "Smartwatches",
