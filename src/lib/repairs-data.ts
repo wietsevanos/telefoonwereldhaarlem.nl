@@ -1570,6 +1570,9 @@ export type RepairPriceInfo = {
 };
 
 export function getRepairPrice(model: string | null | undefined, key: RepairKey): RepairPriceInfo {
+  if (model && watchOrConsoleModels.has(model)) {
+    return { from: null, display: "Op aanvraag", fromLabel: "Prijs op aanvraag", onRequest: true };
+  }
   const override = model ? modelPricing[model]?.[key] : undefined;
   if (override === "request") {
     return { from: null, display: "Op aanvraag", fromLabel: "Prijs op aanvraag", onRequest: true };
