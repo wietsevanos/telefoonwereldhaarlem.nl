@@ -47,6 +47,7 @@ function ReparatiesPage() {
   const [openBrand, setOpenBrand] = useState<string | null>(initialBrand);
   const [openModel, setOpenModel] = useState<string | null>(null);
   const [openSeries, setOpenSeries] = useState<string | null>(null);
+  const [openScreenInfo, setOpenScreenInfo] = useState<string | null>(null);
 
   const brand = useMemo(() => cat.brands.find((b) => b.name === openBrand) ?? null, [cat, openBrand]);
 
