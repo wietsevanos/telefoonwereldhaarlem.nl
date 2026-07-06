@@ -242,7 +242,7 @@ function ReparatiesPage() {
                                         model: m,
                                         repair: r.label,
                                       }}
-                                      className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-brand-900 text-white text-xs font-semibold hover:bg-brand-600 transition-all"
+                                      className="shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-brand-900 text-white text-xs font-semibold hover:bg-brand-600 transition-all w-full sm:w-auto"
                                     >
                                       Plan deze reparatie <span aria-hidden>→</span>
                                     </Link>
