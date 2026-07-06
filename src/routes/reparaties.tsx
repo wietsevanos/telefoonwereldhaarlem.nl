@@ -246,6 +246,9 @@ function ReparatiesPage() {
                                   {isPhoneScreen && screenInfoOpen && (
                                     <div className="mx-5 sm:mx-6 mb-4 rounded-xl bg-brand-50/70 border border-brand-100 p-4 text-sm text-brand-900/70 leading-relaxed animate-fade-in">
                                       <p className="font-semibold text-brand-900 mb-1">
+                                        Meer info over schermkeuzes
+                                      </p>
+                                      <p className="mb-1">
                                         Prijs vanaf {price.display}, dit is onze meest voordelige schermoptie
                                       </p>
                                       <p>
