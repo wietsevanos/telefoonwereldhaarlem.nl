@@ -194,7 +194,7 @@ function ReparatiesPage() {
                               const screenInfoOpen = openScreenInfo === screenInfoKey;
                               return (
                                 <div key={key}>
-                                  <div className="px-5 sm:px-6 py-4 flex items-center justify-between gap-4">
+                                  <div className="px-5 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                                     <div className="min-w-0 flex-1">
                                       <p className="font-medium text-sm">{r.label}</p>
                                       <p className="text-xs text-brand-900/50 mt-0.5">
@@ -214,7 +214,7 @@ function ReparatiesPage() {
                                           e.stopPropagation();
                                           setOpenScreenInfo(screenInfoOpen ? null : screenInfoKey);
                                         }}
-                                        className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                                        className={`shrink-0 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border w-full sm:w-auto ${
                                           screenInfoOpen
                                             ? "bg-brand-900 text-white border-brand-900"
                                             : "bg-brand-50 text-brand-700 border-brand-200 hover:bg-brand-100 hover:border-brand-300"
@@ -242,7 +242,7 @@ function ReparatiesPage() {
                                         model: m,
                                         repair: r.label,
                                       }}
-                                      className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-brand-900 text-white text-xs font-semibold hover:bg-brand-600 transition-all"
+                                      className="shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-brand-900 text-white text-xs font-semibold hover:bg-brand-600 transition-all w-full sm:w-auto"
                                     >
                                       Plan deze reparatie <span aria-hidden>→</span>
                                     </Link>
