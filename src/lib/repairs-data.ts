@@ -19,7 +19,14 @@ export type RepairKey =
   | "ssd"
   | "koeling"
   | "controller"
-  | "hdmi";
+  | "hdmi"
+  | "diagnose"
+  | "waterschadeOnderzoek"
+  | "cameraFront"
+  | "cameraBack"
+  | "audio"
+  | "softwareReset"
+  | "dataOverzetten";
 
 export const repairCatalog: Record<RepairKey, { label: string; from: number }> = {
   scherm: { label: "Scherm vervangen", from: 89 },
@@ -43,6 +50,13 @@ export const repairCatalog: Record<RepairKey, { label: string; from: number }> =
   koeling: { label: "Koeling en ventilator", from: 89 },
   controller: { label: "Controller of joystick reparatie", from: 49 },
   hdmi: { label: "HDMI poort reparatie", from: 79 },
+  diagnose: { label: "Diagnose", from: 0 },
+  waterschadeOnderzoek: { label: "Waterschade onderzoek", from: 69 },
+  cameraFront: { label: "Camera voorzijde", from: 99 },
+  cameraBack: { label: "Camera achterzijde", from: 129 },
+  audio: { label: "Audio issues", from: 99 },
+  softwareReset: { label: "Softwarereset of update", from: 39 },
+  dataOverzetten: { label: "Overzetten oude gegevens", from: 39 },
 };
 
 export type Brand = {
@@ -79,17 +93,20 @@ const phoneRepairs: RepairKey[] = [
 
 const phoneRepairsNoFaceId: RepairKey[] = phoneRepairs.filter((r) => r !== "faceid");
 
-// Apple iPhone reparaties zoals op de officiële prijslijst (PDF).
+// Apple iPhone reparaties (officiële prijslijst).
 const applePhoneRepairs: RepairKey[] = [
+  "diagnose",
+  "waterschadeOnderzoek",
   "scherm",
-  "schermPremium",
-  "camera",
-  "batterij",
   "achterkant",
-  "speaker",
+  "batterij",
   "laadpoort",
+  "cameraFront",
+  "cameraBack",
+  "audio",
   "knoppen",
-  "waterschade",
+  "softwareReset",
+  "dataOverzetten",
 ];
 
 const tabletRepairs: RepairKey[] = [
