@@ -207,33 +207,33 @@ function ReparatiesPage() {
                                           </span>
                                         )}
                                       </p>
-                                      {isPhoneScreen && (
-                                        <button
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            setOpenScreenInfo(screenInfoOpen ? null : screenInfoKey);
-                                          }}
-                                          className={`mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${
-                                            screenInfoOpen
-                                              ? "bg-brand-900 text-white border-brand-900"
-                                              : "bg-brand-50 text-brand-700 border-brand-200 hover:bg-brand-100 hover:border-brand-300"
-                                          }`}
-                                        >
-                                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <circle cx="12" cy="12" r="10" />
-                                            <path d="M12 16v-4" />
-                                            <path d="M12 8h.01" />
-                                          </svg>
-                                          {screenInfoOpen ? "Minder info" : "Meer info over schermkeuzes"}
-                                          <svg
-                                            width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                                            className={`transition-transform ${screenInfoOpen ? "rotate-180" : ""}`}
-                                          >
-                                            <polyline points="6 9 12 15 18 9" />
-                                          </svg>
-                                        </button>
-                                      )}
                                     </div>
+                                    {isPhoneScreen && (
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setOpenScreenInfo(screenInfoOpen ? null : screenInfoKey);
+                                        }}
+                                        className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+                                          screenInfoOpen
+                                            ? "bg-brand-900 text-white border-brand-900"
+                                            : "bg-brand-50 text-brand-700 border-brand-200 hover:bg-brand-100 hover:border-brand-300"
+                                        }`}
+                                      >
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                          <circle cx="12" cy="12" r="10" />
+                                          <path d="M12 16v-4" />
+                                          <path d="M12 8h.01" />
+                                        </svg>
+                                        {screenInfoOpen ? "Minder info" : "Meer info"}
+                                        <svg
+                                          width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                                          className={`transition-transform ${screenInfoOpen ? "rotate-180" : ""}`}
+                                        >
+                                          <polyline points="6 9 12 15 18 9" />
+                                        </svg>
+                                      </button>
+                                    )}
                                     <Link
                                       to="/afspraak"
                                       search={{
