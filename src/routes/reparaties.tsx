@@ -187,6 +187,8 @@ function ReparatiesPage() {
                             {repairs.map((key) => {
                               const r = repairCatalog[key];
                               const price = getRepairPrice(m, key);
+                              const isPhoneScreen =
+                                cat.device === "Smartphone" && key === "scherm" && !price.onRequest;
                               return (
                                 <div
                                   key={key}
@@ -198,12 +200,23 @@ function ReparatiesPage() {
                                       {price.onRequest ? (
                                         <span className="font-semibold text-brand-700">Prijs op aanvraag</span>
                                       ) : (
-                                        <>
-                                          Indicatief vanaf{" "}
+                                        <span className="inline-flex items-center gap-1.5 flex-wrap">
+                                          {isPhoneScreen ? (
+                                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-brand-50 text-brand-700 text-[10px] font-bold uppercase tracking-wider">
+                                              Vanaf
+                                            </span>
+                                          ) : (
+                                            <>Indicatief vanaf</>
+                                          )}
                                           <span className="font-semibold text-brand-700">{price.display}</span>
-                                        </>
+                                        </span>
                                       )}
                                     </p>
+                                    {isPhoneScreen && (
+                                      <p className="text-[11px] text-brand-900/50 mt-1 leading-snug">
+                                        Prijs vanaf: er zijn verschillende schermkwaliteiten beschikbaar. In de winkel adviseren wij u vrijblijvend over de beste keuze voor uw toestel.
+                                      </p>
+                                      )}
                                   </div>
                                   <Link
                                     to="/afspraak"
