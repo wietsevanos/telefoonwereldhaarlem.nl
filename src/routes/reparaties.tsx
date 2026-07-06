@@ -194,7 +194,7 @@ function ReparatiesPage() {
                               const screenInfoOpen = openScreenInfo === screenInfoKey;
                               return (
                                 <div key={key}>
-                                  <div className="px-5 sm:px-6 py-4 flex items-center justify-between gap-4">
+                                  <div className="px-5 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                                     <div className="min-w-0 flex-1">
                                       <p className="font-medium text-sm">{r.label}</p>
                                       <p className="text-xs text-brand-900/50 mt-0.5">
