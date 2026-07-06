@@ -1549,6 +1549,15 @@ export const modelPricing: Record<string, ModelPricing> = {
   "iPhone 5S":         { scherm: 49,  schermPremium: "request", camera: 29, batterij: 29, achterkant: 69, speaker: 29, laadpoort: 29, knoppen: 29, waterschade: 39 },
 };
 
+const watchOrConsoleModels = new Set<string>();
+for (const cat of categories) {
+  if (cat.id === "smartwatches" || cat.id === "consoles") {
+    for (const b of cat.brands) {
+      for (const m of b.models) watchOrConsoleModels.add(m);
+    }
+  }
+}
+
 export type RepairPriceInfo = {
   /** Numeriek bedrag in euro, of null bij "op aanvraag". */
   from: number | null;
