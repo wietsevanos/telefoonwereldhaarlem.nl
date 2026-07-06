@@ -162,8 +162,9 @@ export const categories: Category[] = [
         name: "Apple",
         repairs: applePhoneRepairs,
         models: [
-          "iPhone 17 Pro Max",
           "iPhone Air",
+          "iPhone 17e",
+          "iPhone 17 Pro Max",
           "iPhone 17 Pro",
           "iPhone 17",
           "iPhone 16 Pro Max",
@@ -199,7 +200,6 @@ export const categories: Category[] = [
           "iPhone 8 Plus",
           "iPhone 8",
           "iPhone 7 Plus",
-          "iPhone 7",
           "iPhone SE (1e gen)",
           "iPhone 6S Plus",
           "iPhone 6S",
