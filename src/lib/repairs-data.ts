@@ -210,13 +210,14 @@ export const categories: Category[] = [
       },
       {
         name: "Samsung",
-        repairs: phoneRepairsNoFaceId,
+        repairs: applePhoneRepairs,
         series: [
           {
             name: "Galaxy S",
             models: [
               "Galaxy S26 Ultra",
               "Galaxy S26 Plus",
+              "Galaxy S26",
               "Galaxy S25 Ultra",
               "Galaxy S25 Edge",
               "Galaxy S25 Plus",
@@ -357,7 +358,7 @@ export const categories: Category[] = [
           },
         ],
         models: [
-          "Galaxy S26 Ultra","Galaxy S26 Plus","Galaxy S25 Ultra","Galaxy S25 Edge","Galaxy S25 Plus","Galaxy S25",
+          "Galaxy S26 Ultra","Galaxy S26 Plus","Galaxy S26","Galaxy S25 Ultra","Galaxy S25 Edge","Galaxy S25 Plus","Galaxy S25",
           "Galaxy S24 Ultra","Galaxy S24 Plus","Galaxy S24","Galaxy S24 FE",
           "Galaxy S23 Ultra","Galaxy S23 Plus","Galaxy S23 FE","Galaxy S23",
           "Galaxy S22 Ultra","Galaxy S22 Plus","Galaxy S22",
