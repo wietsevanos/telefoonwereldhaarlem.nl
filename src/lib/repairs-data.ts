@@ -1566,6 +1566,45 @@ export const modelPricing: Record<string, ModelPricing> = {
   "iPhone 5S":         { scherm:  79, achterkant: "request", batterij:  59, laadpoort: 139, cameraFront: "request", cameraBack: 129, audio:  99, knoppen:  99 },
 };
 
+// ===== Samsung Galaxy S (per-model prijzen) =====
+Object.assign(modelPricing, {
+  "Galaxy S26 Ultra": { scherm: 289, achterkant: 119, batterij: 119, laadpoort: 159, cameraFront: "request", cameraBack: "request", audio: 109, knoppen: "request" },
+  "Galaxy S26 Plus":  { scherm: "request", achterkant: "request", batterij: "request", laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy S26":       { scherm: 199, achterkant: 129, batterij: 109, laadpoort: 139, cameraFront: 129, cameraBack: 149, audio: 109, knoppen: "request" },
+  "Galaxy S25 Ultra": { scherm: 269, achterkant: 119, batterij: 119, laadpoort: 159, cameraFront: "request", cameraBack: 149, audio: "request", knoppen: "request" },
+  "Galaxy S25 Plus":  { scherm: 219, achterkant: 119, batterij: 119, laadpoort: 149, cameraFront: "request", cameraBack: "request", audio: 119, knoppen: 99 },
+  "Galaxy S25 Edge":  { scherm: 229, achterkant: 109, batterij: 109, laadpoort: 149, cameraFront: "request", cameraBack: "request", audio: 109, knoppen: "request" },
+  "Galaxy S25":       { scherm: 189, achterkant: 119, batterij: 109, laadpoort: 149, cameraFront: 119, cameraBack: 139, audio: "request", knoppen: 99 },
+  "Galaxy S24 Ultra": { scherm: 259, achterkant: 109, batterij: 109, laadpoort: 149, cameraFront: 129, cameraBack: 129, audio: "request", knoppen: 109 },
+  "Galaxy S24 Plus":  { scherm: 239, achterkant: 109, batterij:  99, laadpoort: 149, cameraFront: 119, cameraBack: 149, audio: "request", knoppen: 109 },
+  "Galaxy S24":       { scherm: 229, achterkant: 109, batterij: "request", laadpoort: 149, cameraFront: 119, cameraBack: 139, audio: "request", knoppen: 99 },
+  "Galaxy S24 FE":    { scherm: 169, achterkant: 109, batterij: "request", laadpoort: 149, cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy S23 Ultra": { scherm: 219, achterkant: 109, batterij: "request", laadpoort: 139, cameraFront: 119, cameraBack: 129, audio: 119, knoppen: 99 },
+  "Galaxy S23 Plus":  { scherm: 199, achterkant: 109, batterij: 109, laadpoort: 149, cameraFront: 119, cameraBack: 139, audio: 119, knoppen: 99 },
+  "Galaxy S23 FE":    { scherm: 149, achterkant: 109, batterij: 109, laadpoort: 149, cameraFront: 109, cameraBack: 139, audio: 99, knoppen: 109 },
+  "Galaxy S23":       { scherm: 209, achterkant: 109, batterij: "request", laadpoort: 149, cameraFront: 119, cameraBack: 139, audio: "request", knoppen: 99 },
+  "Galaxy S22 Ultra": { scherm: "request", achterkant: "request", batterij: "request", laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy S22 Plus":  { scherm: 239, achterkant: 109, batterij: 109, laadpoort: 139, cameraFront: 109, cameraBack: 139, audio: "request", knoppen: 99 },
+  "Galaxy S22":       { scherm: 209, achterkant: 109, batterij: "request", laadpoort: 149, cameraFront: 109, cameraBack: 139, audio: "request", knoppen: 99 },
+  "Galaxy S21 FE":    { scherm: 199, achterkant: 109, batterij:  99, laadpoort: 139, cameraFront: 109, cameraBack: 129, audio: 99, knoppen: "request" },
+  "Galaxy S21 Ultra": { scherm: 279, achterkant: 109, batterij: 109, laadpoort: 149, cameraFront: 109, cameraBack: 129, audio: 109, knoppen: 99 },
+  "Galaxy S21 Plus":  { scherm: 219, achterkant: 109, batterij: 109, laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 99, knoppen: 99 },
+  "Galaxy S21":       { scherm: 209, achterkant: 109, batterij:  99, laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 109, knoppen: 99 },
+  "Galaxy S20 FE":    { scherm: 179, achterkant: 109, batterij:  99, laadpoort: 139, cameraFront: 109, cameraBack: 129, audio: 99, knoppen: 99 },
+  "Galaxy S20 Ultra": { scherm: 259, achterkant: 109, batterij: 109, laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 109, knoppen: 99 },
+  "Galaxy S20 Plus":  { scherm: 239, achterkant: 109, batterij:  99, laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 99, knoppen: 99 },
+  "Galaxy S20":       { scherm: 259, achterkant: 109, batterij:  99, laadpoort: 139, cameraFront: "request", cameraBack: 139, audio: 99, knoppen: 99 },
+  "Galaxy S10+":      { scherm: 239, achterkant: 119, batterij:  99, laadpoort: 139, cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy S10":       { scherm: 219, achterkant: 109, batterij:  99, laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 99, knoppen: 99 },
+  "Galaxy S10e":      { scherm: 179, achterkant: 109, batterij:  99, laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 99, knoppen: 99 },
+  "Galaxy S9+":       { scherm: 189, achterkant: 109, batterij:  99, laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 99, knoppen: 99 },
+  "Galaxy S9":        { scherm: 179, achterkant: 109, batterij: "request", laadpoort: 139, cameraFront: 109, cameraBack: 129, audio: 99, knoppen: 99 },
+  "Galaxy S8+":       { scherm: 209, achterkant: 109, batterij:  99, laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 99, knoppen: 99 },
+  "Galaxy S8":        { scherm: 199, achterkant: 109, batterij: "request", laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 99, knoppen: 99 },
+  "Galaxy S7":        { scherm: 189, achterkant: 109, batterij: "request", laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 99, knoppen: 99 },
+  "Galaxy S7 Edge":   { scherm: 229, achterkant:  99, batterij: "request", laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: 99, knoppen: 99 },
+} satisfies Record<string, ModelPricing>);
+
 const watchOrConsoleModels = new Set<string>();
 for (const cat of categories) {
   if (cat.id === "smartwatches" || cat.id === "consoles") {
