@@ -340,7 +340,7 @@ export const categories: Category[] = [
           {
             name: "Galaxy Z",
             models: [
-              "Galaxy Z Flip 7",
+              "Galaxy Z Flip 7 FE",
               "Galaxy Z Flip 6",
               "Galaxy Z Flip 5",
               "Galaxy Z Flip 4",
@@ -352,7 +352,7 @@ export const categories: Category[] = [
               "Galaxy Z Fold 5",
               "Galaxy Z Fold 4",
               "Galaxy Z Fold 3 5G",
-              "Galaxy Z Fold 2",
+              "Galaxy Z Fold 2 5G",
               "Galaxy Z Fold",
             ],
           },
@@ -374,8 +374,8 @@ export const categories: Category[] = [
           "Galaxy A05s","Galaxy A04s","Galaxy A04","Galaxy A04e","Galaxy A03s","Galaxy A03","Galaxy A02s",
           "Galaxy J7 (2017)","Galaxy J6 Plus","Galaxy J6","Galaxy J5 (2017)","Galaxy J3 (2017)","Galaxy J7 (2016)","Galaxy J5 (2016)","Galaxy J3 (2016)",
           "Galaxy Xcover 7 Pro","Galaxy Xcover 7","Galaxy Xcover 6 Pro","Galaxy Xcover Pro","Galaxy Xcover 5","Galaxy Xcover 4s","Galaxy Xcover 4","Galaxy Xcover 3",
-          "Galaxy Z Flip 7","Galaxy Z Flip 6","Galaxy Z Flip 5","Galaxy Z Flip 4","Galaxy Z Flip 3 5G","Galaxy Z Flip 5G","Galaxy Z Flip",
-          "Galaxy Z Fold 7","Galaxy Z Fold 6","Galaxy Z Fold 5","Galaxy Z Fold 4","Galaxy Z Fold 3 5G","Galaxy Z Fold 2","Galaxy Z Fold",
+          "Galaxy Z Flip 7 FE","Galaxy Z Flip 6","Galaxy Z Flip 5","Galaxy Z Flip 4","Galaxy Z Flip 3 5G","Galaxy Z Flip 5G","Galaxy Z Flip",
+          "Galaxy Z Fold 7","Galaxy Z Fold 6","Galaxy Z Fold 5","Galaxy Z Fold 4","Galaxy Z Fold 3 5G","Galaxy Z Fold 2 5G","Galaxy Z Fold",
         ],
       },
       {
@@ -1684,6 +1684,24 @@ Object.assign(modelPricing, {
   "Galaxy Xcover 4s":    { scherm: "request", achterkant: "request", batterij: "request", laadpoort: 139, cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
   "Galaxy Xcover 4":     { scherm: "request", achterkant: "request", batterij: 99, laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
   "Galaxy Xcover 3":     { scherm: "request", achterkant: "request", batterij: "request", laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+} satisfies Record<string, ModelPricing>);
+
+// ===== Samsung Galaxy Z (per-model prijzen) =====
+Object.assign(modelPricing, {
+  "Galaxy Z Flip 7 FE": { scherm: 259, achterkant: "request", batterij: "request", laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy Z Flip 6":    { scherm: 259, achterkant: 119, batterij: 109, laadpoort: "request", cameraFront: 109, cameraBack: "request", audio: 109, knoppen: "request" },
+  "Galaxy Z Flip 5":    { scherm: 259, achterkant: 109, batterij: 109, laadpoort: 149, cameraFront: 109, cameraBack: 129, audio: 109, knoppen: "request" },
+  "Galaxy Z Flip 4":    { scherm: 289, achterkant: 119, batterij: 99, laadpoort: 159, cameraFront: 109, cameraBack: 139, audio: 99, knoppen: "request" },
+  "Galaxy Z Flip 3 5G": { scherm: 359, achterkant: 119, batterij: 99, laadpoort: 149, cameraFront: 99, cameraBack: 139, audio: 99, knoppen: 99 },
+  "Galaxy Z Flip 5G":   { scherm: 189, achterkant: 119, batterij: "request", laadpoort: 139, cameraFront: 109, cameraBack: 129, audio: "request", knoppen: "request" },
+  "Galaxy Z Flip":      { scherm: 199, achterkant: 119, batterij: 109, laadpoort: 139, cameraFront: 109, cameraBack: 129, audio: "request", knoppen: "request" },
+  "Galaxy Z Fold 7":    { scherm: 529, achterkant: "request", batterij: 109, laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy Z Fold 6":    { scherm: 599, achterkant: 129, batterij: 109, laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy Z Fold 5":    { scherm: 189, achterkant: 119, batterij: 109, laadpoort: "request", cameraFront: 109, cameraBack: 129, audio: "request", knoppen: "request" },
+  "Galaxy Z Fold 4":    { scherm: 259, achterkant: 109, batterij: 109, laadpoort: 159, cameraFront: "request", cameraBack: 139, audio: 109, knoppen: "request" },
+  "Galaxy Z Fold 3 5G": { scherm: 369, achterkant: 109, batterij: 99, laadpoort: "request", cameraFront: 99, cameraBack: 129, audio: 109, knoppen: "request" },
+  "Galaxy Z Fold 2 5G": { scherm: 309, achterkant: 109, batterij: 99, laadpoort: "request", cameraFront: 99, cameraBack: 139, audio: "request", knoppen: 99 },
+  "Galaxy Z Fold":      { scherm: "request", achterkant: "request", batterij: "request", laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
 } satisfies Record<string, ModelPricing>);
 
 const watchOrConsoleModels = new Set<string>();
