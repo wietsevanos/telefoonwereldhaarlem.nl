@@ -1663,6 +1663,18 @@ Object.assign(modelPricing, {
   "Galaxy A12":       { scherm: 129, achterkant: 109, batterij: 109, laadpoort: 139, cameraFront: 109, cameraBack: 129, audio: 99, knoppen: 99 },
 } satisfies Record<string, ModelPricing>);
 
+// ===== Samsung Galaxy J (per-model prijzen) =====
+Object.assign(modelPricing, {
+  "Galaxy J7 (2017)": { scherm: 159, achterkant: "request", batterij: "request", laadpoort: 139, cameraFront:  99, cameraBack: 129, audio:  99, knoppen:  99 },
+  "Galaxy J7 (2016)": { scherm: "request", achterkant: "request", batterij: "request", laadpoort: "request", cameraFront:  99, cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy J6 Plus":   { scherm: 159, achterkant: "request", batterij: "request", laadpoort: 139, cameraFront: "request", cameraBack: 129, audio: 109, knoppen: "request" },
+  "Galaxy J6":        { scherm: 139, achterkant: "request", batterij: "request", laadpoort: 139, cameraFront:  99, cameraBack: 129, audio:  99, knoppen:  99 },
+  "Galaxy J5 (2017)": { scherm: 149, achterkant: "request", batterij: "request", laadpoort: 139, cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy J5 (2016)": { scherm: 139, achterkant: "request", batterij: "request", laadpoort: "request", cameraFront:  99, cameraBack: 129, audio: "request", knoppen: "request" },
+  "Galaxy J3 (2017)": { scherm: "request", achterkant: "request", batterij: "request", laadpoort: 139, cameraFront:  99, cameraBack: 129, audio: "request", knoppen: "request" },
+  "Galaxy J3 (2016)": { scherm: 129, achterkant: 109, batterij: "request", laadpoort: 139, cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+} satisfies Record<string, ModelPricing>);
+
 const watchOrConsoleModels = new Set<string>();
 for (const cat of categories) {
   if (cat.id === "smartwatches" || cat.id === "consoles") {
