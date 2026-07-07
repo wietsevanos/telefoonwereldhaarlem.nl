@@ -1675,6 +1675,17 @@ Object.assign(modelPricing, {
   "Galaxy J3 (2016)": { scherm: 129, achterkant: 109, batterij: "request", laadpoort: 139, cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
 } satisfies Record<string, ModelPricing>);
 
+// ===== Samsung Galaxy Xcover (per-model prijzen) =====
+Object.assign(modelPricing, {
+  "Galaxy Xcover 7":     { scherm: 159, achterkant: "request", batterij: 109, laadpoort: 149, cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy Xcover 7 Pro": { scherm: 149, achterkant: 119, batterij: 109, laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy Xcover Pro":   { scherm: "request", achterkant: "request", batterij: 99, laadpoort: 139, cameraFront: 109, cameraBack: "request", audio: 109, knoppen: "request" },
+  "Galaxy Xcover 5":     { scherm: 149, achterkant: "request", batterij: 99, laadpoort: 139, cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy Xcover 4s":    { scherm: "request", achterkant: "request", batterij: "request", laadpoort: 139, cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy Xcover 4":     { scherm: "request", achterkant: "request", batterij: 99, laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+  "Galaxy Xcover 3":     { scherm: "request", achterkant: "request", batterij: "request", laadpoort: "request", cameraFront: "request", cameraBack: "request", audio: "request", knoppen: "request" },
+} satisfies Record<string, ModelPricing>);
+
 const watchOrConsoleModels = new Set<string>();
 for (const cat of categories) {
   if (cat.id === "smartwatches" || cat.id === "consoles") {
